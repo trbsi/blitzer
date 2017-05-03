@@ -15,7 +15,7 @@ class Pin extends Model
 
     protected $table = 'pins';
     public $timestamps = false;
-    protected $fillable = ['comment', 'post_time', 'lat', 'lng', 'user_id'];
+    protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
 
 
     /**
@@ -78,7 +78,7 @@ class Pin extends Model
                     ],
                 'pin' =>
                     [
-                        'post_time' => $pin->post_time,
+                        'publish_time' => $pin->publish_time,
                         'comment' => $comment,
                         'lat' => (float)$lat,
                         'lng' => (float)$lng,

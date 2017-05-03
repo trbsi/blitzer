@@ -22,7 +22,7 @@ class MapController extends Controller
     }
 
 
-    public function pins($lat, $lng, $current_time)
+    public function pins(Request $request)
     {
         $jsonPins = [];
 
@@ -100,7 +100,7 @@ class MapController extends Controller
         $pin = $this->pin;
 
         $pin->user_id = $user->id;
-        $pin->post_time = $request->current_time;
+        $pin->publish_time = $pin->updated_at = $request->current_time;
         $pin->lng = $request->lng;
         $pin->lat = $request->lat;
         $pin->fill($request->all());

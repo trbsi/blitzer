@@ -17,9 +17,9 @@ class BootstrapController extends Controller
         $this->middleware('currentTimeFixer');
     }
 
+
     /**
      * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
      */
     public function updateNotificationToken(Request $request)
     {
