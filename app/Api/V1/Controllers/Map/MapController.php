@@ -43,7 +43,7 @@ class MapController extends Controller
         }
 
         $pins = $this->pin->getPins($request)->get()->toArray();
-        dd($pins);
+        dd($pins); die();
 
         //return json data
         foreach ($pins as $key => $pin) {

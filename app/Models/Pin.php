@@ -12,15 +12,16 @@ class Pin extends Model
     const DISTANCE = 20;
 
     protected $distance;
+
     public function getDistanceAttribute()
     {
-        return  $this->attributes['distance'];
+        return $this->attributes['distance'];
     }
 
-   /* public function setDistanceAttribute($value)
-    {
-        $this->distance = $value;
-    }*/
+    /* public function setDistanceAttribute($value)
+     {
+         $this->distance = $value;
+     }*/
     /**
      * Generated
      */
@@ -30,6 +31,7 @@ class Pin extends Model
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
     protected $attributes = ['distance' => 0];
     protected $appends = ['distance'];
+
     /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
      * @param $tags
@@ -129,8 +131,8 @@ class Pin extends Model
     {
         $onehour = PinHelper::returnTime('minus-1hour', $request->current_time);
 
-        $activePin = Pin::where('updated_at', '>=', $request->current_time)
-            ->where('updated_at', '<=', $onehour)
+        $activePin = Pin::where('updated_at', '>=', $onehour)
+            ->where('updated_at', '<=', $request->current_time)
             ->where('user_id', $user->id)
             ->count();
 
@@ -144,18 +146,19 @@ class Pin extends Model
      */
     public function getPins($request)
     {
+        $lat = $request->lat;
+        $lng = $request->lng;
+        $current_time = $request->current_time;
         $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
         $distance = Pin::DISTANCE;
-        $onehour = PinHelper::returnTime('minus-1hour', $request->current_time);
+        $onehour = PinHelper::returnTime('minus-1hour', $current_time);
         $pinTable = Pin::getTable();
 
-        $query = Pin::where('updated_at', '>=', '?')
-            ->where('updated_at', '<=', '?')
+        $query = Pin::where('updated_at', '>=', $onehour)
+            ->where('updated_at', '<=', $current_time)
             ->with('relationPinTag.relationTag', 'relationUser')
-            ->selectRaw("$pinTable.*, ($km * acos(cos(radians(?)) * cos(radians(`lat`)) * cos(radians(`lng`) - radians(?)) + sin(radians(?)) * sin(radians(`lat`)) )) AS distance")
-            ->setBindings([$request->current_time, $onehour, $request->lat, $request->lng, $request->lat])
-           // ->having("distance <= $distance")
-        ;
+            ->selectRaw("$pinTable.*, ($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
+            ->having("distance <= $distance");
 
         return $query;
     }
