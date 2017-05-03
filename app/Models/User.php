@@ -53,9 +53,13 @@ class User extends Authenticatable
     // somewhere in your controller
     public function getAuthenticatedUser()
     {
-        try {
+        $token = JWTAuth::getToken();
+        if (!$token)
+            return false;
 
-            if (!$user = JWTAuth::parseToken()->authenticate()) {
+        try {
+            $user = JWTAuth::parseToken()->authenticate();
+            if (!$user) {
                 return response()->json(['user_not_found'], 404);
             }
 

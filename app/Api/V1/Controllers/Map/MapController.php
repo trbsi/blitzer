@@ -7,7 +7,6 @@ use Illuminate\Http\Request;
 use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\User;
-use App\Api\V1\Requests\Map\PinRequest;
 
 class MapController extends Controller
 {
@@ -96,7 +95,7 @@ class MapController extends Controller
                     'showAlert' => true,
                 ]);
         }
-        
+
         $user = $this->user->getAuthenticatedUser();
         $pin = $this->pin;
 
