@@ -2,14 +2,14 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class Location extends Model {
+class Pin extends Model {
 
     /**
      * Generated
      */
 
-    protected $table = 'locations';
-    protected $fillable = ['ID', 'comment', 'post_time', 'lat', 'lng', 'user_id'];
+    protected $table = 'pins';
+    protected $fillable = ['id', 'comment', 'post_time', 'lat', 'lng', 'user_id'];
 
 
     public function user() {
@@ -21,11 +21,11 @@ class Location extends Model {
     }
 
     public function locationTags() {
-        return $this->hasMany(\App\Models\LocationTag::class, 'location_id', 'ID');
+        return $this->hasMany(\App\Models\LocationTag::class, 'location_id', 'id');
     }
 
     public function messages() {
-        return $this->hasMany(\App\Models\Message::class, 'location_id', 'ID');
+        return $this->hasMany(\App\Models\Message::class, 'location_id', 'id');
     }
 
 

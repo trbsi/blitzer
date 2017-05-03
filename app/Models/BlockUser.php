@@ -9,7 +9,7 @@ class BlockUser extends Model {
      */
 
     protected $table = 'block_user';
-    protected $fillable = ['ID', 'who_is_blocked', 'blocked_by'];
+    protected $fillable = ['id', 'who_is_blocked', 'blocked_by'];
 
 
     public function user() {

@@ -9,11 +9,11 @@ class Message extends Model {
      */
 
     protected $table = 'messages';
-    protected $fillable = ['ID', 'location_id', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'last_updated', 'date_modified'];
+    protected $fillable = ['id', 'location_id', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'last_updated', 'date_modified'];
 
 
     public function location() {
-        return $this->belongsTo(\App\Models\Location::class, 'location_id', 'ID');
+        return $this->belongsTo(\App\Models\Location::class, 'location_id', 'id');
     }
 
     public function user() {
@@ -29,7 +29,7 @@ class Message extends Model {
     }
 
     public function messagesReplies() {
-        return $this->hasMany(\App\Models\MessagesReply::class, 'message_id', 'ID');
+        return $this->hasMany(\App\Models\MessagesReply::class, 'message_id', 'id');
     }
 
 

@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'email', 'birthday', 'first_name', 'last_name', 'gender', 'facebook_id',
     ];
 
     /**
@@ -34,16 +34,27 @@ class User extends Authenticatable
      * @param  string  $value
      * @return void
      */
-    public function setPasswordAttribute($value)
+    /*public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = Hash::make($value);
+    }*/
+
+    /**
+     * Get user by email
+     * @param $email
+     * @return mixed
+     */
+    public function getUserByEmail($email)
+    {
+        return User::where(['email' => $email])->first();
     }
 
-    public function users() {
+    //RELATIONS
+    public function usersBlockedBy() {
         return $this->belongsToMany(\App\Models\User::class, 'block_user', 'blocked_by', 'who_is_blocked');
     }
 
-    public function users() {
+    public function usersWhoisBlocked() {
         return $this->belongsToMany(\App\Models\User::class, 'block_user', 'who_is_blocked', 'blocked_by');
     }
 
@@ -51,11 +62,11 @@ class User extends Authenticatable
         return $this->belongsToMany(\App\Models\Message::class, 'messages_reply', 'user_id', 'message_id');
     }
 
-    public function blockUsers() {
+    public function blockUsersBlockedBy() {
         return $this->hasMany(\App\Models\BlockUser::class, 'blocked_by', 'id');
     }
 
-    public function blockUsers() {
+    public function blockUsersWhoIsBlocked() {
         return $this->hasMany(\App\Models\BlockUser::class, 'who_is_blocked', 'id');
     }
 
@@ -63,11 +74,11 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\Location::class, 'user_id', 'id');
     }
 
-    public function messages() {
+    public function messagesUserOne() {
         return $this->hasMany(\App\Models\Message::class, 'user_one', 'id');
     }
 
-    public function messages() {
+    public function messagesUserTwo() {
         return $this->hasMany(\App\Models\Message::class, 'user_two', 'id');
     }
 

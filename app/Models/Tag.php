@@ -9,7 +9,7 @@ class Tag extends Model {
      */
 
     protected $table = 'tags';
-    protected $fillable = ['ID', 'tag', 'popularity', 'active'];
+    protected $fillable = ['id', 'tag', 'popularity', 'active'];
 
 
     public function locations() {
@@ -17,7 +17,7 @@ class Tag extends Model {
     }
 
     public function locationTags() {
-        return $this->hasMany(\App\Models\LocationTag::class, 'tag_id', 'ID');
+        return $this->hasMany(\App\Models\LocationTag::class, 'tag_id', 'id');
     }
 
 

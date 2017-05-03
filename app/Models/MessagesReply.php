@@ -9,11 +9,11 @@ class MessagesReply extends Model {
      */
 
     protected $table = 'messages_reply';
-    protected $fillable = ['ID', 'message_id', 'reply', 'user_id', 'send_date', 'message_type'];
+    protected $fillable = ['id', 'message_id', 'reply', 'user_id', 'send_date', 'message_type'];
 
 
     public function message() {
-        return $this->belongsTo(\App\Models\Message::class, 'message_id', 'ID');
+        return $this->belongsTo(\App\Models\Message::class, 'message_id', 'id');
     }
 
     public function user() {

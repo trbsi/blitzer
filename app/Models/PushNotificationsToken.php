@@ -9,7 +9,7 @@ class PushNotificationsToken extends Model {
      */
 
     protected $table = 'push_notifications_token';
-    protected $fillable = ['ID', 'user_id', 'token', 'device', 'device_id', 'date_modified'];
+    protected $fillable = ['id', 'user_id', 'token', 'device', 'device_id', 'date_modified'];
 
 
     public function user() {
