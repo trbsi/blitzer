@@ -18,6 +18,7 @@ class MapController extends Controller
         $this->pin = $pin;
         $this->user = $user;
         $this->pinTag = $pinTag;
+        $this->authUser = $this->user->getAuthenticatedUser();
         $this->middleware('currentTimeFixer');
     }
 
@@ -25,35 +26,30 @@ class MapController extends Controller
     public function pins(Request $request)
     {
         $jsonPins = [];
+        $showAlert = false;
+        $blink = NULL;
+        $message = NULL;
 
-        //check if user has any pin published and active within 30min
-       // $activePin = PinHelper::userHasActivePin($current_time);
+        //check if user has any active pin
+        $activePin = $this->pin->userHasActivePin($request, $this->authUser);
 
-        //no pins, return reponse
-        if (empty($activePin["within_1_hour"])) {
-            return
-                [[
-                    'showAlert' => true,
-                    'blink' => 'publish-pin',
-                    'message' => Yii::t("app", "User did not publish a pin"),
-                    'pins' => $jsonPins
-                ]];
+        if ($activePin == 0) {
+            $showAlert = true;
+            $blink = 'publish-pin';
+            $message = [
+                'body' => trans('core.map.user_didnt_publish_pin_body'),
+                'title' => trans('core.map.user_didnt_publish_pin_title'),
+            ];
         }
 
-        $locationsTable = Locations::tableName();
-        $query = ApiLocation::searchLocationsQuery();
-        $pins = $query->all();
+        $pins = $this->pin->getPins($request)->get()->toArray();
+        dd($pins);
 
         //return json data
         foreach ($pins as $key => $pin) {
-            $include_pin = true;
-            if (in_array($pin->IDuser, $blocked_by))
-                $include_pin = false;
-
-            if ($include_pin == true)
-                $jsonPins[] = ApiLocation::generateContentForInfoWindow($pin);
+            $jsonPins[] = $this->pin->generateContentForInfoWindow($pin);
         }
-
+dd($jsonPins); die();
         //return $this->render('@app/modules/api/views/layouts/main');
         //if number of elements in array is == 1 that means there is only user's pin, because script can't get here if user didn't publish a pin
         //$jsonPins can be empty because there are no pins, because user's pin can expire after 30 min, so it's active but not visible on the map
@@ -65,14 +61,14 @@ class MapController extends Controller
             $message = NULL;
             $showAlert = false;
         }
-
-        return
-            [[
+        return response()
+            ->json([
                 'showAlert' => $showAlert,
-                'blink' => 'none',
+                'blink' => $blink,
                 'message' => $message,
-                'pins' => $jsonPins,
-            ]];
+                'pins' => $jsonPins
+            ]);
+
     }
 
     /**
@@ -82,8 +78,7 @@ class MapController extends Controller
     public function addPin(Request $request)
     {
         $tags = $this->pin->checkTags($request->tags);
-        if(empty($tags))
-        {
+        if (empty($tags)) {
             return response()
                 ->json([
                     'status' => false,
@@ -96,7 +91,7 @@ class MapController extends Controller
                 ]);
         }
 
-        $user = $this->user->getAuthenticatedUser();
+        $user = $this->authUser;
         $pin = $this->pin;
 
         $pin->user_id = $user->id;
@@ -104,11 +99,9 @@ class MapController extends Controller
         $pin->lng = $request->lng;
         $pin->lat = $request->lat;
         $pin->fill($request->all());
-        if($pin->save())
-        {
+        if ($pin->save()) {
             //save tags
-            foreach($tags as $tag_id => $tag_name)
-            {
+            foreach ($tags as $tag_id => $tag_name) {
                 $tmp = new $this->pinTag;
                 $tmp->pin_id = $pin->id;
                 $tmp->tag_id = $tag_id;
@@ -117,7 +110,7 @@ class MapController extends Controller
             $status = true;
         }
 
-        $pin_info = $pin->generateContentForInfoWindow($pin, $user);
+        $pin_info = $pin->generateContentForInfoWindow($pin);
         return response()
             ->json([
                 'status' => $status,

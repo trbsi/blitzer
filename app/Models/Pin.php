@@ -8,7 +8,19 @@ use App\Models\Helper\PinHelper;
 class Pin extends Model
 {
     const MAX_TAG_LENGTH = 50;
+    const MEAUREMENT = 'miles';
+    const DISTANCE = 20;
 
+    protected $distance;
+    public function getDistanceAttribute()
+    {
+        return  $this->attributes['distance'];
+    }
+
+   /* public function setDistanceAttribute($value)
+    {
+        $this->distance = $value;
+    }*/
     /**
      * Generated
      */
@@ -16,8 +28,8 @@ class Pin extends Model
     protected $table = 'pins';
     public $timestamps = false;
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
-
-
+    protected $attributes = ['distance' => 0];
+    protected $appends = ['distance'];
     /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
      * @param $tags
@@ -51,8 +63,9 @@ class Pin extends Model
      * @param $user - current user
      * @return array
      */
-    public function generateContentForInfoWindow($pin, $user)
+    public function generateContentForInfoWindow($pin)
     {
+        $user = $pin->relationUser;
         if (!empty($pin->comment))
             $comment = htmlentities($pin->comment); //decode html
 
@@ -70,7 +83,7 @@ class Pin extends Model
             [
                 'user' =>
                     [
-                        'name' => $user->first_name." ".$user->last_name,
+                        'name' => $user->first_name . " " . $user->last_name,
                         'gender' => $user->gender,
                         'user_id' => $user->id,
                         'age' => PinHelper::calculateAge($user->birthday),
@@ -106,7 +119,48 @@ class Pin extends Model
             return (float)($number - $rand);
     }
 
-    public function user()
+    /**
+     * check if user has any active pin
+     * @param $request
+     * @param $user
+     * @return mixed
+     */
+    public function userHasActivePin($request, $user)
+    {
+        $onehour = PinHelper::returnTime('minus-1hour', $request->current_time);
+
+        $activePin = Pin::where('updated_at', '>=', $request->current_time)
+            ->where('updated_at', '<=', $onehour)
+            ->where('user_id', $user->id)
+            ->count();
+
+        return $activePin;
+    }
+
+    /**
+     * always search for locations that are between now and 1 hour back,
+     * So I use this function because it always returns that time between now and 3hours back, and this is for global use
+     * @return $this
+     */
+    public function getPins($request)
+    {
+        $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
+        $distance = Pin::DISTANCE;
+        $onehour = PinHelper::returnTime('minus-1hour', $request->current_time);
+        $pinTable = Pin::getTable();
+
+        $query = Pin::where('updated_at', '>=', '?')
+            ->where('updated_at', '<=', '?')
+            ->with('relationPinTag.relationTag', 'relationUser')
+            ->selectRaw("$pinTable.*, ($km * acos(cos(radians(?)) * cos(radians(`lat`)) * cos(radians(`lng`) - radians(?)) + sin(radians(?)) * sin(radians(`lat`)) )) AS distance")
+            ->setBindings([$request->current_time, $onehour, $request->lat, $request->lng, $request->lat])
+           // ->having("distance <= $distance")
+        ;
+
+        return $query;
+    }
+
+    public function relationUser()
     {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
