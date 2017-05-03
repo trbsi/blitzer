@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class BlockUser extends Model {
+class BlockUser extends Model
+{
 
     /**
      * Generated
@@ -12,11 +13,13 @@ class BlockUser extends Model {
     protected $fillable = ['id', 'who_is_blocked', 'blocked_by'];
 
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(\App\Models\User::class, 'blocked_by', 'id');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(\App\Models\User::class, 'who_is_blocked', 'id');
     }
 

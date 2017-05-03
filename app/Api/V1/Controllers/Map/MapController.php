@@ -3,17 +3,32 @@
 namespace App\Api\V1\Controllers\Map;
 
 use App\Http\Controllers\Controller;
-use App\Models\Helper\PinHelper;
+use Illuminate\Http\Request;
+use App\Models\Pin;
+use App\Models\PinTag;
+use App\Models\User;
+use App\Api\V1\Requests\Map\PinRequest;
 
 class MapController extends Controller
 {
-    public function returnPins($lat, $lng, $current_time)
+    /**
+     * Instantiate a new Controller instance.
+     */
+    public function __construct(Pin $pin, User $user, PinTag $pinTag)
     {
-        $current_time = PinHelper::formatCurrentTime($current_time, true);
+        $this->pin = $pin;
+        $this->user = $user;
+        $this->pinTag = $pinTag;
+        $this->middleware('currentTimeFixer');
+    }
+
+
+    public function pins($lat, $lng, $current_time)
+    {
         $jsonPins = [];
 
         //check if user has any pin published and active within 30min
-        $activePin = PinHelper::userHasActivePin($current_time);
+       // $activePin = PinHelper::userHasActivePin($current_time);
 
         //no pins, return reponse
         if (empty($activePin["within_1_hour"])) {
@@ -59,5 +74,55 @@ class MapController extends Controller
                 'message' => $message,
                 'pins' => $jsonPins,
             ]];
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function addPin(Request $request)
+    {
+        $tags = $this->pin->checkTags($request->tags);
+        if(empty($tags))
+        {
+            return response()
+                ->json([
+                    'status' => false,
+                    'message' =>
+                        [
+                            'body' => trans('core.map.missing_tags_title'),
+                            'title' => trans('core.map.missing_tags_body'),
+                        ],
+                    'showAlert' => true,
+                ]);
+        }
+        
+        $user = $this->user->getAuthenticatedUser();
+        $pin = $this->pin;
+
+        $pin->user_id = $user->id;
+        $pin->post_time = $request->current_time;
+        $pin->lng = $request->lng;
+        $pin->lat = $request->lat;
+        $pin->fill($request->all());
+        if($pin->save())
+        {
+            //save tags
+            foreach($tags as $tag_id => $tag_name)
+            {
+                $tmp = new $this->pinTag;
+                $tmp->pin_id = $pin->id;
+                $tmp->tag_id = $tag_id;
+                $tmp->save();
+            }
+            $status = true;
+        }
+
+        $pin_info = $pin->generateContentForInfoWindow($pin, $user);
+        return response()
+            ->json([
+                'status' => $status,
+                'pin' => $pin_info,
+            ]);
     }
 }

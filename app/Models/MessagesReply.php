@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class MessagesReply extends Model {
+class MessagesReply extends Model
+{
 
     /**
      * Generated
@@ -12,11 +13,13 @@ class MessagesReply extends Model {
     protected $fillable = ['id', 'message_id', 'reply', 'user_id', 'send_date', 'message_type'];
 
 
-    public function message() {
+    public function message()
+    {
         return $this->belongsTo(\App\Models\Message::class, 'message_id', 'id');
     }
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(\App\Models\User::class, 'user_id', 'id');
     }
 

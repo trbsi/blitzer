@@ -2,7 +2,8 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class PasswordReset extends Model {
+class PasswordReset extends Model
+{
 
     /**
      * Generated
@@ -10,7 +11,6 @@ class PasswordReset extends Model {
 
     protected $table = 'password_resets';
     protected $fillable = ['email', 'token'];
-
 
 
 }
