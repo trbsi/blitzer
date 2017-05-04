@@ -149,6 +149,7 @@ class Pin extends Model
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
             ->having("distance", "<=", $distance);
 
+        //if user wants to filter by tag
         if (isset($request->filter_by_tag)) {
             $pinTagTable = new PinTag;
             $pinTagTable = $pinTagTable->getTable();

@@ -8,6 +8,7 @@ use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\User;
 use App\Models\Tag;
+use App;
 
 class MapController extends Controller
 {
@@ -24,7 +25,10 @@ class MapController extends Controller
         $this->middleware('currentTimeFixer');
     }
 
-
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function pins(Request $request)
     {
         $jsonPins = [];
@@ -107,6 +111,10 @@ class MapController extends Controller
             ]);
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function tags(Request $request)
     {
         $tags = [];
