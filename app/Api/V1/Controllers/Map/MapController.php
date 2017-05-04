@@ -49,7 +49,6 @@ class MapController extends Controller
             $jsonPins[] = $this->pin->generateContentForInfoWindow($pin);
         }
 
-
         return response()
             ->json([
                 'showAlert' => $showAlert,
@@ -57,7 +56,6 @@ class MapController extends Controller
                 'message' => $message,
                 'pins' => $jsonPins
             ]);
-
     }
 
     /**

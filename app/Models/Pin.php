@@ -11,14 +11,6 @@ class Pin extends Model
     const MEAUREMENT = 'miles';
     const DISTANCE = 20;
 
-    protected $distance;
-
-    public function getDistanceAttribute()
-    {
-        return $this->attributes['distance'];
-    }
-
-
     /**
      * Generated
      */
@@ -26,8 +18,6 @@ class Pin extends Model
     protected $table = 'pins';
     public $timestamps = false;
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
-    protected $attributes = ['distance' => 0];
-    protected $appends = ['distance'];
 
     /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
@@ -156,8 +146,7 @@ class Pin extends Model
             ->with('relationPinTag.relationTag', 'relationUser')
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
-            ->having("distance", "<=", $distance)
-            ;
+            ->having("distance", "<=", $distance);
 
         return $query;
     }
