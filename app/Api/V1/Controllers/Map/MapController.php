@@ -7,17 +7,19 @@ use Illuminate\Http\Request;
 use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\User;
+use App\Models\Tag;
 
 class MapController extends Controller
 {
     /**
      * Instantiate a new Controller instance.
      */
-    public function __construct(Pin $pin, User $user, PinTag $pinTag)
+    public function __construct(Pin $pin, User $user, PinTag $pinTag, Tag $tag)
     {
         $this->pin = $pin;
         $this->user = $user;
         $this->pinTag = $pinTag;
+        $this->tag = $tag;
         $this->authUser = $this->user->getAuthenticatedUser();
         $this->middleware('currentTimeFixer');
     }
@@ -62,7 +64,7 @@ class MapController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function addPin(Request $request)
+    public function pinAdd(Request $request)
     {
         $tags = $this->pin->checkTags($request->tags);
         if (empty($tags)) {
@@ -104,4 +106,17 @@ class MapController extends Controller
                 'pin' => $pin_info,
             ]);
     }
+
+    public function tags(Request $request)
+    {
+        $tags = [];
+        if(!empty($request->tag))
+        {
+            $tags = $this->tag->filterByTags($request);
+        }
+
+        return response()
+            ->json($tags);
+    }
+
 }

@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Tag extends Model
 {
@@ -13,6 +14,15 @@ class Tag extends Model
     public $timestamps = false;
     protected $fillable = ['id', 'tag', 'popularity'];
 
+    /**
+     * @param $request
+     * @return mixed
+     */
+    public function filterByTags($request)
+    {
+        $tagTable = Tag::getTable();
+        return DB::select("SELECT * FROM $tagTable WHERE MATCH(tag) AGAINST(? IN BOOLEAN MODE)", ["$request->tag*"]);
+    }
 
     public function locations()
     {
