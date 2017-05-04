@@ -87,10 +87,16 @@ class MapController extends Controller
         $user = $this->authUser;
         $pin = $this->pin;
 
+        $comment = $request->comment;
+        if (strlen($comment) > Pin::COMMENT_LENGTH) {
+            $comment = substr($comment, 0, Pin::COMMENT_LENGTH);
+        }
+
         $pin->user_id = $user->id;
         $pin->publish_time = $pin->updated_at = $request->current_time;
         $pin->lng = $request->lng;
         $pin->lat = $request->lat;
+        $pin->comment = $comment;
         $pin->fill($request->all());
         if ($pin->save()) {
             //save tags
@@ -118,8 +124,7 @@ class MapController extends Controller
     public function tags(Request $request)
     {
         $tags = [];
-        if(!empty($request->tag))
-        {
+        if (!empty($request->tag)) {
             $tags = $this->tag->filterByTags($request);
         }
 
