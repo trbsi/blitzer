@@ -1,6 +1,7 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pin;
 
 class Message extends Model
 {
@@ -12,7 +13,14 @@ class Message extends Model
     protected $table = 'messages';
     protected $fillable = ['id', 'pin_id', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
 
-    public function findMessageById($id, $authUser, $user_id, $pin_id)
+    /**
+     * @param $id
+     * @param $authUser
+     * @param $user_id
+     * @param $pin_id
+     * @return mixed
+     */
+    public function findMessageByIdOrCreate($id, $authUser, $user_id, $pin_id)
     {
         return Message::firstOrCreate(
             ['id' => $id],
@@ -22,6 +30,23 @@ class Message extends Model
                 'user_two' => $authUser->id,
             ]
         );
+    }
+
+    /**
+     * @param $pin_id
+     * @param $authUser
+     * @return mixed
+     */
+    public function findByPinid($pin_id, $authUser)
+    {
+        $msgTable = Message::getTable();
+        $pinTable = (new Pin)->getTable();
+        return Pin::where("$pinTable.id", '=', $pin_id)
+            ->whereRaw("(user_one = $authUser->id OR user_two = $authUser->id) AND (user_one = $pinTable.user_id OR user_two = $pinTable.user_id)")
+            ->join($msgTable, "$msgTable.pin_id", "=", "$pinTable.id", 'inner')
+            ->select("$msgTable.*")
+            ->first()
+            ;
     }
 
     public function location()

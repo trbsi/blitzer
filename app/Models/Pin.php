@@ -177,7 +177,7 @@ class Pin extends Model
         return $this->hasMany(\App\Models\PinTag::class, 'pin_id', 'id');
     }
 
-    public function messages()
+    public function relationMessage()
     {
         return $this->hasMany(\App\Models\Message::class, 'pin_id', 'id');
     }
