@@ -10,6 +10,7 @@ class MessagesReply extends Model
      */
 
     protected $table = 'messages_reply';
+    public $timestamps = false;
     protected $fillable = ['id', 'message_id', 'reply', 'user_id', 'send_date', 'message_type'];
 
 

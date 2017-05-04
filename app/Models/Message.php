@@ -10,20 +10,31 @@ class Message extends Model
      */
 
     protected $table = 'messages';
-    protected $fillable = ['id', 'location_id', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'last_updated', 'date_modified'];
+    protected $fillable = ['id', 'pin_id', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
 
+    public function findMessageById($id, $authUser, $user_id, $pin_id)
+    {
+        return Message::firstOrCreate(
+            ['id' => $id],
+            [
+                'pin_id' => $pin_id,
+                'user_one' => $user_id,
+                'user_two' => $authUser->id,
+            ]
+        );
+    }
 
     public function location()
     {
-        return $this->belongsTo(\App\Models\Location::class, 'location_id', 'id');
+        return $this->belongsTo(\App\Models\Location::class, 'pin_id', 'id');
     }
 
-    public function user()
+    public function userOne()
     {
         return $this->belongsTo(\App\Models\User::class, 'user_one', 'id');
     }
 
-    public function user()
+    public function userTwo()
     {
         return $this->belongsTo(\App\Models\User::class, 'user_two', 'id');
     }

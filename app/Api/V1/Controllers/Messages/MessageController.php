@@ -4,144 +4,107 @@ namespace App\Api\V1\Controllers\Messages;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Message;
+use App\Models\MessagesReply;
+use App\Models\Helper\Helper;
 
 class MessageController extends Controller
 {
+    public function __construct(User $user, Message $message, MessagesReply $messageReply)
+    {
+        $this->user = $user;
+        $this->message = $message;
+        $this->messageReply = $messageReply;
+        $this->authUser = $this->user->getAuthenticatedUser();
+        $this->middleware('currentTimeFixer');
+    }
+
     public function send(Request $request)
     {
-        if (isset($_POST["IDmessage"]) && isset($_POST["reply"]) && !empty($_POST["IDmessage"])) {
-            $current_time = Api::formatCurrentTime($current_time, $strtotime = true);
-            $IDmessage = (int)$_POST["IDmessage"];
-            $reply = $_POST["reply"];
-            $IDuser = Yii::$app->user->getId();
+        if (isset($request->reply) && isset($request->user_id) && isset($request->pin_id)) {
+            $message_id = (int)$request->message_id; //may be null or 0
+            $reply = $request->reply;
+            $authUser = $this->authUser;
+            $user_id = $request->user_id; //id of a user whose pin it is
+            $pin_id = $request->pin_id;
 
-            $messagesTable = Messages::tableName();
-            $locationsTable = Locations::tableName();
-            $Messages = $this->findViewModel($IDmessage, $current_time);
-            if ($Messages == false) {
-                //delete cached data so new data is recached
-                Helpers::deleteCache(Api::CACHE_MESSAGES_INBOX, $IDuser);
-                return [["message" => Yii::t("app", "This conversation doesnt exist"), "success" => false, "showAlert" => true]];
-            }
-
-            //if user wants to share his location
-            /*$share_location=false;
-            if(isset($_GET["share_location"]) && isset($_GET["lng"]) && isset($_GET["lat"]))
-                $share_location=true;
-
-            if($share_location==true)
-            {
-
-                //get username of a user who shared location
-                if($Messages->user_one==$IDuser)
-                {
-                    $username=$Messages->relationUserOne->username;
-                    $gender=$Messages->relationUserOne->relationUserInformation->gender;
-                }
-                else
-                {
-                    $username=$Messages->relationUserTwo->username;
-                    $gender=$Messages->relationUserTwo->relationUserInformation->gender;
-                }
-
-                if($gender==UserInformation::GENDER_X)
-                    $userShared = Yii::t("app", "User has shared his location");
-                else
-                    $userShared = Yii::t("app", "User has shared hers location");
-
-                $lat=$_GET["lat"];
-                $lng=$_GET["lng"];
-                $reply=$username." ".$userShared;
-                $location=$lat.",".$lng;
-            }*/
 
             //if reply is still empty, show warning
-            if (empty($reply))
-                return [["message" => Yii::t("app", "Type in a message before hitting Send"), "success" => false, "showAlert" => true]];
+            if (empty($reply)) {
+                return response()
+                    ->json([
+                        'status' => false,
+                        'message' =>
+                            [
+                                'body' => trans('core.message.no_reply_body'),
+                                'title' => trans('core.message.no_reply_title'),
+                            ],
+                        'showAlert' => true,
+                    ]);
+            }
+            $Message = $this->message->findMessageById($message_id, $authUser, $user_id, $pin_id);
 
             //set as unread
-            if ($Messages->user_one == $IDuser) {
-                $sendNotificationToThisUser = $Messages->user_two; //to who to send notification about new message
-                $Messages->user_two_read = 0;
-                $Messages->user_one_read = 1;
-                $blocked_by_user = $Messages->user_two;
-
-                //if user wants to share his location
-                /*if($share_location==true)
-                    $Messages->user_one_location=$location;*/
+            if ($Message->user_one == $authUser->id) {
+                $sendNotificationToThisUser = $Message->user_two; //to who to send notification about new message
+                $Message->user_two_read = 0;
+                $Message->user_one_read = 1;
             } else {
-                $sendNotificationToThisUser = $Messages->user_one; //to who to send notification about new message
-                $Messages->user_one_read = 0;
-                $Messages->user_two_read = 1;
-                $blocked_by_user = $Messages->user_one;
-
-                //if user wants to share his location
-                /*if($share_location==true)
-                    $Messages->user_two_location=$location;*/
+                $sendNotificationToThisUser = $Message->user_one; //to who to send notification about new message
+                $Message->user_two_read = 1;
+                $Message->user_one_read = 0;
             }
+            $Message->update();
 
-            //I want to send a message to another user, check if I'm blocked by another user
-            $blocked_by = ApiUser::whoIsBlocked($IDuser);
-            if (in_array($blocked_by_user, $blocked_by)) {
-                return [["message" => Yii::t("app", "You cannot send a message to this user anymore"), "success" => false, "showAlert" => true]];
-            }
-
-            $Messages->last_updated = $current_time;
-            $Messages->update();
-
-            $MessagesReply = new MessagesReply;
-            $MessagesReply->IDmessage = $IDmessage;
+            $MessagesReply = $this->messageReply;
+            $MessagesReply->message_id = $Message->id;
             $MessagesReply->reply = $reply;
-            $MessagesReply->IDuser = $IDuser; //user who sent message. (ME)
-            $MessagesReply->send_date = $current_time;
-            //user shared location, mark that in database
-            /*if($share_location==true)
-                $MessagesReply->message_type=MessagesReply::MESSAGE_TYPE_SHARE_LOCATION;*/
+            $MessagesReply->user_id = $authUser->id; //user who sent message. (authenitacted user)
+            $MessagesReply->send_date = $request->current_time;
+
 
             if ($MessagesReply->save()) {
                 $MessagesReplyArray =
                     [
                         "reply" => $MessagesReply->reply,
-                        "IDmessage" => (int)$MessagesReply->IDmessage,
-                        "IDreply" => (int)$MessagesReply->ID,
-                        "send_date" => Helpers::formatDate($MessagesReply->send_date),
-                        "IDuser" => (int)$MessagesReply->IDuser,
-                        "shareLocation" => false,
-                        "username" => $MessagesReply->relationIDuser->username
+                        "message_id" => (int)$MessagesReply->message_id,
+                        "reply_id" => (int)$MessagesReply->id,
+                        "send_date" => Helper::formatDate($MessagesReply->send_date),
+                        "user_id" => (int)$MessagesReply->user_id,
+                        "user_name" => $authUser->first_name . " " . $authUser->last_name
                     ];
 
                 //trigger PubNub event
-                $success = ApiEvents::triggerMessageEvent($MessagesReplyArray, $IDuser);
+                //$success = ApiEvents::triggerMessageEvent($MessagesReplyArray, $IDuser);
                 //trigger message notification. Send notification to another suer
-                $success = ApiNotifications::triggerMessageNotification($Messages->relationIDlocation, $sendNotificationToThisUser, $MessagesReply, $current_time);
+                // $success = ApiNotifications::triggerMessageNotification($Messages->relationIDlocation, $sendNotificationToThisUser, $MessagesReply, $current_time);
 
-                /*if($share_location==true)
-                {
-                    //trigger event
-                    $args=
-                    [
-                        "IDuser"=>$IDuser,
-                        "IDlocation"=>$Messages->IDlocation,
-                    ];
-                    Event::fire("realLocationShared", $args);
-                }*/
                 //phone is expecting some kind of json response
-                return
-                    [[
+                return response()
+                    ->json([
                         "message" => false,
                         "success" => true,
                         "showAlert" => false,
                         "reply" => $MessagesReplyArray["reply"],
                         "send_date" => $MessagesReplyArray["send_date"],
-                        "IDuser" => $MessagesReplyArray["IDuser"],
-                        "shareLocation" => $MessagesReplyArray["shareLocation"],
-                        "username" => $MessagesReplyArray["username"],
-                        "IDreply" => $MessagesReplyArray["IDreply"],
-                    ]];
-            } else
-                return [["message" => Yii::t("app", "Something went wrong. Try again."), "success" => false, "showAlert" => true]];
-        } else
-            return [["message" => Yii::t("app", "Something went wrong. Try again."), "success" => false, "showAlert" => true]];
+                        "user_id" => $MessagesReplyArray["user_id"],
+                        "user_name" => $MessagesReplyArray["user_name"],
+                        "reply_id" => $MessagesReplyArray["reply_id"],
+                    ]);
+            }
+        } else {
+            return response()
+                ->json([
+                    'status' => false,
+                    'message' =>
+                        [
+                            'body' => trans('core.general.smth_went_wront_body'),
+                            'title' => trans('core.general.smth_went_wront_title'),
+                        ],
+                    'showAlert' => true,
+                ]);
+        }
     }
 
 
