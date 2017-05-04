@@ -3,6 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Tag;
+use App\Models\PinTag;
 use App\Models\Helper\PinHelper;
 
 class Pin extends Model
@@ -148,6 +149,14 @@ class Pin extends Model
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
             ->having("distance", "<=", $distance);
 
+        if (isset($request->filter_by_tag)) {
+            $pinTagTable = new PinTag;
+            $pinTagTable = $pinTagTable->getTable();
+
+            $query
+                ->where("tag_id", "=", $request->filter_by_tag)
+                ->join($pinTagTable, "$pinTable.id", "=", "$pinTagTable.pin_id", 'inner');
+        }
         return $query;
     }
 
