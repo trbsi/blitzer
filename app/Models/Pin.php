@@ -129,8 +129,6 @@ class Pin extends Model
     }
 
     /**
-     * always search for locations that are between now and 1 hour back,
-     * So I use this function because it always returns that time between now and 3hours back, and this is for global use
      * @return $this
      */
     public function getPins($request)

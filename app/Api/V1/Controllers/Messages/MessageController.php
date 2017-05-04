@@ -59,6 +59,7 @@ class MessageController extends Controller
                 $Message->user_two_read = 1;
                 $Message->user_one_read = 0;
             }
+            $Message->updated_at = $request->current_time;
             $Message->update();
 
             $MessagesReply = $this->messageReply;
@@ -110,7 +111,7 @@ class MessageController extends Controller
                 ]);
         }
     }
-    
+
     /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
