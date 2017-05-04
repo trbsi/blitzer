@@ -18,10 +18,7 @@ class Pin extends Model
         return $this->attributes['distance'];
     }
 
-    /* public function setDistanceAttribute($value)
-     {
-         $this->distance = $value;
-     }*/
+
     /**
      * Generated
      */
@@ -157,8 +154,10 @@ class Pin extends Model
         $query = Pin::where('updated_at', '>=', $onehour)
             ->where('updated_at', '<=', $current_time)
             ->with('relationPinTag.relationTag', 'relationUser')
-            ->selectRaw("$pinTable.*, ($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
-            ->having("distance <= $distance");
+            ->select("$pinTable.*")
+            ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
+            ->having("distance", "<=", $distance)
+            ;
 
         return $query;
     }

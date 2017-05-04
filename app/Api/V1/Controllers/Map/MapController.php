@@ -42,25 +42,14 @@ class MapController extends Controller
             ];
         }
 
-        $pins = $this->pin->getPins($request)->get()->toArray();
-        dd($pins); die();
+        $pins = $this->pin->getPins($request)->get();
 
         //return json data
         foreach ($pins as $key => $pin) {
             $jsonPins[] = $this->pin->generateContentForInfoWindow($pin);
         }
-dd($jsonPins); die();
-        //return $this->render('@app/modules/api/views/layouts/main');
-        //if number of elements in array is == 1 that means there is only user's pin, because script can't get here if user didn't publish a pin
-        //$jsonPins can be empty because there are no pins, because user's pin can expire after 30 min, so it's active but not visible on the map
-        if (count($jsonPins) == 1 || empty($jsonPins)) {
-            $minutesLeft = ApiLocation::minutesLeftForActivePin($activePin, $current_time);
-            $message = Yii::t("app", "No pins on the map", ['0' => $minutesLeft]);
-            $showAlert = true;
-        } else {
-            $message = NULL;
-            $showAlert = false;
-        }
+
+
         return response()
             ->json([
                 'showAlert' => $showAlert,
