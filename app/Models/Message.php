@@ -84,15 +84,15 @@ class Message extends Model
 
         $relationUser = $MessagesReply->relationUser;
         // Message payload
-        $data = 
-        [
+        $data =
+            [
             'title'      => $relationUser->first_name . " " . $relationUser->last_name, //user who sent message (ME)
             'body'       => $body,
             'sound'      => "message.wav",
             'event'      => 'message', //so you can redirect users to messages screen, directly to that message
-            'message_id' => (int)$MessagesReply->message_id, //so you can redirect users to a specific conversation
-            'user_id'    => (int)$MessagesReply->user_id, //id of a user who sent a message
-            'pin_id'     => (int)$Message->pin_id,
+            'message_id' => (int) $MessagesReply->message_id, //so you can redirect users to a specific conversation
+            'user_id'    => (int) $MessagesReply->user_id, //id of a user who sent a message
+            'pin_id'     => (int) $Message->pin_id,
             'badge'      => 1,
         ];
 

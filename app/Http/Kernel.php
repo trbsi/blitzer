@@ -58,8 +58,9 @@ class Kernel extends HttpKernel
         'jwt.auth' => GetUserFromToken::class,
         'jwt.refresh' => RefreshToken::class,
 
-
+        //My middlewares
         'currentTimeFixer' => \App\Http\Middleware\CurrentTimeFixer::class,
+        'apiDebugbar' => \App\Http\Middleware\DebugDingoHttpResponse::class,
 
     ];
 }

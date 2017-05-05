@@ -180,10 +180,13 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
-
+        //CRUD and Model generators
         'Way\Generators\GeneratorsServiceProvider',
         'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
         'User11001\EloquentModelGenerator\EloquentModelGeneratorProvider',
+
+        //DEBUG bar
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -232,7 +235,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
         /*
          * Package Facades...
          */

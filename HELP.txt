@@ -1,2 +1,5 @@
 check if app is live or local
 http://laravel-recipes.com/recipes/1/checking-your-environment
+
+debug bar for API
+https://github.com/barryvdh/laravel-debugbar/issues/252
