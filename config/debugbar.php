@@ -12,7 +12,7 @@ return [
      |
      */
 
-    'enabled' => null,
+    'enabled' => true,
 
     /*
      |--------------------------------------------------------------------------
@@ -138,7 +138,7 @@ return [
             'label' => true  // show complete route on bar
         ],
         'logs' => [
-            'file' => null
+            'file' => true
         ],
     ],
 

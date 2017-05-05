@@ -60,7 +60,6 @@ class Kernel extends HttpKernel
 
         //My middlewares
         'currentTimeFixer' => \App\Http\Middleware\CurrentTimeFixer::class,
-        'apiDebugbar' => \App\Http\Middleware\DebugDingoHttpResponse::class,
 
     ];
 }
