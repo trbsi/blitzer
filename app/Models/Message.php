@@ -1,12 +1,12 @@
-<?php 
+<?php
 
 namespace App\Models;
 
 use App\Models\Helper\PubNubHelper;
+use App\Models\Helper\SendPushNotification;
 use App\Models\Pin;
 use Illuminate\Database\Eloquent\Model;
 use Pubnub\Pubnub;
-use App\Models\Helper\SendPushNotification;
 
 class Message extends Model
 {
@@ -66,15 +66,7 @@ class Message extends Model
         $pubnub         = PubNubHelper::initPubNub($user_id);
         $pubnub_channel = PubNubHelper::PUBNUB_CHANNEL_MSG . $data["message_id"];
         //publish message
-        $pubnubResult = $pubnub->publish($pubnub_channel, $data);
-
-        if ($pubnubResult[0] == 1) {
-            $return = true;
-        } else {
-            $return = false;
-        }
-
-        return $return;
+        $pubnub->publish($pubnub_channel, $data);
     }
 
     /**
@@ -85,30 +77,27 @@ class Message extends Model
      * @param $current_time - taken from $_GET["current_time"]
      * @return bool
      */
-    public function triggerMessageNotification($Pin, $user_id, $MessagesReply, $current_time)
+    public function triggerMessageNotification($Message, $user_id, $MessagesReply)
     {
-        $return = false;
-
         //check for all unread messages
-        $body  = (strlen($MessagesReply->reply) > 140) ? substr($MessagesReply->reply, 0, 140) : $MessagesReply->reply;
+        $body = (strlen($MessagesReply->reply) > 140) ? substr($MessagesReply->reply, 0, 140) : $MessagesReply->reply;
 
         $relationUser = $MessagesReply->relationUser;
         // Message payload
-        $data =
+        $data = 
         [
             'title'      => $relationUser->first_name . " " . $relationUser->last_name, //user who sent message (ME)
             'body'       => $body,
             'sound'      => "message.wav",
             'event'      => 'message', //so you can redirect users to messages screen, directly to that message
-            'message_id' => $MessagesReply->message_id, //so you can redirect users to a specific conversation
-            'user_id'    => $MessagesReply->user_id, //id of a user who sent a message
+            'message_id' => (int)$MessagesReply->message_id, //so you can redirect users to a specific conversation
+            'user_id'    => (int)$MessagesReply->user_id, //id of a user who sent a message
+            'pin_id'     => (int)$Message->pin_id,
+            'badge'      => 1,
         ];
 
         //send notification to a user
-        $return = SendPushNotification::sendNotification($user_id, $data);
-
-        return $return;
-
+        SendPushNotification::sendNotification($user_id, $data);
     }
 
     public function relationPin()

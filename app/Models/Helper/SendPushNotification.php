@@ -3,8 +3,9 @@
 namespace App\Models\Helper;
 
 use App\Models\PushNotificationsToken;
+use App;
 
-class SendPushNotifications
+class SendPushNotification
 {
 
     //------------CHANGED-------------------
@@ -122,44 +123,44 @@ class SendPushNotifications
 
         if (!$result) {
             return false;
-        }
-        //return 'Message not delivered' . PHP_EOL;
-        else {
+        } else {
             return true;
         }
-        //return 'Message successfully delivered' . PHP_EOL;
 
     }
 
     // Sends Push's toast notification for Windows Phone 8 users
-    /*public static function WP($data, $uri) {
-    $delay = 2;
-    $msg =  "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
-    "<wp:Notification xmlns:wp=\"WPNotification\">" .
-    "<wp:Toast>" .
-    "<wp:Text1>".htmlspecialchars($data['mtitle'])."</wp:Text1>" .
-    "<wp:Text2>".htmlspecialchars($data['mdesc'])."</wp:Text2>" .
-    "</wp:Toast>" .
-    "</wp:Notification>";
+    /*public static function WP($data, $uri)
+    {
+        $delay = 2;
+        $msg   = "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+        "<wp:Notification xmlns:wp=\"WPNotification\">" .
+        "<wp:Toast>" .
+        "<wp:Text1>" . htmlspecialchars($data['mtitle']) . "</wp:Text1>" .
+        "<wp:Text2>" . htmlspecialchars($data['mdesc']) . "</wp:Text2>" .
+            "</wp:Toast>" .
+            "</wp:Notification>";
 
-    $sendedheaders =  array(
-    'Content-Type: text/xml',
-    'Accept: application/*',
-    'X-WindowsPhone-Target: toast',
-    "X-NotificationClass: $delay"
-    );
+        $sendedheaders = array(
+            'Content-Type: text/xml',
+            'Accept: application/*',
+            'X-WindowsPhone-Target: toast',
+            "X-NotificationClass: $delay",
+        );
 
-    $response = self::useCurl($uri, $sendedheaders, $msg);
+        $response = self::useCurl($uri, $sendedheaders, $msg);
 
-    $result = array();
-    foreach(explode("\n", $response) as $line) {
-    $tab = explode(":", $line, 2);
-    if (count($tab) == 2)
-    $result[$tab[0]] = trim($tab[1]);
-    }
+        $result = array();
+        foreach (explode("\n", $response) as $line) {
+            $tab = explode(":", $line, 2);
+            if (count($tab) == 2) {
+                $result[$tab[0]] = trim($tab[1]);
+            }
 
-    return $result;
-    }   */
+        }
+
+        return $result;
+    }*/
 
     /**
      * CURL to other servers (Apple or Google)
@@ -206,7 +207,7 @@ class SendPushNotifications
      */
     public static function sendNotification($user_id, $data)
     {
-        $tokens    = SendPushNotifications::getNotificationTokens($user_id);
+        $tokens    = PushNotificationsToken::getNotificationTokens($user_id);
         $return    = true;
         $iOStokens = $Androidtokens = [];
         foreach ($tokens as $token) {
@@ -222,26 +223,16 @@ class SendPushNotifications
 
         //only send notifications if there are tokens
         if (!empty($iOStokens)) {
-            $return = SendPushNotifications::iOS($data, $iOStokens);
+            SendPushNotification::iOS($data, $iOStokens);
         }
 
         //send android notifications
         /*if (!empty($Androidtokens)) {
-            $return = SendPushNotifications::android($data, $Androidtokens);
+        $return = SendPushNotification::android($data, $Androidtokens);
         }*/
 
-        return $return;
     }
 
-    /**
-     * get push tokens of a user so you can send notification to him
-     * @param $user_id - ID of a user
-     * @return PushNotificationsToken[]|array
-     */
-    public static function getNotificationTokens($user_id)
-    {
-        //you have to order it by date_modified becuse there was a case when I had 4 tokens and some were old and when I tried to send notification to those tokens it succeeded but user didn't receive it because it expired and notification wasn't sent to newest token
-        return PushNotificationsToken::where('user_id', $user_id)->orderBy("date_modified", "DESC")->get();
-    }
+
 
 }

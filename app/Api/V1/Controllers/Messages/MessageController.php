@@ -81,9 +81,9 @@ class MessageController extends Controller
                     "send_date"  => Helper::formatDate($MessagesReply->send_date),
                     "user_id"    => (int) $MessagesReply->user_id,
                     "user_name"  => $authUser->first_name . " " . $authUser->last_name,
+                    "badge"      => 1,
+                    "pin_id"     => (int)$pin_id
                 ];
-
-                return response()->json($MessagesReplyArray);
 
                 //trigger PubNub event
                 $this->message->triggerMessageEvent($MessagesReplyArray, $authUser->id);
@@ -91,10 +91,9 @@ class MessageController extends Controller
                 //trigger message notification. Send notification to another suer
                 $this->message->triggerMessageNotification
                 (
-                    $Message->relationPin,
+                    $Message,
                     $sendNotificationToThisUser,
-                    $MessagesReply,
-                    $request->current_time
+                    $MessagesReply
                 );
 
                 //phone is expecting some kind of json response
