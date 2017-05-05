@@ -9,6 +9,7 @@ class PinHelper
 {
     const ONE_HOUR_BACK = 1;
     const MINUTES_BACK_30 = 30;
+    const REDIS_PINS_TO_UPDATE_TIME = "pinsToUpdateTime";
 
     /**
      * I'm getting current time from mobile in format Y-m-d_H:i:s, so you have to explode "_" and return date

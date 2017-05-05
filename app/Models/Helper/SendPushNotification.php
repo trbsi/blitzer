@@ -2,7 +2,9 @@
 
 namespace App\Models\Helper;
 
-class PushNotifications
+use App\Models\PushNotificationsToken;
+
+class SendPushNotifications
 {
 
     //------------CHANGED-------------------
@@ -22,24 +24,24 @@ class PushNotifications
      */
     public function android($data, $reg_id)
     {
-        $url = 'https://android.googleapis.com/gcm/send';
+        $url     = 'https://android.googleapis.com/gcm/send';
         $message = array(
-            'title' => $data['title'],
-            'message' => $data['body'],
-            'subtitle' => '',
+            'title'      => $data['title'],
+            'message'    => $data['body'],
+            'subtitle'   => '',
             'tickerText' => '',
-            'msgcnt' => 1,
-            'vibrate' => 1
+            'msgcnt'     => 1,
+            'vibrate'    => 1,
         );
 
         $headers = array(
             'Authorization: key=' . self::$API_ACCESS_KEY,
-            'Content-Type: application/json'
+            'Content-Type: application/json',
         );
 
         $fields = array(
             'registration_ids' => $reg_id,
-            'data' => $message,
+            'data'             => $message,
         );
 
         return self::useCurl($url, $headers, json_encode($fields));
@@ -57,10 +59,10 @@ class PushNotifications
         //------------CHANGED-------------------
         if (App::isLocal()) {
             $applePushGateway = "ssl://gateway.sandbox.push.apple.com:2195";
-            $ckpem = "ios_sandbox.pem";
+            $ckpem            = "ios_sandbox.pem";
         } else {
             $applePushGateway = "ssl://gateway.push.apple.com:2195";
-            $ckpem = "ios_production.pem";
+            $ckpem            = "ios_production.pem";
         }
         //------------CHANGED-------------------
 
@@ -83,21 +85,23 @@ class PushNotifications
         // Create the payload body
         $body['aps'] =
             [
-                'alert' =>
-                    [
-                        'title' => $data['title'],
-                        'body' => $data['body'],
-                    ],
-                'sound' => $data['sound'], //"message.wav"
-            ];
+            'alert' =>
+            [
+                'title' => $data['title'],
+                'body'  => $data['body'],
+            ],
+            'sound' => $data['sound'], //"message.wav"
+        ];
 
         //only if badge is set, send it
-        if (isset($data['badge']))
-            $body['aps']['badge'] = (int)$data['badge'];
+        if (isset($data['badge'])) {
+            $body['aps']['badge'] = (int) $data['badge'];
+        }
 
         //this is used so you know which pin to open
-        if (isset($data["pin_id"]))
-            $body["pin_id"] = (int)$data["pin_id"];
+        if (isset($data["pin_id"])) {
+            $body["pin_id"] = (int) $data["pin_id"];
+        }
 
         //------------CHANGED-------------------
 
@@ -116,43 +120,46 @@ class PushNotifications
         // Close the connection to the server
         fclose($fp);
 
-        if (!$result)
-            return false; //return 'Message not delivered' . PHP_EOL;
-        else
-            return true; //return 'Message successfully delivered' . PHP_EOL;
+        if (!$result) {
+            return false;
+        }
+        //return 'Message not delivered' . PHP_EOL;
+        else {
+            return true;
+        }
+        //return 'Message successfully delivered' . PHP_EOL;
 
     }
 
     // Sends Push's toast notification for Windows Phone 8 users
     /*public static function WP($data, $uri) {
-        $delay = 2;
-        $msg =  "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
-                "<wp:Notification xmlns:wp=\"WPNotification\">" .
-                    "<wp:Toast>" .
-                        "<wp:Text1>".htmlspecialchars($data['mtitle'])."</wp:Text1>" .
-                        "<wp:Text2>".htmlspecialchars($data['mdesc'])."</wp:Text2>" .
-                    "</wp:Toast>" .
-                "</wp:Notification>";
+    $delay = 2;
+    $msg =  "<?xml version=\"1.0\" encoding=\"utf-8\"?>" .
+    "<wp:Notification xmlns:wp=\"WPNotification\">" .
+    "<wp:Toast>" .
+    "<wp:Text1>".htmlspecialchars($data['mtitle'])."</wp:Text1>" .
+    "<wp:Text2>".htmlspecialchars($data['mdesc'])."</wp:Text2>" .
+    "</wp:Toast>" .
+    "</wp:Notification>";
 
-        $sendedheaders =  array(
-            'Content-Type: text/xml',
-            'Accept: application/*',
-            'X-WindowsPhone-Target: toast',
-            "X-NotificationClass: $delay"
-        );
+    $sendedheaders =  array(
+    'Content-Type: text/xml',
+    'Accept: application/*',
+    'X-WindowsPhone-Target: toast',
+    "X-NotificationClass: $delay"
+    );
 
-        $response = self::useCurl($uri, $sendedheaders, $msg);
+    $response = self::useCurl($uri, $sendedheaders, $msg);
 
-        $result = array();
-        foreach(explode("\n", $response) as $line) {
-            $tab = explode(":", $line, 2);
-            if (count($tab) == 2)
-                $result[$tab[0]] = trim($tab[1]);
-        }
+    $result = array();
+    foreach(explode("\n", $response) as $line) {
+    $tab = explode(":", $line, 2);
+    if (count($tab) == 2)
+    $result[$tab[0]] = trim($tab[1]);
+    }
 
-        return $result;
+    return $result;
     }   */
-
 
     /**
      * CURL to other servers (Apple or Google)
@@ -180,7 +187,7 @@ class PushNotifications
 
             // Execute post
             $result = curl_exec($ch);
-            if ($result === FALSE) {
+            if ($result === false) {
                 die('Curl failed: ' . curl_error($ch));
             }
 
@@ -189,6 +196,52 @@ class PushNotifications
 
             return $result;
         }
+    }
+
+    /**
+     * send notification to a user
+     * @param $user_id - id of a user from users
+     * @param $data - notification payload
+     * @return bool
+     */
+    public static function sendNotification($user_id, $data)
+    {
+        $tokens    = SendPushNotifications::getNotificationTokens($user_id);
+        $return    = true;
+        $iOStokens = $Androidtokens = [];
+        foreach ($tokens as $token) {
+            /*if (!empty($token->token) && $token->device == "android") {
+            $Androidtokens[] = $token->token;
+            }*/
+
+            if (!empty($token->token) && $token->device == "ios") {
+                $iOStokens[] = $token->token;
+            }
+
+        }
+
+        //only send notifications if there are tokens
+        if (!empty($iOStokens)) {
+            $return = SendPushNotifications::iOS($data, $iOStokens);
+        }
+
+        //send android notifications
+        /*if (!empty($Androidtokens)) {
+            $return = SendPushNotifications::android($data, $Androidtokens);
+        }*/
+
+        return $return;
+    }
+
+    /**
+     * get push tokens of a user so you can send notification to him
+     * @param $user_id - ID of a user
+     * @return PushNotificationsToken[]|array
+     */
+    public static function getNotificationTokens($user_id)
+    {
+        //you have to order it by date_modified becuse there was a case when I had 4 tokens and some were old and when I tried to send notification to those tokens it succeeded but user didn't receive it because it expired and notification wasn't sent to newest token
+        return PushNotificationsToken::where('user_id', $user_id)->orderBy("date_modified", "DESC")->get();
     }
 
 }

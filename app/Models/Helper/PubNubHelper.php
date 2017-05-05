@@ -6,6 +6,8 @@ use Pubnub\Pubnub;
 
 class PubNubHelper
 {
+    const PUBNUB_CHANNEL_MSG = "pubnub_channel_msg_";
+
     /**
      * initialize pubnub
      * @param $IDuser

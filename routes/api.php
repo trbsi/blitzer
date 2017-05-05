@@ -19,7 +19,7 @@ $api->version('v1', function (Router $api) {
         $api->group(['prefix' => 'map'], function(Router $api) {
             $api->get('pins/{lat}/{lng}/{current_time}', 'App\Api\V1\Controllers\Map\MapController@pins');
             $api->get('tags', 'App\Api\V1\Controllers\Map\MapController@tags');
-            $api->post('pins/{lat}/{lng}/{current_time}', 'App\Api\V1\Controllers\Map\MapController@pinAdd');
+            $api->post('pins/{lat}/{lng}/{current_time}', 'App\Api\V1\Controllers\Map\MapController@pinPublish');
         });
 
         $api->group(['prefix' => 'msg'], function(Router $api) {

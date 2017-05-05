@@ -8,6 +8,7 @@ use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\User;
 use App\Models\Tag;
+use Illuminate\Support\Facades\Redis;
 use App;
 
 class MapController extends Controller
@@ -68,7 +69,7 @@ class MapController extends Controller
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      */
-    public function pinAdd(Request $request)
+    public function pinPublish(Request $request)
     {
         $tags = $this->pin->checkTags($request->tags);
         if (empty($tags)) {
@@ -99,6 +100,8 @@ class MapController extends Controller
         $pin->comment = $comment;
         $pin->fill($request->all());
         if ($pin->save()) {
+            //save in redis so you can get latest user's pin id
+            Redis::set("user:$user->id:pin", $pin->id);
             //save tags
             foreach ($tags as $tag_id => $tag_name) {
                 $tmp = new $this->pinTag;
