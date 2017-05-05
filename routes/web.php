@@ -16,6 +16,8 @@ Route::get('reset_password/{token}', ['as' => 'password.reset', function($token)
     // implement your reset password route here!
 }]);
 
+Route::get('ajax-test', 'Controller@ajaxTest');
+
 Route::group(['namespace' => 'Cron', 'prefix' => 'cron'], function()
 {
 	 Route::get('update-pin-time', 'PinController@updatePinTime');
