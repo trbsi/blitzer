@@ -185,9 +185,6 @@ return [
         'Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider',
         'User11001\EloquentModelGenerator\EloquentModelGeneratorProvider',
 
-        //DEBUG bar
-        Barryvdh\Debugbar\ServiceProvider::class,
-
     ],
 
     /*
