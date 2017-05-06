@@ -2,11 +2,11 @@
 
 namespace App\Api\V1\Controllers;
 
-use Tymon\JWTAuth\JWTAuth;
 use App\Http\Controllers\Controller;
-use Tymon\JWTAuth\Exceptions\JWTException;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\JWTAuth;
 
 class LoginController extends Controller
 {
@@ -24,9 +24,13 @@ class LoginController extends Controller
         }
 
         //init var
-        $status = true;
+        $status    = true;
         $showAlert = false;
-        $token = false;
+        $token     = false;
+        $message   = [
+            'body'  => trans('core.login.login_failed_title'),
+            'title' => trans('core.login.login_failed_body'),
+        ];
 
         //save or update
         $request["birthday"] = date("Y-m-d H:i:s", strtotime($request->birthday));
@@ -36,28 +40,27 @@ class LoginController extends Controller
                 $token = $JWTAuth->fromUser($user);
 
                 if (!$token) {
-                    $status = false;
+                    $status    = false;
                     $showAlert = true;
+                } else {
+                    $message = null;
                 }
 
             } catch (JWTException $e) {
-                $status = false;
+                $status    = false;
                 $showAlert = true;
             }
         } else {
-            $status = false;
+            $status    = false;
             $showAlert = true;
+
         }
 
         return response()
             ->json([
-                'status' => $status,
-                'token' => $token,
-                'message' =>
-                    [
-                        'body' => trans('core.login.login_failed_title'),
-                        'title' => trans('core.login.login_failed_body'),
-                    ],
+                'status'    => $status,
+                'token'     => $token,
+                'message'   => $message,
                 'showAlert' => $showAlert,
             ]);
 

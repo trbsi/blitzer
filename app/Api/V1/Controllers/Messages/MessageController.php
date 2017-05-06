@@ -99,7 +99,7 @@ class MessageController extends Controller
                 //phone is expecting some kind of json response
                 return response()
                     ->json([
-                        "message"   => false,
+                        "message"   => NULL,
                         "success"   => true,
                         "showAlert" => false,
                         "reply"     => $MessagesReplyArray["reply"],
