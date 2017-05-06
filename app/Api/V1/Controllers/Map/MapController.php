@@ -37,12 +37,14 @@ class MapController extends Controller
         $blink = NULL;
         $message = NULL;
         $authUser = $this->authUser;
+        $enableAllPins = true;
 
         //check if user has any active pin
         $activePin = $this->pin->userHasActivePin($request, $this->authUser);
 
         if ($activePin == 0) {
             $showAlert = true;
+            $enableAllPins = false;
             $blink = 'publish-pin';
             $message = [
                 'body' => trans('core.map.user_didnt_publish_pin_body'),
@@ -54,6 +56,7 @@ class MapController extends Controller
 
         return response()
             ->json([
+                'enableAllPins' => $enableAllPins,
                 'showAlert' => $showAlert,
                 'blink' => $blink,
                 'message' => $message,
