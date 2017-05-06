@@ -98,7 +98,7 @@ class MapController extends Controller
         if ($pin->save()) {
             //save in redis so you can get latest user's pin id
             //Redis::set("user:$user->id:pin", $pin->id);
-            Cache::store('memcached')->put("user:$user->id:pin", $pin->id);
+            Cache::add("user:$user->id:pin", $pin->id);
             
             //save tags
             foreach ($tags as $tag_id => $tag_name) {
