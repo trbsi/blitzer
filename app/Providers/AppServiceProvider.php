@@ -31,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
     {
         if ($this->app->environment() == 'local') {
             $this->app->register('Appzcoder\CrudGenerator\CrudGeneratorServiceProvider');
+
+            //CRUD and Model generators
+            $this->app->register('Way\Generators\GeneratorsServiceProvider');
+            $this->app->register('Xethron\MigrationsGenerator\MigrationsGeneratorServiceProvider');
+            $this->app->register('User11001\EloquentModelGenerator\EloquentModelGeneratorProvider');
         }
     }
 }
