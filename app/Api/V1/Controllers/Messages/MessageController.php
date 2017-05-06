@@ -75,7 +75,7 @@ class MessageController extends Controller
                 //Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
                 try 
                 {
-                    PinTimeUpdate::create(['user_id' => $user_id]);
+                    PinTimeUpdate::create(['user_id' => $authUser->id]);
                 } 
                 catch(\Exception $e) {}
 
