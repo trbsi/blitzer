@@ -8,8 +8,9 @@ use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\User;
 use App\Models\Tag;
-use Illuminate\Support\Facades\Redis;
+//use Illuminate\Support\Facades\Redis;
 use App;
+use Illuminate\Support\Facades\Cache;
 
 class MapController extends Controller
 {
@@ -32,7 +33,6 @@ class MapController extends Controller
      */
     public function pins(Request $request)
     {
-        $jsonPins = [];
         $showAlert = false;
         $blink = NULL;
         $message = NULL;
@@ -50,19 +50,14 @@ class MapController extends Controller
             ];
         }
 
-        $pins = $this->pin->getPins($request, $authUser)->get();
-
-        //return json data
-        foreach ($pins as $key => $pin) {
-            $jsonPins[] = $this->pin->generateContentForInfoWindow($pin);
-        }
+        $pins = $this->pin->getPins($request, $authUser);
 
         return response()
             ->json([
                 'showAlert' => $showAlert,
                 'blink' => $blink,
                 'message' => $message,
-                'pins' => $jsonPins
+                'pins' => $pins
             ]);
     }
 
@@ -102,7 +97,9 @@ class MapController extends Controller
         $pin->fill($request->all());
         if ($pin->save()) {
             //save in redis so you can get latest user's pin id
-            Redis::set("user:$user->id:pin", $pin->id);
+            //Redis::set("user:$user->id:pin", $pin->id);
+            Cache::store('memcached')->put("user:$user->id:pin", $pin->id);
+            
             //save tags
             foreach ($tags as $tag_id => $tag_name) {
                 $tmp = new $this->pinTag;

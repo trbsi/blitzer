@@ -139,9 +139,12 @@ class Pin extends Model
     }
 
     /**
-     * @return $this
+     * get only query for pins
+     * @param  Request $request  [Laravel request]
+     * @param  User $authUser [authenticated user]
+     * @return [Laravel Eloquent]           [laravel prepared query]
      */
-    public function getPins($request, $authUser)
+    public function getPinsQuery($request, $authUser)
     {
         $user_id       = $authUser->id;
         $lat           = $request->lat;
@@ -158,11 +161,13 @@ class Pin extends Model
             ->with('relationPinTag.relationTag', 'relationUser')
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
+            //so you can get message_id for that pin and authenticated user
             ->selectRaw("$messagesTable.id as message_id")
             ->leftJoin($messagesTable, function ($join) use ($messagesTable, $pinTable, $user_id) {
                 $join->on("$messagesTable.pin_id", "=", "$pinTable.id");
                 $join->whereRaw("(user_one = ? OR user_two = ?)", [$user_id, $user_id]);
             })
+            //so you can get message_id for that pin and authenticated user
             ->having("distance", "<=", $distance)
             ->groupBy("$pinTable.id");
 
@@ -176,6 +181,31 @@ class Pin extends Model
                 ->join($pinTagTable, "$pinTable.id", "=", "$pinTagTable.pin_id", 'inner');
         }
         return $query;
+    }
+
+    /**
+     * return all pins formatted
+     * @param  Request $request  [Laravel request]
+     * @param  User $authUser [authenticated user]
+     * @return [array]           [formatted pins]
+     */
+    public function getPins($request, $authUser)
+    {
+        $pins = $this->getPinsQuery($request, $authUser)->get();
+        $jsonPins = [];
+
+        //return json data
+        foreach ($pins as $key => $pin) {
+            $jsonPins[] = $this->generateContentForInfoWindow($pin);
+        }
+
+        if (count($jsonPins) < 20) {
+            //@TODO - generate fake pins
+            //$this->pin->generateFakePins
+        }
+
+        return $jsonPins;
+
     }
 
     public function relationUser()

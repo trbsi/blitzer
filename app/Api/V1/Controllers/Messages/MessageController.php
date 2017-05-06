@@ -4,12 +4,12 @@ namespace App\Api\V1\Controllers\Messages;
 
 use App\Http\Controllers\Controller;
 use App\Models\Helper\Helper;
-use App\Models\Helper\PinHelper;
 use App\Models\Message;
 use App\Models\MessagesReply;
+use App\Models\PinTimeUpdate;
 use App\Models\User;
+//use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redis;
 
 class MessageController extends Controller
 {
@@ -48,6 +48,7 @@ class MessageController extends Controller
                         'showAlert' => true,
                     ]);
             }
+
             $Message = $this->message->findMessageByIdOrCreate($message_id, $authUser, $user_id, $pin_id);
 
             //set as unread
@@ -71,7 +72,12 @@ class MessageController extends Controller
 
             if ($MessagesReply->save()) {
                 //save to redis so you know you have to update updated_at in pins table
-                Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
+                //Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
+                try 
+                {
+                    PinTimeUpdate::create(['user_id' => $user_id]);
+                } 
+                catch(\Exception $e) {}
 
                 $MessagesReplyArray =
                     [
@@ -99,7 +105,7 @@ class MessageController extends Controller
                 //phone is expecting some kind of json response
                 return response()
                     ->json([
-                        "message"   => NULL,
+                        "message"   => null,
                         "success"   => true,
                         "showAlert" => false,
                         "reply"     => $MessagesReplyArray["reply"],
