@@ -43,14 +43,9 @@ class Message extends Model
      * @param $authUser
      * @return mixed
      */
-    public function findByPinId($pin_id, $authUser)
+    public function findByMessageId($message_id)
     {
-        $msgTable = Message::getTable();
-        $pinTable = (new Pin)->getTable();
-        return Pin::select("$msgTable.*")
-            ->where("$pinTable.id", '=', $pin_id)
-            ->whereRaw("(user_one = $authUser->id OR user_two = $authUser->id)")
-            ->join($msgTable, "$msgTable.pin_id", "=", "$pinTable.id", 'inner')
+        return Message::where("id", '=', $message_id)
             ->first();
     }
 

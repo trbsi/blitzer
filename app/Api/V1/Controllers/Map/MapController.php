@@ -36,6 +36,7 @@ class MapController extends Controller
         $showAlert = false;
         $blink = NULL;
         $message = NULL;
+        $authUser = $this->authUser;
 
         //check if user has any active pin
         $activePin = $this->pin->userHasActivePin($request, $this->authUser);
@@ -49,7 +50,7 @@ class MapController extends Controller
             ];
         }
 
-        $pins = $this->pin->getPins($request)->get();
+        $pins = $this->pin->getPins($request, $authUser)->get();
 
         //return json data
         foreach ($pins as $key => $pin) {

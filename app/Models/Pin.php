@@ -1,24 +1,25 @@
 <?php
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use App\Models\Tag;
-use App\Models\PinTag;
 use App\Models\Helper\PinHelper;
+use App\Models\Message;
+use App\Models\PinTag;
+use App\Models\Tag;
+use Illuminate\Database\Eloquent\Model;
 
 class Pin extends Model
 {
     const MAX_TAG_LENGTH = 50;
-    const MEAUREMENT = 'miles';
-    const DISTANCE = 20;
+    const MEAUREMENT     = 'miles';
+    const DISTANCE       = 20;
     const COMMENT_LENGTH = 255;
 
     /**
      * Generated
      */
 
-    protected $table = 'pins';
-    public $timestamps = false;
+    protected $table    = 'pins';
+    public $timestamps  = false;
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
 
     /**
@@ -38,9 +39,13 @@ class Pin extends Model
             $t = Tag::where(['tag' => $tag])->first();
 
             if (empty($t)) {
-                $t = new Tag;
-                $t->tag = $tag;
+                $t             = new Tag;
+                $t->tag        = $tag;
+                $t->popularity = $t->popularity + 1;
                 $t->save();
+            } else {
+                $t->popularity = $t->popularity + 1;
+                $t->update();
             }
 
             $return[$t->id] = $tag;
@@ -57,12 +62,14 @@ class Pin extends Model
     public function generateContentForInfoWindow($pin)
     {
         $user = $pin->relationUser;
-        if (!empty($pin->comment))
-            $comment = htmlentities($pin->comment); //decode html
+        if (!empty($pin->comment)) {
+            $comment = htmlentities($pin->comment);
+        }
+        //decode html
 
         $i = 0;
         foreach ($pin->relationPinTag as $pin2) {
-            $tags[$i]["tag_id"] = $pin2->tag_id;
+            $tags[$i]["tag_id"]   = $pin2->tag_id;
             $tags[$i]["tag_name"] = $pin2->relationTag->tag;
             $i++;
         }
@@ -72,25 +79,26 @@ class Pin extends Model
 
         return
             [
-                'user' =>
-                    [
-                        'name' => $user->first_name . " " . $user->last_name,
-                        'gender' => $user->gender,
-                        'user_id' => $user->id,
-                        'age' => PinHelper::calculateAge($user->birthday),
-                        'profile_picture' => $user->profile_picture,
-                    ],
-                'pin' =>
-                    [
-                        'publish_time' => $pin->publish_time,
-                        'comment' => $comment,
-                        'lat' => (float)$lat,
-                        'lng' => (float)$lng,
-                        'location_id' => $pin->id,
-                        'tags' => $tags,
-                    ]
+            'user' =>
+            [
+                'name'            => $user->first_name . " " . $user->last_name,
+                'gender'          => $user->gender,
+                'user_id'         => $user->id,
+                'age'             => PinHelper::calculateAge($user->birthday),
+                'profile_picture' => $user->profile_picture,
+            ],
+            'pin'  =>
+            [
+                'publish_time' => $pin->publish_time,
+                'comment'      => $comment,
+                'lat'          => (float) $lat,
+                'lng'          => (float) $lng,
+                'pin_id'       => $pin->id,
+                'tags'         => $tags,
+                'message_id'   => $pin->message_id,
+            ],
 
-            ];
+        ];
     }
 
     /**
@@ -101,13 +109,15 @@ class Pin extends Model
     private function fakeLocation($number)
     {
         //this moves pin's location to about 100m
-        $rand = 0.000400; //rand(1000,1100);
+        $rand     = 0.000400; //rand(1000,1100);
         $date_sum = date("Y") + date("m") + date("d");
 
-        if ($date_sum % 2 == 0)
-            return (float)($number + $rand);
-        else
-            return (float)($number - $rand);
+        if ($date_sum % 2 == 0) {
+            return (float) ($number + $rand);
+        } else {
+            return (float) ($number - $rand);
+        }
+
     }
 
     /**
@@ -131,22 +141,30 @@ class Pin extends Model
     /**
      * @return $this
      */
-    public function getPins($request)
+    public function getPins($request, $authUser)
     {
-        $lat = $request->lat;
-        $lng = $request->lng;
-        $current_time = $request->current_time;
-        $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
-        $distance = Pin::DISTANCE;
-        $onehour = PinHelper::returnTime('minus-1hour', $current_time);
-        $pinTable = Pin::getTable();
+        $user_id       = $authUser->id;
+        $lat           = $request->lat;
+        $lng           = $request->lng;
+        $current_time  = $request->current_time;
+        $km            = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
+        $distance      = Pin::DISTANCE;
+        $onehour       = PinHelper::returnTime('minus-1hour', $current_time);
+        $pinTable      = Pin::getTable();
+        $messagesTable = (new Message)->getTable();
 
-        $query = Pin::where('updated_at', '>=', $onehour)
-            ->where('updated_at', '<=', $current_time)
+        $query = Pin::where("$pinTable.updated_at", '>=', $onehour)
+            ->where("$pinTable.updated_at", '<=', $current_time)
             ->with('relationPinTag.relationTag', 'relationUser')
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
-            ->having("distance", "<=", $distance);
+            ->selectRaw("$messagesTable.id as message_id")
+            ->leftJoin($messagesTable, function ($join) use ($messagesTable, $pinTable, $user_id) {
+                $join->on("$messagesTable.pin_id", "=", "$pinTable.id");
+                $join->whereRaw("(user_one = ? OR user_two = ?)", [$user_id, $user_id]);
+            })
+            ->having("distance", "<=", $distance)
+            ->groupBy("$pinTable.id");
 
         //if user wants to filter by tag
         if (isset($request->filter_by_tag)) {
@@ -179,6 +197,5 @@ class Pin extends Model
     {
         return $this->hasMany(\App\Models\Message::class, 'pin_id', 'id');
     }
-
 
 }

@@ -74,7 +74,7 @@ class MessageController extends Controller
                 Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
 
                 $MessagesReplyArray =
-                [
+                    [
                     "reply"      => $MessagesReply->reply,
                     "message_id" => (int) $MessagesReply->message_id,
                     "reply_id"   => (int) $MessagesReply->id,
@@ -82,7 +82,7 @@ class MessageController extends Controller
                     "user_id"    => (int) $MessagesReply->user_id,
                     "user_name"  => $authUser->first_name . " " . $authUser->last_name,
                     "badge"      => 1,
-                    "pin_id"     => (int)$pin_id
+                    "pin_id"     => (int) $pin_id,
                 ];
 
                 //trigger PubNub event
@@ -90,7 +90,7 @@ class MessageController extends Controller
 
                 //trigger message notification. Send notification to another suer
                 $this->message->triggerMessageNotification
-                (
+                    (
                     $Message,
                     $sendNotificationToThisUser,
                     $MessagesReply
@@ -131,10 +131,13 @@ class MessageController extends Controller
     {
         $pin_id             = (int) $request->pin_id;
         $authUser           = $this->authUser;
+        $return             = [];
+        $return["success"]  = true;
         $return["messages"] = [];
 
         //find message by pin id and logged user
-        $Message = $this->message->findByPinId($pin_id, $authUser);
+        $Message = $this->message->findByMessageId($pin_id);
+
         if (!empty($Message)) {
             if ($Message->user_one == $authUser->id) {
                 $Message->user_one_read = 1;
@@ -156,9 +159,6 @@ class MessageController extends Controller
                 ];
             }
         }
-
-        $return            = [];
-        $return["success"] = true;
 
         return response()
             ->json($return);
