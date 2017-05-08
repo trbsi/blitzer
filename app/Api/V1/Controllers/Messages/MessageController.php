@@ -72,7 +72,7 @@ class MessageController extends Controller
 
             if ($MessagesReply->save()) {
                 //save to redis so you know you have to update updated_at in pins table
-                //Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
+                //@TODO Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
                 try 
                 {
                     PinTimeUpdate::create(['user_id' => $authUser->id]);

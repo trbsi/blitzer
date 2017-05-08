@@ -100,7 +100,7 @@ class MapController extends Controller
         $pin->fill($request->all());
         if ($pin->save()) {
             //save in redis so you can get latest user's pin id
-            //Redis::set("user:$user->id:pin", $pin->id);
+            //@TODO Redis::set("user:$user->id:pin", $pin->id);
             if(!Cache::add("user:$user->id:pin", $pin->id, 900)){
                 Cache::put("user:$user->id:pin", $pin->id, 900);
             }
