@@ -15,6 +15,22 @@ class LoginController extends Controller
         $this->user = $user;
     }
 
+    /**
+     * refresh the token after it expires
+     * @param  Request $request [description]
+     * @param  JWTAuth $JWTAuth [description]
+     * @return [type]           [description]
+     */
+    public function refreshToken(Request $request, JWTAuth $JWTAuth)
+    {
+         $token = $JWTAuth->refresh($JWTAuth->getToken());
+         return response()
+            ->json([
+                'status'    => true,
+                'token'     => $token,
+            ]); 
+    }
+
     public function login(Request $request, JWTAuth $JWTAuth)
     {
         //check if user exists
