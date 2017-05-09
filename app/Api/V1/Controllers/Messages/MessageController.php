@@ -33,8 +33,10 @@ class MessageController extends Controller
             $message_id = (int) $request->message_id; //may be null or 0
             $reply      = $request->reply;
             $authUser   = $this->authUser;
-            $user_id    = $request->user_id; //id of a user whose pin it is
-            $pin_id     = $request->pin_id;
+            $user_one   = $request->user_id; //id of a user whose pin it is
+            $pin_one    = $request->pin_id;
+            $user_two   = $authUser->id;
+            $pin_two    = Cache::get("user:$user_two:pin");
 
             //if reply is still empty, show warning
             if (empty($reply)) {
@@ -50,19 +52,19 @@ class MessageController extends Controller
                     ]);
             }
 
-            $Message = $this->message->findMessageByIdOrCreate($message_id, $authUser, $user_id, $pin_id);
+            $Message = $this->message->findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two);
 
             //set as unread
             if ($Message->user_one == $authUser->id) {
                 $sendNotificationToThisUser = $Message->user_two; //to who to send notification about new message
                 $Message->user_two_read     = 0;
                 $Message->user_one_read     = 1;
-                $badgeForPin = Cache::get("user:$Message->user_two:pin");
+                $badgeForPin                = Cache::get("user:$Message->user_two:pin");
             } else {
                 $sendNotificationToThisUser = $Message->user_one; //to who to send notification about new message
                 $Message->user_two_read     = 1;
                 $Message->user_one_read     = 0;
-                $badgeForPin = Cache::get("user:$Message->user_one:pin"); 
+                $badgeForPin                = Cache::get("user:$Message->user_one:pin");
             }
             $Message->updated_at = $request->current_time;
             $Message->update();
@@ -90,7 +92,7 @@ class MessageController extends Controller
                     "user_id"    => (int) $MessagesReply->user_id,
                     "user_name"  => $authUser->first_name . " " . $authUser->last_name,
                     "badge"      => 1,
-                    "pin_id"     => (int) $pin_id,
+                    "pin_id"     => (int) $pin_one,
                 ];
 
                 //trigger PubNub event
@@ -98,7 +100,7 @@ class MessageController extends Controller
 
                 //trigger message notification. Send notification to another suer
                 $this->message->triggerMessageNotification
-                (
+                    (
                     $MessagesReply,
                     ["sendNotificationToThisUser" => $sendNotificationToThisUser, 'badgeForPin' => $badgeForPin]
                 );
@@ -136,14 +138,14 @@ class MessageController extends Controller
      */
     public function view(Request $request)
     {
-        $pin_id             = (int) $request->pin_id;
+        $message_id         = (int) $request->message_id;
         $authUser           = $this->authUser;
         $return             = [];
         $return["success"]  = true;
         $return["messages"] = [];
 
         //find message by pin id and logged user
-        $Message = $this->message->findByMessageId($pin_id);
+        $Message = $this->message->findByMessageId($message_id);
 
         if (!empty($Message)) {
             if ($Message->user_one == $authUser->id) {

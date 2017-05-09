@@ -95,7 +95,6 @@ class Pin extends Model
                 'lng'          => (float) $lng,
                 'pin_id'       => $pin->id,
                 'tags'         => $tags,
-                'message_id'   => $pin->message_id,
             ],
 
         ];
@@ -161,13 +160,6 @@ class Pin extends Model
             ->with('relationPinTag.relationTag', 'relationUser')
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
-            //so you can get message_id for that pin and authenticated user
-            ->selectRaw("$messagesTable.id as message_id")
-            ->leftJoin($messagesTable, function ($join) use ($messagesTable, $pinTable, $user_id) {
-                $join->on("$messagesTable.pin_id", "=", "$pinTable.id");
-                $join->whereRaw("(user_one = ? OR user_two = ?)", [$user_id, $user_id]);
-            })
-            //so you can get message_id for that pin and authenticated user
             ->having("distance", "<=", $distance)
             ->groupBy("$pinTable.id");
 

@@ -16,30 +16,37 @@ class Message extends Model
      */
 
     protected $table    = 'messages';
-    protected $fillable = ['id', 'pin_id', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
+    protected $fillable = ['id', 'pin_one', 'pin_two', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
 
     /**
-     * @param $id
-     * @param $authUser
-     * @param $user_id
-     * @param $pin_id
-     * @return mixed
+     * find message by pin id
+     * @param  [type] $user_one [description]
+     * @param  [type] $user_two [description]
+     * @param  [type] $pin_one  [description]
+     * @param  [type] $pin_two  [description]
+     * @return [type]           [description]
      */
-    public function findMessageByIdOrCreate($id, $authUser, $user_id, $pin_id)
+    public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two)
     {
-        return Message::firstOrCreate(
-            ['id' => $id],
-            [
-                'pin_id'   => $pin_id,
-                'user_one' => $user_id,
-                'user_two' => $authUser->id,
-            ]
-        );
+        //first try to find by message_id, if not possible try with pin_id if not possible create message
+        $result = Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)", 
+                    [$pin_one, $pin_one, $pin_two, $pin_two])
+        ->first();
+        if (empty($result)) {
+
+            $result = Message::create([
+                'pin_one'   => $pin_one,
+                'pin_two'   => $pin_two,
+                'user_one' => $user_one,
+                'user_two' => $user_two,
+            ]);
+        }
+
+        return $result;
     }
 
     /**
      * find specific conversation based on pin id and user id
-     * @param $pin_id
      * @param $authUser
      * @return mixed
      */
@@ -95,9 +102,9 @@ class Message extends Model
         SendPushNotification::sendNotification($ids["sendNotificationToThisUser"], $data);
     }
 
-    public function relationPin()
+    public function pinOne()
     {
-        return $this->belongsTo(\App\Models\Pin::class, 'pin_id', 'id');
+        return $this->belongsTo(\App\Models\Pin::class, 'pin_one', 'id');
     }
 
     public function userOne()
