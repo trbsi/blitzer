@@ -28,7 +28,6 @@ class Message extends Model
      */
     public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two)
     {
-        //first try to find by message_id, if not possible try with pin_id if not possible create message
         $result = Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)", 
                     [$pin_one, $pin_one, $pin_two, $pin_two])
         ->first();

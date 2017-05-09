@@ -41,7 +41,7 @@ class Pin extends Model
             if (empty($t)) {
                 $t             = new Tag;
                 $t->tag        = $tag;
-                $t->popularity = $t->popularity + 1;
+                $t->popularity = 1;
                 $t->save();
             } else {
                 $t->popularity = $t->popularity + 1;
@@ -214,10 +214,4 @@ class Pin extends Model
     {
         return $this->hasMany(\App\Models\PinTag::class, 'pin_id', 'id');
     }
-
-    public function relationMessage()
-    {
-        return $this->hasMany(\App\Models\Message::class, 'pin_id', 'id');
-    }
-
 }
