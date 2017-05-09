@@ -72,7 +72,7 @@ class Message extends Model
      * @param $current_time - taken from $_GET["current_time"]
      * @return bool
      */
-    public function triggerMessageNotification($Message, $user_id, $MessagesReply)
+    public function triggerMessageNotification($MessagesReply, $ids)
     {
         //check for all unread messages
         $body = (strlen($MessagesReply->reply) > 140) ? substr($MessagesReply->reply, 0, 140) : $MessagesReply->reply;
@@ -87,12 +87,12 @@ class Message extends Model
             'event'      => 'message', //so you can redirect users to messages screen, directly to that message
             'message_id' => (int) $MessagesReply->message_id, //so you can redirect users to a specific conversation
             'user_id'    => (int) $MessagesReply->user_id, //id of a user who sent a message
-            'pin_id'     => (int) $Message->pin_id,
+            'pin_id'     => (int) $ids["badgeForPin"],
             'badge'      => 1,
         ];
 
         //send notification to a user
-        SendPushNotification::sendNotification($user_id, $data);
+        SendPushNotification::sendNotification($ids["sendNotificationToThisUser"], $data);
     }
 
     public function relationPin()

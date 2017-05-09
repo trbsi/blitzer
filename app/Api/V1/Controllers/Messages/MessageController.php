@@ -10,6 +10,7 @@ use App\Models\PinTimeUpdate;
 use App\Models\User;
 //use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MessageController extends Controller
 {
@@ -56,10 +57,12 @@ class MessageController extends Controller
                 $sendNotificationToThisUser = $Message->user_two; //to who to send notification about new message
                 $Message->user_two_read     = 0;
                 $Message->user_one_read     = 1;
+                $badgeForPin = Cache::get("user:$Message->user_two:pin");
             } else {
                 $sendNotificationToThisUser = $Message->user_one; //to who to send notification about new message
                 $Message->user_two_read     = 1;
                 $Message->user_one_read     = 0;
+                $badgeForPin = Cache::get("user:$Message->user_one:pin"); 
             }
             $Message->updated_at = $request->current_time;
             $Message->update();
@@ -73,11 +76,10 @@ class MessageController extends Controller
             if ($MessagesReply->save()) {
                 //save to redis so you know you have to update updated_at in pins table
                 //@TODO Redis::command("sadd", [PinHelper::REDIS_PINS_TO_UPDATE_TIME, $pin_id]);
-                try 
+                try
                 {
                     PinTimeUpdate::create(['user_id' => $authUser->id]);
-                } 
-                catch(\Exception $e) {}
+                } catch (\Exception $e) {}
 
                 $MessagesReplyArray =
                     [
@@ -96,10 +98,9 @@ class MessageController extends Controller
 
                 //trigger message notification. Send notification to another suer
                 $this->message->triggerMessageNotification
-                    (
-                    $Message,
-                    $sendNotificationToThisUser,
-                    $MessagesReply
+                (
+                    $MessagesReply,
+                    ["sendNotificationToThisUser" => $sendNotificationToThisUser, 'badgeForPin' => $badgeForPin]
                 );
 
                 //phone is expecting some kind of json response
