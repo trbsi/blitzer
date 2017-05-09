@@ -91,8 +91,6 @@ class MessageController extends Controller
                     "send_date"  => Helper::formatDate($MessagesReply->send_date),
                     "user_id"    => (int) $MessagesReply->user_id,
                     "user_name"  => $authUser->first_name . " " . $authUser->last_name,
-                    "badge"      => 1,
-                    "pin_id"     => (int) $pin_one,
                 ];
 
                 //trigger PubNub event
