@@ -15,4 +15,9 @@ class Controller extends BaseController
     {
         return view("ajax-test");
     }
+
+    public function index()
+    {
+    	return view("welcome");
+    }
 }
