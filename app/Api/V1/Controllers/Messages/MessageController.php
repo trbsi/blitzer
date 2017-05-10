@@ -37,7 +37,7 @@ class MessageController extends Controller
             $pin_one    = $request->pin_id;
             $user_two   = $authUser->id;
             //$badgeForPin - if I send a message other user will get notification and badge has to be set on my pin.
-            $pin_two    = $badgeForPin    = Cache::get("user:$user_two:pin");
+            $pin_two = $badgeForPin = Cache::get("user:$user_two:pin");
 
             //if reply is still empty, show warning
             if (empty($reply)) {
@@ -135,14 +135,17 @@ class MessageController extends Controller
      */
     public function view(Request $request)
     {
-        $message_id         = (int) $request->message_id;
+        $pin_one            = (int) $request->pin_id;
+        $user_one           = (int) $request->user_id;
         $authUser           = $this->authUser;
+        $user_two           = (int) $authUser->user_id;
+        $pin_two            = (int) Cache::get("user:$user_two:pin");
         $return             = [];
         $return["success"]  = true;
         $return["messages"] = [];
 
         //find message by pin id and logged user
-        $Message = $this->message->findByMessageId($message_id);
+        $Message = $this->message->findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two);
 
         if (!empty($Message)) {
             if ($Message->user_one == $authUser->id) {
@@ -152,7 +155,7 @@ class MessageController extends Controller
             }
             $Message->update();
 
-            $messages = $this->messageReply->getMessages($request, $Message->id);
+            $messages = $this->messageReply->getMessages($request->load_all, $Message->id);
 
             foreach ($messages as $message) {
                 $usr                  = $message->relationUser;

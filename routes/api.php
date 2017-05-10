@@ -25,7 +25,7 @@ $api->version('v1', function (Router $api) {
         });
 
         $api->group(['prefix' => 'msg'], function (Router $api) {
-            $api->get('view/{message_id}', 'App\Api\V1\Controllers\Messages\MessageController@view');
+            $api->get('view/{pin_id}', 'App\Api\V1\Controllers\Messages\MessageController@view');
             $api->post('send/{current_time}', 'App\Api\V1\Controllers\Messages\MessageController@send');
         });
     });

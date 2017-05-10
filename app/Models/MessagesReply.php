@@ -15,15 +15,15 @@ class MessagesReply extends Model
     protected $fillable = ['id', 'message_id', 'reply', 'user_id', 'send_date', 'message_type'];
 
     /**
-     * @param $request
+     * @param $load_all
      * @return \Illuminate\Database\Eloquent\Collection|static[]
      */
-    public function getMessages($request, $message_id)
+    public function getMessages($load_all, $message_id)
     {
         $messagesReplyTable = MessagesReply::getTable();
 
         $query = MessagesReply::with(['relationUser']);
-        if (!isset($request->load_all)) {
+        if (!isset($load_all)) {
             //get newest last 10 messages
             //http://stackoverflow.com/questions/9424327/mysql-select-from-table-get-newest-last-10-rows-in-table
             $previousMessages = $query->from(DB::raw("(SELECT * FROM $messagesReplyTable WHERE message_id=$message_id ORDER BY send_date DESC LIMIT 10) AS temp_table"))
