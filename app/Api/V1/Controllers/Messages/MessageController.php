@@ -145,7 +145,7 @@ class MessageController extends Controller
         $return["messages"] = [];
 
         //find message by pin id and logged user
-        $Message = $this->message->findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two);
+        $Message = $this->message->findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two, false);
 
         if (!empty($Message)) {
             if ($Message->user_one == $authUser->id) {

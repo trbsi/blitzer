@@ -26,12 +26,12 @@ class Message extends Model
      * @param  [type] $pin_two  [description]
      * @return [type]           [description]
      */
-    public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two)
+    public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two, $create = true)
     {
         $result = Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)", 
-                    [$pin_one, $pin_one, $pin_two, $pin_two])
-        ->first();
-        if (empty($result)) {
+                    [$pin_one, $pin_one, $pin_two, $pin_two])->first();
+        
+        if (empty($result) && $create == true) {
 
             $result = Message::create([
                 'pin_one'   => $pin_one,
