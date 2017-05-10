@@ -138,7 +138,7 @@ class MessageController extends Controller
         $pin_one            = (int) $request->pin_id;
         $user_one           = (int) $request->user_id;
         $authUser           = $this->authUser;
-        $user_two           = (int) $authUser->user_id;
+        $user_two           = (int) $authUser->id;
         $pin_two            = (int) Cache::get("user:$user_two:pin");
         $return             = [];
         $return["success"]  = true;
