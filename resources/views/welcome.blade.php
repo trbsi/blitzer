@@ -103,7 +103,7 @@
             <h2 class="">Blitzer Video</h2>
             <div class="virticle-line"></div>
             <div class="circle"></div>
-            <img src="img/feature.png" alt="feature" class="video img-responsive">
+            <div class='embed-container'><iframe src='https://www.youtube.com/embed/qiYRMm2JA94' frameborder='0' allowfullscreen></iframe></div>
         </div> <!-- /.container -->
     </div> <!-- /#video -->
 
@@ -162,7 +162,7 @@
     <section id="footer" class="wrapper">
         <div class="container text-center">
             <div class="footer-logo">
-                <h1 class="text-center animation-box wow bounceIn animated">blitzer</h1>
+                <h1 class="text-center animation-box wow bounceIn animated">Blitzer</h1>
             </div>
             <ul class="social-icons text-center">
                 <li class="wow animated fadeInLeft facebook"><a href="https://www.facebook.com/BlitzerApp/" target="_blank"><i class="fa fa-facebook"></i></a></li>
@@ -174,13 +174,6 @@
             </div>
         </div><!-- container -->
     </section>
-
-
-
-
-    
-    
-
 
     <!-- HHHHHHHHHHHHHHHHHH        Open/Close          HHHHHHHHHHHHHHHH -->
     <div class="overlay overlay-hugeinc">
