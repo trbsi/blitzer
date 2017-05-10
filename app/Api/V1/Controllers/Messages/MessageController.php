@@ -165,6 +165,7 @@ class MessageController extends Controller
                     "send_date" => Helper::formatDate($message->send_date),
                     "user_name" => $usr->first_name . " " . $usr->last_name,
                     "user_id"   => $message->user_id,
+                    "id"   => $message->id,
                 ];
             }
         }
