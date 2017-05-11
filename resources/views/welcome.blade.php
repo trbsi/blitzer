@@ -75,7 +75,7 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="banner-text">
-                             <h2 class="animation-box wow bounceIn animated"><strong class="strong">Blitzer</strong><br>Live the life, live in the moment</h2>
+                             <h2 class="animation-box wow bounceIn animated"><strong class="strong">Blitzer</strong><br>Live in the moment</h2>
                             <p>
                                  Blitzer is a social discovery app where people can discover other people on the map based on hashtags, chat from within map markers and quickly meet in real life.
                             </p>
@@ -170,7 +170,7 @@
             EMAIL: hello@blitzerapp.com
 
             <div class="copyright">
-                <div>Â©<?=date("Y")?> Blitzer, All Rights Reserved</div>
+                <div>©<?=date("Y")?> Blitzer, All Rights Reserved</div>
             </div>
         </div><!-- container -->
     </section>
