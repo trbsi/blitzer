@@ -8,6 +8,7 @@ use App\Models\PinTimeUpdate;
 use App\Models\Pin;
 use Illuminate\Support\Facades\Cache;
 use DB;
+use App\Models\Helper\CacheHelper;
 
 class PinController extends Controller
 {
@@ -21,7 +22,7 @@ class PinController extends Controller
         $pin_id = [];
         $result = PinTimeUpdate::limit(100)->get();
         foreach ($result as $value) {
-            $pin_id[] = Cache::get("user:$value->user_id:pin");
+            $pin_id[] = CacheHelper::getCache("pin_id", ["user_id" => $value->user_id]);
             $value->delete();
         }
 
