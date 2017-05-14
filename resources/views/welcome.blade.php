@@ -168,10 +168,6 @@
                 <li class="wow animated fadeInLeft facebook"><a href="https://www.facebook.com/BlitzerApp/" target="_blank"><i class="fa fa-facebook"></i></a></li>
             </ul>
             EMAIL: hello@blitzerapp.com
-
-            <div class="copyright">
-                <div>©<?=date("Y")?> Blitzer, All Rights Reserved</div>
-            </div>
         </div><!-- container -->
     </section>
 
