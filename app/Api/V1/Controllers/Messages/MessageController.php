@@ -3,14 +3,14 @@
 namespace App\Api\V1\Controllers\Messages;
 
 use App\Http\Controllers\Controller;
-use App\Models\Helper\Helper;
+use App\Helpers\Helper;
 use App\Models\Message;
 use App\Models\MessagesReply;
 use App\Models\PinTimeUpdate;
 use App\Models\User;
 //use Illuminate\Support\Facades\Redis;
 use Illuminate\Http\Request;
-use App\Models\Helper\CacheHelper;
+use App\Helpers\CacheHelper;
 
 class MessageController extends Controller
 {

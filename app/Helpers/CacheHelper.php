@@ -1,5 +1,5 @@
 <?php
-namespace App\Models\Helper;
+namespace App\Helpers;
 
 use Illuminate\Support\Facades\Cache;
 

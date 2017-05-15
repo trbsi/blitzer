@@ -1,14 +1,18 @@
 <?php
 namespace App\Models;
 
-use App\Models\Helper\PinHelper;
+use App\Traits\PinTrait;
+use App\Helpers\PinHelper;
 use App\Models\Message;
 use App\Models\PinTag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
 
+
 class Pin extends Model
 {
+    use PinTrait;
+
     const MAX_TAG_LENGTH = 50;
     const MEAUREMENT     = 'miles';
     const DISTANCE       = 20;
@@ -54,70 +58,6 @@ class Pin extends Model
         return $return;
     }
 
-    /**
-     * @param $pin - loaded Pin model
-     * @param $user - current user
-     * @return array
-     */
-    public function generateContentForInfoWindow($pin)
-    {
-        $user = $pin->relationUser;
-        if (!empty($pin->comment)) {
-            $comment = htmlentities($pin->comment);
-        }
-        //decode html
-
-        $i = 0;
-        foreach ($pin->relationPinTag as $pin2) {
-            $tags[$i]["tag_id"]   = $pin2->tag_id;
-            $tags[$i]["tag_name"] = $pin2->relationTag->tag;
-            $i++;
-        }
-
-        $lat = $this->fakeLocation($pin->lat);
-        $lng = $this->fakeLocation($pin->lng);
-
-        return
-            [
-            'user' =>
-            [
-                'name'            => $user->first_name . " " . $user->last_name,
-                'gender'          => $user->gender,
-                'user_id'         => $user->id,
-                'age'             => PinHelper::calculateAge($user->birthday),
-                'profile_picture' => $user->profile_picture,
-            ],
-            'pin'  =>
-            [
-                'publish_time' => $pin->publish_time,
-                'comment'      => $comment,
-                'lat'          => (float) $lat,
-                'lng'          => (float) $lng,
-                'pin_id'       => $pin->id,
-                'tags'         => $tags,
-            ],
-
-        ];
-    }
-
-    /**
-     * fake user's real location
-     * @param $number - lng/lat coordinates
-     * @return float
-     */
-    private function fakeLocation($number)
-    {
-        //this moves pin's location to about 100m
-        $rand     = 0.000400; //rand(1000,1100);
-        $date_sum = date("Y") + date("m") + date("d");
-
-        if ($date_sum % 2 == 0) {
-            return (float) ($number + $rand);
-        } else {
-            return (float) ($number - $rand);
-        }
-
-    }
 
     /**
      * check if user has any active pin
@@ -135,6 +75,15 @@ class Pin extends Model
             ->count();
 
         return $activePin;
+    }
+
+    /**
+     * get pin by id
+     * @param $pin_id
+     */
+    public function getPinById($pin_id)
+    {
+        return Pin::where('id', $pin_id)->first();
     }
 
     /**
@@ -193,8 +142,12 @@ class Pin extends Model
 
         if (count($jsonPins) < 20) {
             //@TODO - generate fake pins
-            //$this->pin->generateFakePins
+            $fakePins[] = $this->generateFakePins($authUser->id);
+
+            $jsonPins = array_merge($jsonPins, $fakePins);
         }
+
+
 
         return $jsonPins;
 
@@ -214,4 +167,5 @@ class Pin extends Model
     {
         return $this->hasMany(\App\Models\PinTag::class, 'pin_id', 'id');
     }
+
 }

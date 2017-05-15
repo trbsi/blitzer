@@ -2,8 +2,8 @@
 
 namespace App\Models;
 
-use App\Models\Helper\PubNubHelper;
-use App\Models\Helper\SendPushNotification;
+use App\Helpers\PubNubHelper;
+use App\Helpers\SendPushNotification;
 use App\Models\Pin;
 use Illuminate\Database\Eloquent\Model;
 use Pubnub\Pubnub;

@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use App\Models\Helper\PinHelper;
+use App\Helpers\PinHelper;
 
 /**
  * Used to modify current_time I get from mobile into PHP readable format

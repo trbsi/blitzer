@@ -8,7 +8,7 @@ use App\Models\PinTimeUpdate;
 use App\Models\Pin;
 use Illuminate\Support\Facades\Cache;
 use DB;
-use App\Models\Helper\CacheHelper;
+use App\Helpers\CacheHelper;
 
 class PinController extends Controller
 {

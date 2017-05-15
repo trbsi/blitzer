@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Helper;
+namespace App\Helpers;
 
 use App\Models\PushNotificationsToken;
 use App;
