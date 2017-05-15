@@ -122,7 +122,8 @@ trait PinTrait
             'lng' => $pin->lng,
             'time' => $pin->publish_time,
             'pin_id' => $pin->id,
-            'tags' => $tags
+            'tags' => $tags,
+            'user_id' => $user_id
         ];
 
         $data["type"] = 'male';
@@ -161,7 +162,7 @@ trait PinTrait
             [
                 "name"            => $data['gender']["first"][rand(0,$countName-1)]." ".$data['gender']["last"][rand(0,$countName-1)],
                 "gender"          => $type,
-                "user_id"         => 0,
+                "user_id"         => $data["user_id"],
                 "age"             => rand($data["age"]-$plusMinusage, $data["age"]+$plusMinusage),
                 "profile_picture" => "https://www.x.com/x.jpg",
             ],
