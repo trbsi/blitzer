@@ -126,8 +126,8 @@ trait PinTrait
             'user_id' => $user_id
         ];
 
-        $data["type"] = 'male';
-        $data["gender"] = $male;
+        $data["gender"] = 'male';
+        $data["names"] = $male;
         for ($i = 0; $i < ($countMale); $i++) {
 
             $fake[] = $this->generateArray($data);
@@ -135,7 +135,7 @@ trait PinTrait
         }
 
         $data["type"] = 'female';
-        $data["gender"] = $female;
+        $data["names"] = $female;
         for ($i = 0; $i < ($countFemale); $i++) {
 
             $fake[] = $this->generateArray($data);
@@ -148,8 +148,8 @@ trait PinTrait
 
     private function generateArray($data)
     {
-        $type = $data["type"];
-        $countName = count($data['gender']["first"]);
+        $gender = $data["gender"];
+        $countName = count($data['names']["first"]);
         $plusMinusage = 5;
         $date = new \DateTime($data["time"]);
         $date->sub(new \DateInterval('PT'.rand(1,120)."M".rand(1,60)."S"));
@@ -160,11 +160,11 @@ trait PinTrait
         [
             "user" =>
             [
-                "name"            => $data['gender']["first"][rand(0,$countName-1)]." ".$data['gender']["last"][rand(0,$countName-1)],
-                "gender"          => $type,
+                "name"            => $data['names']["first"][rand(0,$countName-1)]." ".$data['names']["last"][rand(0,$countName-1)],
+                "gender"          => $gender,
                 "user_id"         => $data["user_id"],
                 "age"             => rand($data["age"]-$plusMinusage, $data["age"]+$plusMinusage),
-                "profile_picture" => "https://www.x.com/x.jpg",
+                "profile_picture" => env('APP_URL').'/files/'.$gender.'/'.rand(0,$countName-1).'.jpg',
             ],
             "pin" =>
             [
