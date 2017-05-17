@@ -56,11 +56,5 @@
     },
     "config": {
         "preferred-install": "dist"
-    },
-    "repositories": [
-        {
-            "type": "git",
-            "url": "git@github.com:jamisonvalenta/Laravel-4-Generators.git"
-        }
-    ]
+    }
 }
