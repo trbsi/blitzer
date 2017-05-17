@@ -22,7 +22,7 @@ class PinController extends Controller
         $pin_id = [];
         $result = PinTimeUpdate::limit(100)->get();
         foreach ($result as $value) {
-            $pin_id[] = CacheHelper::getCache("pin_id", ["user_id" => $value->user_id]);
+            $pin_id[] = CacheHelper::getCache("user_pin_id", ["user_id" => $value->user_id]);
             $value->delete();
         }
 

@@ -79,10 +79,16 @@ trait PinTrait
      */
     private function generateFakePins($user_id)
     {
-        //@TODO save fake pins in cache for an hour or 2
-        $userPin = CacheHelper::getCache("pin_id", ["user_id" => $user_id]);
-    	$pin = $this->getPinById(1);
-        
+        $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
+    	$pin = $this->getPinById($userPin);
+
+        $pins = CacheHelper::getCache("fake_pins", ["location" => round($pin->lat+$pin->lng)]);
+
+        if(!empty($pins))
+        {
+            return $pins;
+        }
+
         $male =
         [
             'first' =>
@@ -142,6 +148,8 @@ trait PinTrait
 
         }
 
+        //save pins to cache
+        CacheHelper::saveCache("fake_pins", ["location" => round($pin->lat+$pin->lng)], $fake, 60);
         return $fake;
 
     }
@@ -170,8 +178,8 @@ trait PinTrait
             [
                 "publish_time" => $date->format('Y-m-d H:i:s'),
                 "comment"      => "",
-                "lat"          => $lat,
-                "lng"          => $lng,
+                "lat"          => round($lat,6),
+                "lng"          => round($lng,6),
                 "pin_id"       => $data["pin_id"],
                 "tags" => $data["tags"][rand(0,count($data["tags"])-1)]
             ],

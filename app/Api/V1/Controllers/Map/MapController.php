@@ -9,8 +9,7 @@ use App\Models\PinTag;
 use App\Models\User;
 use App\Models\Tag;
 //use Illuminate\Support\Facades\Redis;
-use App;
-use Illuminate\Support\Facades\Cache;
+use App\Helpers\CacheHelper;
 
 class MapController extends Controller
 {
@@ -101,9 +100,7 @@ class MapController extends Controller
         if ($pin->save()) {
             //save in redis so you can get latest user's pin id
             //@TODO Redis::set("user:$user->id:pin", $pin->id);
-            if(!Cache::add("user:$user->id:pin", $pin->id, 900)){
-                Cache::put("user:$user->id:pin", $pin->id, 900);
-            }
+            CacheHelper::saveCache("user_pin_id", ["user_id"=>$user->id], $pin->id, 360);
             
             //save tags
             foreach ($tags as $tag_id => $tag_name) {

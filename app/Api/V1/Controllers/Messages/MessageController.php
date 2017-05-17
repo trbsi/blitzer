@@ -37,7 +37,7 @@ class MessageController extends Controller
             $pin_one    = $request->pin_id;
             $user_two   = $authUser->id;
             //$badgeForPin - if I send a message other user will get notification and badge has to be set on my pin.
-            $pin_two = $badgeForPin = CacheHelper::getCache("pin_id",["user_id" => $user_two]);
+            $pin_two = $badgeForPin = CacheHelper::getCache("user_pin_id",["user_id" => $user_two]);
 
             //if reply is still empty, show warning
             if (empty($reply)) {
@@ -139,7 +139,7 @@ class MessageController extends Controller
         $user_one           = (int) $request->user_id;
         $authUser           = $this->authUser;
         $user_two           = (int) $authUser->id;
-        $pin_two            = (int) CacheHelper::getCache("pin_id",["user_id" => $user_two]);
+        $pin_two            = (int) CacheHelper::getCache("user_pin_id",["user_id" => $user_two]);
         $return             = [];
         $return["success"]  = true;
         $return["messages"] = [];

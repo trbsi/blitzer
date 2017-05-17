@@ -141,9 +141,7 @@ class Pin extends Model
         }
 
         if (count($jsonPins) < 20) {
-            //@TODO - generate fake pins
             $fakePins[] = $this->generateFakePins($authUser->id);
-
             $jsonPins = array_merge($jsonPins, $fakePins);
         }
 
