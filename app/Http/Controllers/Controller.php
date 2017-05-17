@@ -20,4 +20,9 @@ class Controller extends BaseController
     {
     	return view("welcome");
     }
+
+    public function legal()
+    {
+    	return view("public.legal.legal");
+    }
 }

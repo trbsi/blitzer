@@ -13,6 +13,7 @@
 
 Route::get('ajax-test', 'Controller@ajaxTest');
 Route::get('/', 'Controller@index');
+Route::get('legal', 'Controller@legal');
 
 Route::group(['namespace' => 'Cron', 'prefix' => 'cron'], function()
 {
