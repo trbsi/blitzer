@@ -20,7 +20,7 @@ class CreatePinsTable extends Migration
             $table->float('lat', 10, 6);
             $table->float('lng', 10, 6);
             $table->integer('user_id');
-            $table->datetime('updated_at');
+            $table->timestamp('updated_at');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
 
         });

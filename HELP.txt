@@ -3,3 +3,6 @@ http://laravel-recipes.com/recipes/1/checking-your-environment
 
 debug bar for API
 https://github.com/barryvdh/laravel-debugbar/issues/252
+
+Saving and Updating Laravel Relations
+http://meigwilym.com/family-fortunes-saving-and-updating-laravel-relations/

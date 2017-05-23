@@ -10,7 +10,7 @@ class UsersTable extends Seeder
      *
      * @return void
      */
-    public function run(User $user = null)
+    public function run(User $user)
     {
         $data =
         [

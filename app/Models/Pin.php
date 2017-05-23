@@ -164,8 +164,6 @@ class Pin extends Model
             $jsonPins = array_merge($jsonPins, $fakePins);
         }
 
-
-
         return $jsonPins;
 
     }
