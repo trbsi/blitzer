@@ -14,6 +14,7 @@ class CreatePinTagTable extends Migration
     public function up()
     {
         Schema::create('pin_tag', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->integer('id', true);
             $table->integer('tag_id');
             $table->integer('pin_id');

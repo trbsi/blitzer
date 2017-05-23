@@ -14,6 +14,7 @@ class CreateMessagesReplyTable extends Migration
     public function up()
     {
         Schema::create('messages_reply', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->integer('id', true);
             $table->integer('message_id');
             $table->text('reply');

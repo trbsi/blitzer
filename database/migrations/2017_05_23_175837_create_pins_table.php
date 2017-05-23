@@ -14,6 +14,7 @@ class CreatePinsTable extends Migration
     public function up()
     {
         Schema::create('pins', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->integer('id', true);
             $table->string('comment', 255)->nullable();
             $table->datetime('publish_time');
