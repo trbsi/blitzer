@@ -27,6 +27,6 @@ class CreatePinTimeUpdateTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tags');
+        Schema::dropIfExists('pin_time_update');
     }
 }
