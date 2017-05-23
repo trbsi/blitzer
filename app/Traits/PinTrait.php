@@ -77,12 +77,29 @@ trait PinTrait
      * @param  [type] $user_id [Auth user id]
      * @return [type]          [description]
      */
-    private function generateFakePins($user_id)
+    private function generateFakePins($user_id, $request)
     {
         $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
     	$pin = $this->getPinById($userPin);
 
-        $pins = CacheHelper::getCache("fake_pins", ["location" => round($pin->lat+$pin->lng)]);
+        if(!empty($pin))
+        {
+            $lat = $pin->lat;
+            $lng = $pin->lng;
+            $publish_time = $pin->publish_time;
+            $pin_id = $pin->id;
+            $age = PinHelper::calculateAge($pin->relationUser->birthday);
+        }
+        else
+        {
+            $lat = $request->lat;
+            $lng = $request->lng;
+            $publish_time = $request->current_time;
+            $pin_id = 0;
+            $age = 25;
+        }
+
+        $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat+$lng)]);
 
         if(!empty($pins))
         {
@@ -123,11 +140,11 @@ trait PinTrait
         $fake = [];
         $data =
         [
-            'age' => PinHelper::calculateAge($pin->relationUser->birthday),
-            'lat' => $pin->lat,
-            'lng' => $pin->lng,
-            'time' => $pin->publish_time,
-            'pin_id' => $pin->id,
+            'age' => $age,
+            'lat' => $lat,
+            'lng' => $lng,
+            'time' => $publish_time,
+            'pin_id' => $pin_id,
             'tags' => $tags,
             'user_id' => $user_id
         ];
@@ -149,7 +166,7 @@ trait PinTrait
         }
 
         //save pins to cache
-        CacheHelper::saveCache("fake_pins", ["location" => round($pin->lat+$pin->lng)], $fake, 60);
+        CacheHelper::saveCache("fake_pins", ["location" => round($lat+$lng)], $fake, 60);
         return $fake;
 
     }

@@ -7,7 +7,7 @@ use App\Models\Message;
 use App\Models\PinTag;
 use App\Models\Tag;
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 
 class Pin extends Model
 {
@@ -69,12 +69,22 @@ class Pin extends Model
     {
         $onehour = PinHelper::returnTime('minus-1hour', $request->current_time);
 
-        $activePin = Pin::where('updated_at', '>=', $onehour)
+        return Pin::where('updated_at', '>=', $onehour)
             ->where('updated_at', '<=', $request->current_time)
             ->where('user_id', $user->id)
             ->count();
+    }
 
-        return $activePin;
+    /**
+     * get user's latest pin
+     * @param $request
+     * @param $user
+     * @return mixed
+     */
+    public function getUserLatestPin($user_id)
+    {
+
+        return Pin::where('id', DB::raw('(SELECT MAX(id) FROM '.Pin::getTable().')'))->first();
     }
 
     /**
@@ -106,6 +116,7 @@ class Pin extends Model
 
         $query = Pin::where("$pinTable.updated_at", '>=', $onehour)
             ->where("$pinTable.updated_at", '<=', $current_time)
+            ->where("$pinTable.user_id", '<>', $user_id)
             ->with('relationPinTag.relationTag', 'relationUser')
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
@@ -133,7 +144,15 @@ class Pin extends Model
     public function getPins($request, $authUser)
     {
         $pins = $this->getPinsQuery($request, $authUser)->get();
+
         $jsonPins = [];
+
+        //add latest user pin to array
+        $latestUserPin = $this->getUserLatestPin($authUser->id);
+        if(!empty($latestUserPin))
+        {
+            $jsonPins[] = $this->generateContentForInfoWindow($latestUserPin);
+        }
 
         //return json data
         foreach ($pins as $key => $pin) {
@@ -141,7 +160,7 @@ class Pin extends Model
         }
 
         if (count($jsonPins) < 20) {
-            $fakePins[] = $this->generateFakePins($authUser->id);
+            $fakePins[] = $this->generateFakePins($authUser->id, $request);
             $jsonPins = array_merge($jsonPins, $fakePins);
         }
 

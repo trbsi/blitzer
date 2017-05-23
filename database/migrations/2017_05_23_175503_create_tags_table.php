@@ -18,6 +18,8 @@ class CreateTagsTable extends Migration
             $table->string('tag', 50);
             $table->integer('popularity');
         });
+
+        \DB::statement('ALTER TABLE tags ADD FULLTEXT INDEX tags_ft_index (tag);');
     }
 
     /**
