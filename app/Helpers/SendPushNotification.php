@@ -85,7 +85,7 @@ class SendPushNotification
         //------------CHANGED-------------------
         // Create the payload body
         $body['aps'] =
-            [
+        [
             'alert' =>
             [
                 'title' => $data['title'],
