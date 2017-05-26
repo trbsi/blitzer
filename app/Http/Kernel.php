@@ -38,6 +38,12 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
+        //My global middlewares
+        'api.global' => 
+        [
+            \App\Http\Middleware\AllowEntry::class,
+        ]
     ];
 
     /**
