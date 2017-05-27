@@ -43,7 +43,7 @@ class LoginController extends Controller
         ];
 
         //save or update
-        $request["birthday"] = date("Y-m-d H:i:s", strtotime($request->birthday));
+        $request["birthday"] = date("Y-m-d", strtotime($request->birthday));
         $user = User::updateOrCreate(['email' => $request->email], $request->all());
         if ($user) {
             try {
