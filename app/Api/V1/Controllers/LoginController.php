@@ -33,12 +33,6 @@ class LoginController extends Controller
 
     public function login(Request $request, JWTAuth $JWTAuth)
     {
-        //check if user exists
-        $user = $this->user->getUserByEmail($request->email);
-        if (empty($user)) {
-            $user = $this->user;
-        }
-
         //init var
         $status    = true;
         $showAlert = false;
@@ -50,8 +44,8 @@ class LoginController extends Controller
 
         //save or update
         $request["birthday"] = date("Y-m-d H:i:s", strtotime($request->birthday));
-        $user->fill($request->all());
-        if ($user->save()) {
+        $user = User::updateOrCreate(['email' => $request->email], $request->all());
+        if ($user) {
             try {
                 $token = $JWTAuth->fromUser($user);
 
