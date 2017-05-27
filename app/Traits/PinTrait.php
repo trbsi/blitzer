@@ -14,13 +14,13 @@ trait PinTrait
     private function fakeLocation($number)
     {
         //this moves pin's location to about 100m
-        $rand     = 0.000400; //rand(1000,1100);
+        $rand = 0.000400; //rand(1000,1100);
         $date_sum = date("Y") + date("m") + date("d");
 
         if ($date_sum % 2 == 0) {
-            return (float) ($number + $rand);
+            return (float)($number + $rand);
         } else {
-            return (float) ($number - $rand);
+            return (float)($number - $rand);
         }
 
     }
@@ -40,7 +40,7 @@ trait PinTrait
 
         $i = 0;
         foreach ($pin->relationPinTag as $pin2) {
-            $tags[$i]["tag_id"]   = $pin2->tag_id;
+            $tags[$i]["tag_id"] = $pin2->tag_id;
             $tags[$i]["tag_name"] = $pin2->relationTag->tag;
             $i++;
         }
@@ -50,25 +50,25 @@ trait PinTrait
 
         return
             [
-            'user' =>
-            [
-                'name'            => $user->first_name . " " . $user->last_name,
-                'gender'          => $user->gender,
-                'user_id'         => $user->id,
-                'age'             => PinHelper::calculateAge($user->birthday),
-                'profile_picture' => $user->profile_picture,
-            ],
-            'pin'  =>
-            [
-                'publish_time' => $pin->publish_time,
-                'comment'      => $comment,
-                'lat'          => (float) $lat,
-                'lng'          => (float) $lng,
-                'pin_id'       => $pin->id,
-                'tags'         => $tags,
-            ],
+                'user' =>
+                    [
+                        'name' => $user->first_name . " " . $user->last_name,
+                        'gender' => $user->gender,
+                        'user_id' => $user->id,
+                        'age' => PinHelper::calculateAge($user->birthday),
+                        'profile_picture' => $user->profile_picture,
+                    ],
+                'pin' =>
+                    [
+                        'publish_time' => $pin->publish_time,
+                        'comment' => $comment,
+                        'lat' => (float)$lat,
+                        'lng' => (float)$lng,
+                        'pin_id' => $pin->id,
+                        'tags' => $tags,
+                    ],
 
-        ];
+            ];
     }
 
     //****************************FAKE PINS START********************************
@@ -80,18 +80,15 @@ trait PinTrait
     private function generateFakePins($user_id, $request)
     {
         $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
-    	$pin = $this->getPinById($userPin);
+        $pin = $this->getPinById($userPin);
 
-        if(!empty($pin))
-        {
+        if (!empty($pin)) {
             $lat = $pin->lat;
             $lng = $pin->lng;
             $publish_time = $pin->publish_time;
             $pin_id = $pin->id;
             $age = PinHelper::calculateAge($pin->relationUser->birthday);
-        }
-        else
-        {
+        } else {
             $lat = $request->lat;
             $lng = $request->lng;
             $publish_time = $request->current_time;
@@ -99,55 +96,54 @@ trait PinTrait
             $age = 25;
         }
 
-        $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat+$lng)]);
+        $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng)]);
 
-        if(!empty($pins))
-        {
+        if (!empty($pins)) {
             return $pins;
         }
 
         $male =
-        [
-            'first' =>
             [
-                'Donovan', 'Randolph', 'Shaun', 'Garth', 'Ty', 'Stefan', 'Doug', 'Carter', 'Werner', 'Ignacio', 'Truman', 'Coy', 'Reynaldo', 'Valentin', 'Roscoe', 'Randall', 'Andres', 'Leonard', 'Dewayne', 'Leon',
+                'first' =>
+                    [
+                        'Donovan', 'Randolph', 'Shaun', 'Garth', 'Ty', 'Stefan', 'Doug', 'Carter', 'Werner', 'Ignacio', 'Truman', 'Coy', 'Reynaldo', 'Valentin', 'Roscoe', 'Randall', 'Andres', 'Leonard', 'Dewayne', 'Leon',
 
-            ],
-            'last'  =>
-            [
-                'Eason', 'Beltran', 'Albanese', 'Ellington', 'Mccandless', 'Chappel', 'Dufner', 'Stanberry', 'Linger', 'Frisch', 'Chagnon', 'Borman', 'Vanderpool', 'Kerby', 'Funnell', 'Erhardt', 'Mcalister', 'Fenn', 'Crispin', 'Harp',
-            ],
-        ];
+                    ],
+                'last' =>
+                    [
+                        'Eason', 'Beltran', 'Albanese', 'Ellington', 'Mccandless', 'Chappel', 'Dufner', 'Stanberry', 'Linger', 'Frisch', 'Chagnon', 'Borman', 'Vanderpool', 'Kerby', 'Funnell', 'Erhardt', 'Mcalister', 'Fenn', 'Crispin', 'Harp',
+                    ],
+            ];
 
         $female =
             [
-            'first' => [
-                'Shella', 'Jaqueline', 'Janey', 'Sha', 'Sudie', 'Katherine', 'Jennie', 'Arlene', 'Lizbeth', 'Allyson', 'Elinore', 'Hsiu', 'Pei', 'Janiece', 'Cinda', 'Ora', 'Geralyn', 'Sebrina', 'Lura', 'Ann', 'Nadene', 'Krista', 'Nieves', 'Johanna', 'Joella', 'Janna', 'Charis', 'Yon', 'Anissa', 'Charita',
-            ],
-            'last'  => [
-                'Hockman', 'Haus', 'Ames', 'Kephart', 'Monfort', 'Meche', 'Parrinello', 'Abercrombie', 'Colone', 'Ellison', 'Monson', 'Austin', 'Robitaille', 'Cargill', 'Peckham', 'Castanon', 'Dare', 'Magwood', 'Booth', 'Pitre', 'Huth', 'Muth', 'Kauppi', 'Galyean', 'Cousin', 'Ditullio', 'Hawes', 'Vuong', 'Trinidad', 'Hayse',
-            ],
-        ];
+                'first' => [
+                    'Shella', 'Jaqueline', 'Janey', 'Sha', 'Sudie', 'Katherine', 'Jennie', 'Arlene', 'Lizbeth', 'Allyson', 'Elinore', 'Hsiu', 'Pei', 'Janiece', 'Cinda', 'Ora', 'Geralyn', 'Sebrina', 'Lura', 'Ann', 'Nadene', 'Krista', 'Nieves', 'Johanna', 'Joella', 'Janna', 'Charis', 'Yon', 'Anissa', 'Charita',
+                ],
+                'last' => [
+                    'Hockman', 'Haus', 'Ames', 'Kephart', 'Monfort', 'Meche', 'Parrinello', 'Abercrombie', 'Colone', 'Ellison', 'Monson', 'Austin', 'Robitaille', 'Cargill', 'Peckham', 'Castanon', 'Dare', 'Magwood', 'Booth', 'Pitre', 'Huth', 'Muth', 'Kauppi', 'Galyean', 'Cousin', 'Ditullio', 'Hawes', 'Vuong', 'Trinidad', 'Hayse',
+                ],
+            ];
 
-        $tags = 
-        [
-            [['tag_name'=>'#mama'], ['tag_name'=>'#tata']], [['tag_name'=>'#jedan'], ['tag_name'=>'#dva']], [['tag_name'=>'#plaža'], ['tag_name'=>'#sunce']]
-        ];
+        $tags =
+            [
+                [['tag_name' => '#mama'], ['tag_name' => '#tata']], [['tag_name' => '#jedan'], ['tag_name' => '#dva']], [['tag_name' => '#plaža'], ['tag_name' => '#sunce']]
+            ];
 
-        $countMale   = count($male["first"]);
+        $countMale = count($male["first"]);
         $countFemale = count($female["first"]);
 
         $fake = [];
         $data =
-        [
-            'age' => $age,
-            'lat' => $lat,
-            'lng' => $lng,
-            'time' => $publish_time,
-            'pin_id' => $pin_id,
-            'tags' => $tags,
-            'user_id' => $user_id
-        ];
+            [
+                'age' => $age,
+                'lat' => $lat,
+                'lng' => $lng,
+                'time' => $publish_time,
+                'pin_id' => $pin_id,
+                'tags' => $tags,
+                'user_id' => $user_id
+            ];
 
         $data["gender"] = 'male';
         $data["names"] = $male;
@@ -166,7 +162,7 @@ trait PinTrait
         }
 
         //save pins to cache
-        CacheHelper::saveCache("fake_pins", ["location" => round($lat+$lng)], $fake, 60);
+        CacheHelper::saveCache("fake_pins", ["location" => round($lat + $lng)], $fake, 60);
         return $fake;
 
     }
@@ -177,32 +173,32 @@ trait PinTrait
         $countName = count($data['names']["first"]);
         $plusMinusage = 5;
         $date = new \DateTime($data["time"]);
-        $date->sub(new \DateInterval('PT'.rand(1,120)."M".rand(1,60)."S"));
-        $lat = $data["lat"]+(float)("0.000".rand(1000, 9000));
-        $lng = $data["lng"]+(float)("0.000".rand(1000, 9000));
+        $date->sub(new \DateInterval('PT' . rand(1, 120) . "M" . rand(1, 60) . "S"));
+        $lat = $data["lat"] + (float)("0.000" . rand(1000, 9000));
+        $lng = $data["lng"] + (float)("0.000" . rand(1000, 9000));
 
         return
-        [
-            "user" =>
             [
-                "name"            => $data['names']["first"][rand(0,$countName-1)]." ".$data['names']["last"][rand(0,$countName-1)],
-                "gender"          => $gender,
-                "user_id"         => $data["user_id"],
-                "age"             => rand($data["age"]-$plusMinusage, $data["age"]+$plusMinusage),
-                "profile_picture" => env('APP_URL').'/files/'.$gender.'/'.rand(0,$countName-1).'.jpg',
-            ],
-            "pin" =>
-            [
-                "publish_time" => $date->format('Y-m-d H:i:s'),
-                "comment"      => "",
-                "lat"          => round($lat,6),
-                "lng"          => round($lng,6),
-                "pin_id"       => $data["pin_id"],
-                "tags" => $data["tags"][rand(0,count($data["tags"])-1)]
-            ],
-        ];
+                "user" =>
+                    [
+                        "name" => $data['names']["first"][rand(0, $countName - 1)] . " " . $data['names']["last"][rand(0, $countName - 1)],
+                        "gender" => $gender,
+                        "user_id" => $data["user_id"],
+                        "age" => rand($data["age"] - $plusMinusage, $data["age"] + $plusMinusage),
+                        "profile_picture" => env('APP_URL') . '/files/' . $gender . '/' . rand(0, $countName - 1) . '.jpg',
+                    ],
+                "pin" =>
+                    [
+                        "publish_time" => $date->format('Y-m-d H:i:s'),
+                        "comment" => "",
+                        "lat" => round($lat, 6),
+                        "lng" => round($lng, 6),
+                        "pin_id" => $data["pin_id"],
+                        "tags" => $data["tags"][rand(0, count($data["tags"]) - 1)]
+                    ],
+            ];
     }
     //****************************FAKE PINS END********************************
 
-	
+
 }

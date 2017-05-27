@@ -25,14 +25,14 @@ class SendPushNotification
      */
     public function android($data, $reg_id)
     {
-        $url     = 'https://android.googleapis.com/gcm/send';
+        $url = 'https://android.googleapis.com/gcm/send';
         $message = array(
-            'title'      => $data['title'],
-            'message'    => $data['body'],
-            'subtitle'   => '',
+            'title' => $data['title'],
+            'message' => $data['body'],
+            'subtitle' => '',
             'tickerText' => '',
-            'msgcnt'     => 1,
-            'vibrate'    => 1,
+            'msgcnt' => 1,
+            'vibrate' => 1,
         );
 
         $headers = array(
@@ -42,7 +42,7 @@ class SendPushNotification
 
         $fields = array(
             'registration_ids' => $reg_id,
-            'data'             => $message,
+            'data' => $message,
         );
 
         return self::useCurl($url, $headers, json_encode($fields));
@@ -60,10 +60,10 @@ class SendPushNotification
         //------------CHANGED-------------------
         if (App::isLocal()) {
             $applePushGateway = "ssl://gateway.sandbox.push.apple.com:2195";
-            $ckpem            = "ios_sandbox.pem";
+            $ckpem = "ios_sandbox.pem";
         } else {
             $applePushGateway = "ssl://gateway.push.apple.com:2195";
-            $ckpem            = "ios_production.pem";
+            $ckpem = "ios_production.pem";
         }
         //------------CHANGED-------------------
 
@@ -85,23 +85,23 @@ class SendPushNotification
         //------------CHANGED-------------------
         // Create the payload body
         $body['aps'] =
-        [
-            'alert' =>
             [
-                'title' => $data['title'],
-                'body'  => $data['body'],
-            ],
-            'sound' => $data['sound'], //"message.wav"
-        ];
+                'alert' =>
+                    [
+                        'title' => $data['title'],
+                        'body' => $data['body'],
+                    ],
+                'sound' => $data['sound'], //"message.wav"
+            ];
 
         //only if badge is set, send it
         if (isset($data['badge'])) {
-            $body['aps']['badge'] = (int) $data['badge'];
+            $body['aps']['badge'] = (int)$data['badge'];
         }
 
         //this is used so you know which pin to open
         if (isset($data["pin_id"])) {
-            $body["pin_id"] = (int) $data["pin_id"];
+            $body["pin_id"] = (int)$data["pin_id"];
         }
 
         //------------CHANGED-------------------
@@ -207,8 +207,8 @@ class SendPushNotification
      */
     public static function sendNotification($user_id, $data)
     {
-        $tokens    = PushNotificationsToken::getNotificationTokens($user_id);
-        $return    = true;
+        $tokens = PushNotificationsToken::getNotificationTokens($user_id);
+        $return = true;
         $iOStokens = $Androidtokens = [];
         foreach ($tokens as $token) {
             /*if (!empty($token->token) && $token->device == "android") {
@@ -232,7 +232,6 @@ class SendPushNotification
         }*/
 
     }
-
 
 
 }

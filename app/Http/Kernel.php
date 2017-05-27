@@ -40,10 +40,10 @@ class Kernel extends HttpKernel
         ],
 
         //My global middlewares
-        'api.global' => 
-        [
-            \App\Http\Middleware\AllowEntry::class,
-        ]
+        'api.global' =>
+            [
+                \App\Http\Middleware\AllowEntry::class,
+            ]
     ];
 
     /**

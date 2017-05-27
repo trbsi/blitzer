@@ -18,11 +18,11 @@ class Controller extends BaseController
 
     public function index()
     {
-    	return view("welcome");
+        return view("welcome");
     }
 
     public function legal()
     {
-    	return view("public.legal.legal");
+        return view("public.legal.legal");
     }
 }

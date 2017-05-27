@@ -10,8 +10,8 @@ class MessagesReply extends Model
      * Generated
      */
 
-    protected $table    = 'messages_reply';
-    public $timestamps  = false;
+    protected $table = 'messages_reply';
+    public $timestamps = false;
     protected $fillable = ['id', 'message_id', 'reply', 'user_id', 'send_date', 'message_type'];
 
     /**
@@ -32,9 +32,9 @@ class MessagesReply extends Model
         } else {
             //get all messages
             $previousMessages =
-            $query->orderBy('send_date', 'ASC')
-                ->where("message_id", "=", $message_id)
-                ->get();
+                $query->orderBy('send_date', 'ASC')
+                    ->where("message_id", "=", $message_id)
+                    ->get();
         }
 
         return $previousMessages;

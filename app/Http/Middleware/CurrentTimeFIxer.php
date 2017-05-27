@@ -15,15 +15,14 @@ class CurrentTimeFixer
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
-     * @param  string|null  $guard
+     * @param  \Illuminate\Http\Request $request
+     * @param  \Closure $next
+     * @param  string|null $guard
      * @return mixed
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(isset($request->current_time))
-        {
+        if (isset($request->current_time)) {
             $request['current_time'] = PinHelper::formatCurrentTime($request->current_time, true);
         }
 

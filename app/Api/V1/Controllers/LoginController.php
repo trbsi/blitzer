@@ -23,22 +23,22 @@ class LoginController extends Controller
      */
     public function refreshToken(Request $request, JWTAuth $JWTAuth)
     {
-         $token = $JWTAuth->refresh($JWTAuth->getToken());
-         return response()
+        $token = $JWTAuth->refresh($JWTAuth->getToken());
+        return response()
             ->json([
-                'status'    => true,
-                'token'     => $token,
-            ]); 
+                'status' => true,
+                'token' => $token,
+            ]);
     }
 
     public function login(Request $request, JWTAuth $JWTAuth)
     {
         //init var
-        $status    = true;
+        $status = true;
         $showAlert = false;
-        $token     = false;
-        $message   = [
-            'body'  => trans('core.login.login_failed_title'),
+        $token = false;
+        $message = [
+            'body' => trans('core.login.login_failed_title'),
             'title' => trans('core.login.login_failed_body'),
         ];
 
@@ -50,27 +50,27 @@ class LoginController extends Controller
                 $token = $JWTAuth->fromUser($user);
 
                 if (!$token) {
-                    $status    = false;
+                    $status = false;
                     $showAlert = true;
                 } else {
                     $message = null;
                 }
 
             } catch (JWTException $e) {
-                $status    = false;
+                $status = false;
                 $showAlert = true;
             }
         } else {
-            $status    = false;
+            $status = false;
             $showAlert = true;
 
         }
 
         return response()
             ->json([
-                'status'    => $status,
-                'token'     => $token,
-                'message'   => $message,
+                'status' => $status,
+                'token' => $token,
+                'message' => $message,
                 'showAlert' => $showAlert,
             ]);
 

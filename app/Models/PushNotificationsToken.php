@@ -10,7 +10,7 @@ class PushNotificationsToken extends Model
      * Generated
      */
 
-    protected $table    = 'push_notifications_token';
+    protected $table = 'push_notifications_token';
     protected $fillable = ['id', 'user_id', 'token', 'device', 'device_id', 'updated_at', 'created_at'];
 
     /**

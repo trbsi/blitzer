@@ -1,10 +1,11 @@
-<?php 
+<?php
 
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PinTimeUpdate extends Model {
+class PinTimeUpdate extends Model
+{
 
     /**
      * Generated

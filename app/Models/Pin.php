@@ -14,16 +14,16 @@ class Pin extends Model
     use PinTrait;
 
     const MAX_TAG_LENGTH = 50;
-    const MEAUREMENT     = 'miles';
-    const DISTANCE       = 20;
+    const MEAUREMENT = 'miles';
+    const DISTANCE = 20;
     const COMMENT_LENGTH = 255;
 
     /**
      * Generated
      */
 
-    protected $table    = 'pins';
-    public $timestamps  = false;
+    protected $table = 'pins';
+    public $timestamps = false;
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
 
     /**
@@ -43,8 +43,8 @@ class Pin extends Model
             $t = Tag::where(['tag' => $tag])->first();
 
             if (empty($t)) {
-                $t             = new Tag;
-                $t->tag        = $tag;
+                $t = new Tag;
+                $t->tag = $tag;
                 $t->popularity = 1;
                 $t->save();
             } else {
@@ -84,7 +84,7 @@ class Pin extends Model
     public function getUserLatestPin($user_id)
     {
 
-        return Pin::where('id', DB::raw('(SELECT MAX(id) FROM '.Pin::getTable().')'))->first();
+        return Pin::where('id', DB::raw('(SELECT MAX(id) FROM ' . Pin::getTable() . ')'))->first();
     }
 
     /**
@@ -98,20 +98,20 @@ class Pin extends Model
 
     /**
      * get only query for pins
-     * @param  Request $request  [Laravel request]
+     * @param  Request $request [Laravel request]
      * @param  User $authUser [authenticated user]
      * @return [Laravel Eloquent]           [laravel prepared query]
      */
     public function getPinsQuery($request, $authUser)
     {
-        $user_id       = $authUser->id;
-        $lat           = $request->lat;
-        $lng           = $request->lng;
-        $current_time  = $request->current_time;
-        $km            = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
-        $distance      = Pin::DISTANCE;
-        $onehour       = PinHelper::returnTime('minus-1hour', $current_time);
-        $pinTable      = Pin::getTable();
+        $user_id = $authUser->id;
+        $lat = $request->lat;
+        $lng = $request->lng;
+        $current_time = $request->current_time;
+        $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
+        $distance = Pin::DISTANCE;
+        $onehour = PinHelper::returnTime('minus-1hour', $current_time);
+        $pinTable = Pin::getTable();
         $messagesTable = (new Message)->getTable();
 
         $query = Pin::where("$pinTable.updated_at", '>=', $onehour)
@@ -137,7 +137,7 @@ class Pin extends Model
 
     /**
      * return all pins formatted
-     * @param  Request $request  [Laravel request]
+     * @param  Request $request [Laravel request]
      * @param  User $authUser [authenticated user]
      * @return [array]           [formatted pins]
      */
@@ -149,8 +149,7 @@ class Pin extends Model
 
         //add latest user pin to array
         $latestUserPin = $this->getUserLatestPin($authUser->id);
-        if(!empty($latestUserPin))
-        {
+        if (!empty($latestUserPin)) {
             $jsonPins[] = $this->generateContentForInfoWindow($latestUserPin);
         }
 
