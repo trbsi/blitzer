@@ -85,15 +85,9 @@ trait PinTrait
         if (!empty($pin)) {
             $lat = $pin->lat;
             $lng = $pin->lng;
-            $publish_time = $pin->publish_time;
-            $pin_id = $pin->id;
-            $age = PinHelper::calculateAge($pin->relationUser->birthday);
         } else {
             $lat = $request->lat;
             $lng = $request->lng;
-            $publish_time = $request->current_time;
-            $pin_id = 0;
-            $age = 25;
         }
 
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng)]);
@@ -102,6 +96,16 @@ trait PinTrait
             return $pins;
         }
 
+        if (!empty($pin)) {
+            $publish_time = $pin->publish_time;
+            $pin_id = $pin->id;
+            $age = PinHelper::calculateAge($pin->relationUser->birthday);
+        } else {
+            $publish_time = $request->current_time;
+            $pin_id = 0;
+            $age = 25;
+        }
+        
         $male =
             [
                 'en' =>
