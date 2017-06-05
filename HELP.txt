@@ -6,3 +6,6 @@ https://github.com/barryvdh/laravel-debugbar/issues/252
 
 Saving and Updating Laravel Relations
 http://meigwilym.com/family-fortunes-saving-and-updating-laravel-relations/
+
+get raw query: DB::table('users')->toSql() 
+https://stackoverflow.com/questions/18236294/how-do-i-get-the-query-builder-to-output-its-raw-sql-query-as-a-string
