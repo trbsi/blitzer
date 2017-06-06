@@ -33,8 +33,12 @@ class MapController extends Controller
     public function pins(Request $request)
     {
         $showAlert = false;
-        $blink = NULL;
-        $message = NULL;
+        $blink = false;
+        $message = 
+        [
+            'body' => null,
+            'title' => null,
+        ];
         $authUser = $this->authUser;
         $enableAllPins = true;
 
