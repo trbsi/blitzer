@@ -643,7 +643,16 @@ trait PinTrait
                 ]
             ];
 
+        $header = $request->header("Country");
         $get = 'en';
+        if($header)
+        {
+            if($header == "Croatia")
+            {
+                $get = "hr";
+            }
+        }
+
 
         $countMale = count($male[$get]["first"]);
         $countFemale = count($female[$get]["first"]);
