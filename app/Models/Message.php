@@ -18,6 +18,11 @@ class Message extends Model
     protected $table = 'messages';
     protected $fillable = ['id', 'pin_one', 'pin_two', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
 
+    /**
+     * get conversation between 2 pins
+     * @param  [int] $pin_one [id of a pin]
+     * @param  [int] $pin_two [id of a pin]
+     */
     public function getConversationByPin($pin_one, $pin_two)
     {
         return Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)",
@@ -32,12 +37,12 @@ class Message extends Model
      * @param  [type] $pin_two  [description]
      * @return [type]           [description]
      */
-    public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two, $create = true)
+    public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two)
     {
         $result = $this->getConversationByPin($pin_one, $pin_two);
 
         //if user wants to see a conversation but it doesn't exist, don't create it. Create only if he wasnts to send a message
-        if (empty($result) && $create == true) {
+        if (empty($result)) {
 
             $result = Message::create([
                 'pin_one' => $pin_one,
@@ -84,25 +89,25 @@ class Message extends Model
      * @param $current_time - taken from $_GET["current_time"]
      * @return bool
      */
-    public function triggerMessageNotification($MessagesReply, $ids)
+    public function triggerMessageNotification($MessagesReply, $data)
     {
         //check for all unread messages
         $body = (strlen($MessagesReply->reply) > 140) ? substr($MessagesReply->reply, 0, 140) . "..." : $MessagesReply->reply;
 
         $relationUser = $MessagesReply->relationUser;
         // Message payload
-        $data =
+        $dataTmp =
             [
                 'title' => $relationUser->first_name . " " . $relationUser->last_name, //user who sent message (ME)
                 'body' => $body,
                 'sound' => "message.wav",
                 'event' => 'message', //so you can redirect users to messages screen, directly to that message
-                'pin_id' => (int)$ids["badgeForPin"],
+                'pin_id' => (int)$data["badgeForPin"],
                 'badge' => rand(1, 9),
             ];
 
         //send notification to a user
-        SendPushNotification::sendNotification($ids["sendNotificationToThisUser"], $data);
+        SendPushNotification::sendNotification($ids["sendNotificationToThisUser"], $dataTmp);
     }
 
     public function pinOne()

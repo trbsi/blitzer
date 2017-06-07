@@ -30,7 +30,6 @@ class MessageController extends Controller
     public function send(Request $request)
     {
         if (isset($request->reply) && isset($request->user_id) && isset($request->pin_id)) {
-            $message_id = (int)$request->message_id; //may be null or 0
             $reply = $request->reply;
             $authUser = $this->authUser;
             $user_one = $request->user_id; //id of a user whose pin it is
