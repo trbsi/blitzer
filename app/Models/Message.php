@@ -31,6 +31,7 @@ class Message extends Model
         $result = Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)",
             [$pin_one, $pin_one, $pin_two, $pin_two])->first();
 
+        //if user wants to see a conversation but it doesn't exist, don't create it. Create only if he wasnts to send a message
         if (empty($result) && $create == true) {
 
             $result = Message::create([
