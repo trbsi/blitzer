@@ -136,16 +136,14 @@ class MessageController extends Controller
     public function view(Request $request)
     {
         $pin_one = (int)$request->pin_id;
-        $user_one = (int)$request->user_id;
         $authUser = $this->authUser;
-        $user_two = (int)$authUser->id;
-        $pin_two = (int)CacheHelper::getCache("user_pin_id", ["user_id" => $user_two]);
+        $pin_two = (int)CacheHelper::getCache("user_pin_id", ["user_id" => $authUser->id]);
         $return = [];
         $return["success"] = true;
         $return["messages"] = [];
 
         //find message by pin id and logged user
-        $Message = $this->message->findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two, false);
+        $Message = $this->message->getConversationByPin($pin_one, $pin_two);
 
         if (!empty($Message)) {
             if ($Message->user_one == $authUser->id) {

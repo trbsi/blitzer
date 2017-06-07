@@ -18,6 +18,12 @@ class Message extends Model
     protected $table = 'messages';
     protected $fillable = ['id', 'pin_one', 'pin_two', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
 
+    public function getConversationByPin($pin_one, $pin_two)
+    {
+        return Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)",
+            [$pin_one, $pin_one, $pin_two, $pin_two])->first();
+    }
+
     /**
      * find message by pin id
      * @param  [type] $user_one [description]
@@ -28,8 +34,7 @@ class Message extends Model
      */
     public function findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two, $create = true)
     {
-        $result = Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)",
-            [$pin_one, $pin_one, $pin_two, $pin_two])->first();
+        $result = $this->getConversationByPin($pin_one, $pin_two);
 
         //if user wants to see a conversation but it doesn't exist, don't create it. Create only if he wasnts to send a message
         if (empty($result) && $create == true) {
