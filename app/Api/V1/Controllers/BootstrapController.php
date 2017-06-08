@@ -43,6 +43,12 @@ class BootstrapController extends Controller
                 $PNT->token = $request->push_token;
                 $PNT->update();
             }
+
+            return response()->json(['success' => true]);
+
         }
+    
+        return response()->json(['success' => false]);
+
     }
 }
