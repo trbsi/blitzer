@@ -21,7 +21,7 @@ class LoginController extends Controller
      * @param  JWTAuth $JWTAuth [description]
      * @return [type]           [description]
      */
-    public function refreshToken(Request $request, JWTAuth $JWTAuth)
+    /*public function refreshToken(Request $request, JWTAuth $JWTAuth)
     {
         $token = $JWTAuth->refresh($JWTAuth->getToken());
         return response()
@@ -29,7 +29,7 @@ class LoginController extends Controller
                 'status' => true,
                 'token' => $token,
             ]);
-    }
+    }*/
 
     public function login(Request $request, JWTAuth $JWTAuth)
     {
