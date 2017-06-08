@@ -10,3 +10,6 @@ https://makeappicon.com/
 
 #Favicon generator
 http://www.favicon-generator.org/
+
+#laravel jwt boilerplate
+https://github.com/francescomalatesta/laravel-api-boilerplate-jwt
