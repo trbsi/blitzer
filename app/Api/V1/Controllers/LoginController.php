@@ -46,9 +46,9 @@ class LoginController extends Controller
         $request["birthday"] = date("Y-m-d", strtotime($request->birthday));
         $user = User::updateOrCreate(['email' => $request->email], $request->all());
         if ($user) {
+
             try {
                 $token = $JWTAuth->fromUser($user);
-
                 if (!$token) {
                     $status = false;
                     $showAlert = true;
