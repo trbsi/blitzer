@@ -62,8 +62,8 @@ trait PinTrait
                     [
                         'publish_time' => $pin->publish_time,
                         'comment' => $comment,
-                        'lat' => (float)$lat,
-                        'lng' => (float)$lng,
+                        'lat' => number_format($lat,6),
+                        'lng' => number_format($lng,6),
                         'pin_id' => $pin->id,
                         'tags' => $tags,
                     ],
@@ -715,8 +715,8 @@ trait PinTrait
                     [
                         "publish_time" => $date->format('Y-m-d H:i:s'),
                         "comment" => "",
-                        "lat" => round($lat, 6),
-                        "lng" => round($lng, 6),
+                        "lat" => number_format($lat, 6),
+                        "lng" => number_format($lng, 6),
                         "pin_id" => $data["pin_id"],
                         "tags" => $data["tags"][$get][$i]
                     ],
