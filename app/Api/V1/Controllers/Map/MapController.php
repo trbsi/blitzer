@@ -48,7 +48,7 @@ class MapController extends Controller
         if ($activePin == 0) {
             $showAlert = true;
             $enableAllPins = false;
-            $blink = 'publish-pin';
+            $blink = true;
             $message = [
                 'body' => trans('core.map.user_didnt_publish_pin_body'),
                 'title' => trans('core.map.user_didnt_publish_pin_title'),
