@@ -120,7 +120,7 @@ class MapController extends Controller
         return response()
             ->json([
                 'status' => $status,
-                'pin' => $pin_info,
+                'pins' => $pin_info,
             ]);
     }
 
