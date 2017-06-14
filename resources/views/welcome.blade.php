@@ -79,11 +79,11 @@
                             <p>
                                  Blitzer is a social discovery app where people can discover other people on the map based on hashtags, chat from within map markers and quickly meet in real life.
                             </p>
-                            <a href="#" class="btn btn-download wow animated fadeInLeft">
+                            <a href="<?= env("GOOGLE_PLAY_LINK") ?>" target="_blank" class="btn btn-download wow animated fadeInLeft">
                             <i class="fa fa-android pull-left"></i>
                             <strong>Get it on</strong>
                             <br/>Google Play </a>
-                            <a href="#" class="btn btn-download wow animated fadeInRight">
+                            <a href="<?= env("IOS_STORE_LINK") ?>" target="_blank" class="btn btn-download wow animated fadeInRight">
                             <i class="fa fa-apple pull-left"></i>
                             <strong>Get it on</strong>
                             <br/>App store </a>   
