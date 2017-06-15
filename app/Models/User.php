@@ -26,7 +26,6 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token',
     ];
 
     /**
@@ -82,34 +81,9 @@ class User extends Authenticatable
     }
 
     //RELATIONS
-    public function usersBlockedBy()
-    {
-        return $this->belongsToMany(\App\Models\User::class, 'block_user', 'blocked_by', 'who_is_blocked');
-    }
-
-    public function usersWhoisBlocked()
-    {
-        return $this->belongsToMany(\App\Models\User::class, 'block_user', 'who_is_blocked', 'blocked_by');
-    }
-
     public function messages()
     {
         return $this->belongsToMany(\App\Models\Message::class, 'messages_reply', 'user_id', 'message_id');
-    }
-
-    public function blockUsersBlockedBy()
-    {
-        return $this->hasMany(\App\Models\BlockUser::class, 'blocked_by', 'id');
-    }
-
-    public function blockUsersWhoIsBlocked()
-    {
-        return $this->hasMany(\App\Models\BlockUser::class, 'who_is_blocked', 'id');
-    }
-
-    public function locations()
-    {
-        return $this->hasMany(\App\Models\Location::class, 'user_id', 'id');
     }
 
     public function messagesUserOne()
