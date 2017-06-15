@@ -4,7 +4,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,100,300,500,700);
 :root {
-    --blitzer-color: #E97362;
+    --company-color: #E97362;
     --gradient-color: #E93F25;
 }
 
@@ -97,7 +97,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
     top: 0;
     left: 0;
     z-index: 9999;
-    background: linear-gradient(50deg, var(--blitzer-color), var(--gradient-color));
+    background: linear-gradient(50deg, var(--company-color), var(--gradient-color));
 }
 
 .overlay .overlay-close {
@@ -215,7 +215,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 
 .header {
     height: 100vh;
-    background: linear-gradient(50deg, var(--blitzer-color), var(--gradient-color));
+    background: linear-gradient(50deg, var(--company-color), var(--gradient-color));
     padding: 45px 0px;
 }
 
@@ -247,7 +247,7 @@ a#logo:hover {
 
 .fixed {
     position: fixed;
-    background: var(--blitzer-color);
+    background: var(--company-color);
     top: 0;
     z-index: 99;
     transition: 1s;
@@ -796,7 +796,7 @@ HH              Testimonial
 HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 
 #testimonial {
-    background: linear-gradient(50deg, var(--blitzer-color), var(--gradient-color));
+    background: linear-gradient(50deg, var(--company-color), var(--gradient-color));
     color: white;
     padding: 100px 0px;
     /*position: relative;*/
@@ -865,7 +865,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 #pricing {
     position: relative;
     height: 100%;
-    background: linear-gradient(50deg, var(--blitzer-color), var(--gradient-color));
+    background: linear-gradient(50deg, var(--company-color), var(--gradient-color));
 }
 
 ul.pricing-table {
@@ -1094,7 +1094,7 @@ HHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH*/
 
 #footer {
     /*background: linear-gradient(180deg, rgb(0, 190, 111), rgb(87, 160, 255));*/
-    background-color: var(--blitzer-color);
+    background-color: var(--company-color);
     color: white;
     padding: 40px 0;
 }

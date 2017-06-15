@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <title>Blitzer - live in the moment</title>
+    <title><?= config("app.name") ?> - live in the moment</title>
 
     
     <link rel="stylesheet" href="css/bootstrap.min.css">
@@ -52,7 +52,7 @@
                             <div class="col-md-11 col-xs-10">
                                 <a href="/">
                                 <img src="img/logo.png" class="img-responsive" style="max-width: 25px; float: left;margin-right: 20px; padding-top: 10px;">
-                                <span id="logo"><strong class="strong">B</strong>litzer</span>
+                                <span id="logo"><?= config("app.name") ?></span>
                                 </a>
                             </div>
                             <div class="col-md-1 col-xs-2">
@@ -75,9 +75,9 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <div class="banner-text">
-                             <h2 class="animation-box wow bounceIn animated"><strong class="strong">Blitzer</strong><br>Live in the moment</h2>
+                             <h2 class="animation-box wow bounceIn animated"><strong class="strong"><?= config("app.name") ?></strong><br>Live in the moment</h2>
                             <p>
-                                 Blitzer is a social discovery app where people can discover other people on the map based on hashtags, chat from within map markers and quickly meet in real life.
+                                 <?= config("app.name") ?> is a social discovery app where people can discover other people on the map based on hashtags, chat from within map markers and quickly meet in real life.
                             </p>
                             <a href="<?= env("GOOGLE_PLAY_LINK") ?>" target="_blank" class="btn btn-download wow animated fadeInLeft">
                             <i class="fa fa-android pull-left"></i>
@@ -100,7 +100,7 @@
     <!-- HHHHHHHHHHHHHHHHHH        Video          HHHHHHHHHHHHHHHH -->
     <div id="video" class="wrapper">
         <div class="container">
-            <h2 class="">Blitzer Video</h2>
+            <h2 class=""><?= config("app.name") ?> Video</h2>
             <div class="virticle-line"></div>
             <div class="circle"></div>
             <div class='embed-container'><iframe src='https://www.youtube.com/embed/qiYRMm2JA94' frameborder='0' allowfullscreen></iframe></div>
@@ -162,7 +162,7 @@
     <section id="footer" class="wrapper">
         <div class="container text-center">
             <div class="footer-logo">
-                <h1 class="text-center animation-box wow bounceIn animated">Blitzer</h1>
+                <h1 class="text-center animation-box wow bounceIn animated"><?= config("app.name") ?></h1>
             </div>
             <ul class="social-icons text-center">
                 <li class="wow animated fadeInLeft facebook"><a href="https://www.facebook.com/BlitzerApp/" target="_blank"><i class="fa fa-facebook"></i></a></li>
