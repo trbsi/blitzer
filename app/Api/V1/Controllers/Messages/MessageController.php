@@ -2,7 +2,7 @@
 
 namespace App\Api\V1\Controllers\Messages;
 
-use App\Http\Controllers\Controller;
+use App\Api\V1\Controllers\BaseAuthController;
 use App\Helpers\Helper;
 use App\Models\Message;
 use App\Models\MessagesReply;
@@ -12,14 +12,13 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Helpers\CacheHelper;
 
-class MessageController extends Controller
+class MessageController extends BaseAuthController
 {
-    public function __construct(User $user, Message $message, MessagesReply $messageReply)
+    public function __construct(Message $message, MessagesReply $messageReply, User $user)
     {
-        $this->user = $user;
+        parent::__construct($user);
         $this->message = $message;
         $this->messageReply = $messageReply;
-        $this->authUser = $this->user->getAuthenticatedUser();
         $this->middleware('currentTimeFixer');
     }
 

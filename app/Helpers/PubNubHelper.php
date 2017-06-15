@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use Pubnub\Pubnub;
+use PubNub\PubNub;
 
 class PubNubHelper
 {
@@ -15,9 +15,9 @@ class PubNubHelper
      */
     private static function pubNubObject($IDuser)
     {
-        return new Pubnub(array(
-            'subscribe_key' => 'sub-c-f98aa7c4-a551-11e4-aa71-02ee2ddab7fe',
-            'publish_key' => 'pub-c-9f407429-88df-4267-be8b-182e7a4763f4',
+        return new PubNub(array(
+            'subscribe_key' => env('PUBNUB_SUBSCRIBE_KEY'),
+            'publish_key' => env('PUBNUB_PUBLISH_KEY'),
             'uuid' => $IDuser,
             'ssl' => false, // kad je true ima neka greška sa PEM fajlom
             //'verify_peer' => false

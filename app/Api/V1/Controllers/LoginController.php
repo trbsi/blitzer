@@ -10,10 +10,6 @@ use Tymon\JWTAuth\JWTAuth;
 
 class LoginController extends Controller
 {
-    public function __construct(User $user)
-    {
-        $this->user = $user;
-    }
 
     /**
      * refresh the token after it expires

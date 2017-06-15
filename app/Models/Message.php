@@ -107,7 +107,7 @@ class Message extends Model
             ];
 
         //send notification to a user
-        SendPushNotification::sendNotification($ids["sendNotificationToThisUser"], $dataTmp);
+        SendPushNotification::sendNotification($data["sendNotificationToThisUser"], $dataTmp);
     }
 
     public function pinOne()

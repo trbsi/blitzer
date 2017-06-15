@@ -2,27 +2,26 @@
 
 namespace App\Api\V1\Controllers\Map;
 
-use App\Http\Controllers\Controller;
+use App\Api\V1\Controllers\BaseAuthController;
 use Illuminate\Http\Request;
 use App\Models\Pin;
 use App\Models\PinTag;
-use App\Models\User;
 use App\Models\Tag;
 //use Illuminate\Support\Facades\Redis;
 use App\Helpers\CacheHelper;
+use App\Models\User;
 
-class MapController extends Controller
+class MapController extends BaseAuthController
 {
     /**
      * Instantiate a new Controller instance.
      */
-    public function __construct(Pin $pin, User $user, PinTag $pinTag, Tag $tag)
+    public function __construct(Pin $pin, PinTag $pinTag, Tag $tag, User $user)
     {
+        parent::__construct($user);
         $this->pin = $pin;
-        $this->user = $user;
         $this->pinTag = $pinTag;
         $this->tag = $tag;
-        $this->authUser = $this->user->getAuthenticatedUser();
         $this->middleware('currentTimeFixer');
     }
 
