@@ -85,7 +85,7 @@
             </p>
 
             <p class="p16 ft6 list-item"><span
-                    class="ft14">manage your account and provide you with customer support;</span></p>
+                        class="ft14">manage your account and provide you with customer support;</span></p>
 
             <p class="p17 ft16 list-item"><span class="ft15">perform research and analysis about your use of, or interest in, our or others’ products, services, or content;</span>
             </p>
@@ -102,7 +102,7 @@
             </p>
 
             <p class="p16 ft6 list-item"><span class="ft14">enforce or exercise any rights in our </span><span
-                    class="ft19">Terms of Use</span>; and</p>
+                        class="ft19">Terms of Use</span>; and</p>
 
             <p class="p16 ft6 list-item"><span class="ft14">perform functions or services as otherwise described to you at the time of collection.</span>
             </p>
@@ -155,7 +155,7 @@
             </p>
 
             <p class="p31 ft1 list-item double"><span class="ft24">When we believe disclosure is appropriate in connection with efforts to investigate, prevent, or take other action regarding illegal activity, suspected fraud or other wrongdoing; to protect and defend the rights, property or safety of our company, our users, our employees, or others; to comply with applicable law or cooperate with law enforcement; or to enforce our </span><span
-                    class="ft11">Terms of Use </span>or other agreements or policies.</p>
+                        class="ft11">Terms of Use </span>or other agreements or policies.</p>
 
             <p class="p32 ft18 list-item double"><span class="ft25">In connection with a substantial corporate transaction, such as the sale of our business, a divestiture, merger, consolidation, or asset sale, or in the unlikely event of bankruptcy.</span>
             </p>
@@ -230,7 +230,7 @@
                 chats, or other communications will always remain secure. Users should also take care with how they
                 handle and disclose their personal information and should avoid sending personal information through
                 insecure email. Please refer to the Federal Trade Commission's website at <a
-                    href="http://www.ftc.gov/bcp/menus/consumer/data.shtm"><span class="ft11">http://www.ftc.gov/bcp/menus/consumer/data.shtm </span></a>for
+                        href="http://www.ftc.gov/bcp/menus/consumer/data.shtm"><span class="ft11">http://www.ftc.gov/bcp/menus/consumer/data.shtm </span></a>for
                 information about how to protect yourself against identity theft.</p>
 
             <p class="p46 bold">Information you provide about yourself while using our Service</p>
@@ -238,7 +238,8 @@
             <p class="p47 ft1">
                 We provide areas on our Service where you can post information about yourself and others and communicate
                 with others. Such postings are governed by our <?= config("app.name") ?><span
-                    class="ft11">Terms of Use</span>. Also, whenever you voluntarily disclose personal information on
+                        class="ft11">Terms of Use</span>. Also, whenever you voluntarily disclose personal information
+                on
                 publicly-viewable
                 pages, that information will be publicly available and can be collected and used by others. For example,
                 if you post your email address, you may receive unsolicited messages. We cannot control who reads your

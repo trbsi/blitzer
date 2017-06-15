@@ -4,35 +4,36 @@
         <h4>Last revised on December 30, 2015</h4>
         <span class="">Welcome to <?= config("app.name") ?>
             , operated by <?= config("app.name") ?> , (the "</span><span
-            class="  c9">Company</span><span class="">" or "</span><span
-            class="  c9"><?= config("app.name") ?>  </span><span class="">"). </span>
+                class="  c9">Company</span><span class="">" or "</span><span
+                class="  c9"><?= config("app.name") ?>  </span><span class="">"). </span>
 
         <p></p>
 
         <p class=" 4"><span class="">By accessing the <?= config("app.name") ?> application or its website found at <a
-                    href="<?= env('APP_URL') ?>"><?= env('APP_URL') ?></a>, whether through a mobile device, mobile application or computer (collectively, the "</span><span
-                class="  c9">Service</span><span
-                class="">") you agree to be bound by these Terms of Use (this "</span><span
-                class="  c9">Agreement</span><span
-                class="">"), whether or not you create a <?= config("app.name") ?> account. If you wish to create a <?= config("app.name") ?>
+                        href="<?= env('APP_URL') ?>"><?= env('APP_URL') ?></a>, whether through a mobile device, mobile application or computer (collectively, the "</span><span
+                    class="  c9">Service</span><span
+                    class="">") you agree to be bound by these Terms of Use (this "</span><span
+                    class="  c9">Agreement</span><span
+                    class="">"), whether or not you create a <?= config("app.name") ?>
+                account. If you wish to create a <?= config("app.name") ?>
                 account and make use of the Service, please read these Terms of Use. </span></p>
 
         <p class=" 4"><span class="">You should also read the <?= config("app.name") ?>  </span><span
-                class="">Privacy Policy</span><span class="">, which is incorporated by reference into this Agreement and available in the Service. If you do not accept and agree to be bound by all of the terms of this Agreement, including the <?= config("app.name") ?>
+                    class="">Privacy Policy</span><span class="">, which is incorporated by reference into this Agreement and available in the Service. If you do not accept and agree to be bound by all of the terms of this Agreement, including the <?= config("app.name") ?>
                 Privacy Policy, do not use the Service. Please contact us with any questions regarding this Agreement. </span>
         </p>
         <ol class=" lst-kix_list_1-0 start" start="1">
             <li class=" "><span class="bold">Acceptance of Terms of Use Agreement.</span><span class=""></span></li>
         </ol>
         <p class="c12 "><span class="">a.This Agreement is an electronic contract that establishes the legally binding terms you must accept to use the Service. This Agreement includes the Company's (i) Privacy Policy, (ii) our </span><span
-                class="">Safety Tips</span><span class="">and (iii) terms disclosed and agreed to by you if you purchase or accept additional features, products or services we offer on the Service, such as terms governing features, billing, free trials, discounts and promotions. </span>
+                    class="">Safety Tips</span><span class="">and (iii) terms disclosed and agreed to by you if you purchase or accept additional features, products or services we offer on the Service, such as terms governing features, billing, free trials, discounts and promotions. </span>
         </p>
 
         <p class=" c12"><span class="">b.By accessing or using the Service, you accept this Agreement and agree to the terms, conditions and notices contained or referenced herein and consent to have this Agreement and all notices provided to you in electronic form. To withdraw this consent, you must cease using the Service and terminate your account. This Agreement may be modified by the Company from time to time, such modifications to be effective upon posting by the Company in the Service. </span>
         </p>
         <ol class=" lst-kix_list_1-0" start="2">
             <li class=" "><span class="bold">Eligibility.</span><span
-                    class="">No part of <?= config("app.name") ?> is directed to persons under the age of 18. You must be at least 18 years of age to access and use the Service. Any use of the Service is void where prohibited. By accessing and using the Service, you represent and warrant that you have the right, authority and capacity to enter into this Agreement and to abide by all of the terms and conditions of this Agreement. If you create an account, you represent and warrant that you have never been convicted of a felony and that you are not required to register as a sex offender with any government entity. Using the Service may be prohibited or restricted in certain countries. If you use the Service from outside of the United States, you are responsible for complying with the laws and regulations of the territory from which you access or use the Service. </span>
+                        class="">No part of <?= config("app.name") ?> is directed to persons under the age of 18. You must be at least 18 years of age to access and use the Service. Any use of the Service is void where prohibited. By accessing and using the Service, you represent and warrant that you have the right, authority and capacity to enter into this Agreement and to abide by all of the terms and conditions of this Agreement. If you create an account, you represent and warrant that you have never been convicted of a felony and that you are not required to register as a sex offender with any government entity. Using the Service may be prohibited or restricted in certain countries. If you use the Service from outside of the United States, you are responsible for complying with the laws and regulations of the territory from which you access or use the Service. </span>
             </li>
             <li class=" "><span class="bold">Term and Termination. </span><span class="">This Agreement will remain in full force and effect while you use the Service and/or have a <?= config("app.name") ?>
                     account. The Company may terminate or suspend your account at any time without notice if the Company believes that you have breached this Agreement, or for any other reason, with or without cause, in its sole discretion. Upon such termination or suspension, you will not be entitled to any refund of unused fees for in app purchases. The Company is not required to disclose, and may be prohibited by law from disclosing, the reason for the termination or suspension of your account. After your account is terminated for any reason, all terms of this Agreement survive such termination, and continue in full force and effect, except for any terms that by their nature expire or are fully satisfied. </span>
@@ -41,22 +42,23 @@
                     's express consent (such as for promoted profiles or other advertisements), which <?= config("app.name") ?>
                     may provide or deny in its sole discretion. The Company may investigate and take any available legal action in response to illegal and/or unauthorized uses of the Service, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email and unauthorized framing of or linking to the Service. </span>
             </li>
-            <li class=" "><span class="bold">Account Security. </span><span class="">You are responsible for maintaining the confidentiality of the username and password you designate during the registration process, and you are solely responsible for all activities that occur under your username and password. You agree to immediately notify the Company of any disclosure or unauthorized use of your username or password or any other breach of security at info@blitzerapp.com
+            <li class=" "><span class="bold">Account Security. </span><span class="">You are responsible for maintaining the confidentiality of the username and password you designate during the registration process, and you are solely responsible for all activities that occur under your username and password. You agree to immediately notify the Company of any disclosure or unauthorized use of your username or password or any other breach of security at info@blitzerapp
+                    .com
                     and ensure that you log out from your account at the end of each session. </span></li>
             <li class=" "><span class="bold">Your Interactions with Other Users. </span></li>
         </ol>
         <ul class=" lst-kix_list_1-1 start" start="1">
             <li class=" "><span class=" ">YOU ARE SOLELY RESPONSIBLE FOR YOUR INTERACTIONS WITH OTHER USERS. YOU UNDERSTAND THAT THE COMPANY CURRENTLY </span><span
-                    class="  c9">DOES NOT</span><span class=" ">CONDUCT CRIMINAL BACKGROUND CHECKS OR SCREENINGS ON ITS USERS. THE COMPANY ALSO </span><span
-                    class="  c9">DOES NOT</span><span class=" ">INQUIRE INTO THE BACKGROUNDS OF ALL OF ITS USERS OR ATTEMPT TO VERIFY THE STATEMENTS OF ITS USERS. THE COMPANY MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONDUCT OF USERS OR THEIR COMPATIBILITY WITH ANY CURRENT OR FUTURE USERS. THE COMPANY RESERVES THE RIGHT TO CONDUCT ANY CRIMINAL BACKGROUND CHECK OR OTHER SCREENINGS (SUCH AS SEX OFFENDER REGISTER SEARCHES), AT ANY TIME AND USING AVAILABLE PUBLIC RECORDS. </span>
+                        class="  c9">DOES NOT</span><span class=" ">CONDUCT CRIMINAL BACKGROUND CHECKS OR SCREENINGS ON ITS USERS. THE COMPANY ALSO </span><span
+                        class="  c9">DOES NOT</span><span class=" ">INQUIRE INTO THE BACKGROUNDS OF ALL OF ITS USERS OR ATTEMPT TO VERIFY THE STATEMENTS OF ITS USERS. THE COMPANY MAKES NO REPRESENTATIONS OR WARRANTIES AS TO THE CONDUCT OF USERS OR THEIR COMPATIBILITY WITH ANY CURRENT OR FUTURE USERS. THE COMPANY RESERVES THE RIGHT TO CONDUCT ANY CRIMINAL BACKGROUND CHECK OR OTHER SCREENINGS (SUCH AS SEX OFFENDER REGISTER SEARCHES), AT ANY TIME AND USING AVAILABLE PUBLIC RECORDS. </span>
             </li>
         </ul>
         <p class=" c19"><span class=""></span></p>
         <ul class=" lst-kix_list_1-1" start="2">
             <li class=" "><span class=" ">The Company is not responsible for the conduct of any user. As noted in and without limiting Sections 15 and 17 below, in no event shall the Company, its affiliates or its partners be liable (directly or indirectly) for any losses or damages whatsoever, whether direct, indirect, general, special, compensatory, consequential, and/or incidental, arising out of or relating to the conduct of you or anyone else in connection with the use of the Service including, without limitation, death, bodily injury, emotional distress, and/or any other damages resulting from communications or meetings with other users or persons you meet through the Service. </span><span
-                    class="">You agree to take all necessary precautions in all interactions with other users, particularly if you decide to communicate off the Service or meet in person, or if you decide to send money to another user. </span><span
-                    class=" ">In addition, you agree to review and follow the Company's </span><span class=" ">Safety Tips</span><span
-                    class=" ">, located in the Service, prior to using the Service</span><span class="">. You understand that the Company makes no guarantees, either express or implied, regarding your ultimate compatibility with individuals you meet through the Service. You should not provide your financial information (for example, your credit card or bank account information), or wire or otherwise send money, to other users. </span>
+                        class="">You agree to take all necessary precautions in all interactions with other users, particularly if you decide to communicate off the Service or meet in person, or if you decide to send money to another user. </span><span
+                        class=" ">In addition, you agree to review and follow the Company's </span><span class=" ">Safety Tips</span><span
+                        class=" ">, located in the Service, prior to using the Service</span><span class="">. You understand that the Company makes no guarantees, either express or implied, regarding your ultimate compatibility with individuals you meet through the Service. You should not provide your financial information (for example, your credit card or bank account information), or wire or otherwise send money, to other users. </span>
             </li>
         </ul>
         <p class=" 2"><span class=""></span></p>
@@ -67,8 +69,8 @@
         </ol>
         <ul class=" lst-kix_list_1-1 start" start="1">
             <li class=" "><span class="">You are solely responsible for the content and information that you post, upload, publish, link to, transmit, record, display or otherwise make available (hereinafter, "</span><span
-                    class="  c9">post</span><span class="">") on the Service or transmit to other users, including text messages, chat, videos (including streaming videos), photographs, or profile text, whether publicly posted or privately transmitted (collectively, "</span><span
-                    class="  c9">Content</span><span class="">"). You may not post as part of the Service, or transmit to the Company or any other user (either on or off the Service), any offensive, inaccurate, incomplete, abusive, obscene, profane, threatening, intimidating, harassing, racially offensive, or illegal material, or any material that infringes or violates another person's rights (including intellectual property rights, and rights of privacy and publicity). You represent and warrant that (i) all information that you submit upon creation of your account, including information submitted from your Facebook account, is accurate and truthful and that you will promptly update any information provided by you that subsequently becomes inaccurate, incomplete, misleading or false and (ii) you have the right to post the Content on the Service and grant the licenses set forth below. </span>
+                        class="  c9">post</span><span class="">") on the Service or transmit to other users, including text messages, chat, videos (including streaming videos), photographs, or profile text, whether publicly posted or privately transmitted (collectively, "</span><span
+                        class="  c9">Content</span><span class="">"). You may not post as part of the Service, or transmit to the Company or any other user (either on or off the Service), any offensive, inaccurate, incomplete, abusive, obscene, profane, threatening, intimidating, harassing, racially offensive, or illegal material, or any material that infringes or violates another person's rights (including intellectual property rights, and rights of privacy and publicity). You represent and warrant that (i) all information that you submit upon creation of your account, including information submitted from your Facebook account, is accurate and truthful and that you will promptly update any information provided by you that subsequently becomes inaccurate, incomplete, misleading or false and (ii) you have the right to post the Content on the Service and grant the licenses set forth below. </span>
             </li>
         </ul>
         <p class=" c19"><span class=""></span></p>
@@ -255,8 +257,10 @@
         </ol>
         <p class=" 2"><span class=""></span></p>
         <?php /*<ol class=" lst-kix_list_3-0 start" start="1">
-         <li class=" 9"><span class=" ">In App Purchases</span><span class="">. From time to time, <?= config("app.name") ?>   may offer additional products and services for purchase through the App Store</span><span class="8"></span><span class="1">?</span><span class="2">,</span><span class="">Google Play or other application platforms ("in app purchases"). If you choose to make an in app purchase, you will be prompted to enter details for your account with the mobile platform you are using (e.g., Apple, Android, etc.) ("your IAP Account"), and your IAP Account will be charged for the in app purchase in accordance with the terms disclosed to you at the time of purchase as well as the general terms for in app purchases that apply to your IAP Account. In app purchases may include a free trial period. At the end of the free trial period, you will be charged the price of the subscription and will continue to be charged until you cancel your subscription. To avoid any charges, you must cancel before the end of the trial period. If you purchase an auto-recurring periodic subscription through an in app purchase, your IAP Account will be billed continuously for the subscription until you cancel in accordance with the platform terms. In call cases, please refer to the terms of your application platform which apply to your in app purchases.</span></li>
-      </ol> */ ?>
+         <li class=" 9"><span class=" ">In App Purchases</span><span class="">. From time to time, <?= config("app.name") ?>
+        may offer additional products and services for purchase through the App Store</span><span class="8"></span><span
+                class="1">?</span><span class="2">,</span><span class="">Google Play or other application platforms ("in app purchases"). If you choose to make an in app purchase, you will be prompted to enter details for your account with the mobile platform you are using (e.g., Apple, Android, etc.) ("your IAP Account"), and your IAP Account will be charged for the in app purchase in accordance with the terms disclosed to you at the time of purchase as well as the general terms for in app purchases that apply to your IAP Account. In app purchases may include a free trial period. At the end of the free trial period, you will be charged the price of the subscription and will continue to be charged until you cancel your subscription. To avoid any charges, you must cancel before the end of the trial period. If you purchase an auto-recurring periodic subscription through an in app purchase, your IAP Account will be billed continuously for the subscription until you cancel in accordance with the platform terms. In call cases, please refer to the terms of your application platform which apply to your in app purchases.</span></li>
+        </ol> */ ?>
         <p class=" "><span class=""></span></p>
         <ol class=" lst-kix_list_3-0" start="2">
             <li class=" 9"><span class="bold">Modifications to Service. </span><span class="">The Company reserves the right at any time to modify or discontinue, temporarily or permanently, the Service (or any part thereof) with or without notice. You agree that the Company shall not be liable to you or to any third party for any modification, suspension or discontinuance of the Service. To protect the integrity of the Service, the Company reserves the right at any time in its sole discretion to block users from certain IP addresses from accessing the Service. </span>
@@ -265,7 +269,7 @@
         <p class=" "><span class=""></span></p>
         <ol class=" lst-kix_list_3-0" start="3">
             <li class=" 9"><span class="bold">Copyright Policy; Notice and Procedure for Making Claims of Copyright Infringement. </span><span
-                    class="">You may not post, distribute, or reproduce in any way any copyrighted material, trademarks, or other proprietary information without obtaining the prior written consent of the owner of such proprietary rights. Without limiting the foregoing, if you believe that your work has been copied and posted on the Service in a way that constitutes copyright infringement, please provide our Copyright Agent with the following information: </span>
+                        class="">You may not post, distribute, or reproduce in any way any copyrighted material, trademarks, or other proprietary information without obtaining the prior written consent of the owner of such proprietary rights. Without limiting the foregoing, if you believe that your work has been copied and posted on the Service in a way that constitutes copyright infringement, please provide our Copyright Agent with the following information: </span>
             </li>
         </ol>
         <p class=" 2"><span class=""></span></p>
@@ -276,7 +280,7 @@
         <p class=" 2 "><span class=""></span></p>
         <ul class=" lst-kix_list_4-1">
             <li class=" 3 "><span
-                    class="">a description of the copyrighted work that you claim has been infringed; </span></li>
+                        class="">a description of the copyrighted work that you claim has been infringed; </span></li>
         </ul>
         <p class=" 2 "><span class=""></span></p>
         <ul class=" lst-kix_list_4-1">
@@ -302,7 +306,7 @@
             <li class=" "><span class="bold">Disclaimers. </span></li>
         </ol>
         <p class=" "><span class="">a.You acknowledge and agree that neither the Company nor its affiliates and third party partners are responsible for and shall not have any liability, directly or indirectly, for any loss or damage, including personal injury or death, as a result of or alleged to be the result of (i) any incorrect or inaccurate Content posted in the Service, whether caused by users or any of the equipment or programming associated with or utilized in the Service; (ii) the timeliness, deletion or removal, incorrect delivery or failure to store any Content, communications or personalization settings; (iii) the conduct, whether online or offline, of any user; (iv) any error, omission or defect in, interruption, deletion, alteration, delay in operation or transmission, theft or destruction of, or unauthorized access to, any user or user communications; or (v) any problems, failure or technical malfunction of any telephone network or lines, computer online systems, servers or providers, computer equipment, software, failure of email or players on account of technical problems or traffic congestion on the Internet or at any website or combination thereof, including injury or damage to users or to any other person's computer or device related to or resulting from participating or downloading materials in connection with the Internet and/or in connection with the Service. </span><span
-                class=" ">TO THE MAXIMUM EXTENT ALLOWED BY APPLICABLE LAW, THE COMPANY PROVIDES THE SERVICE ON AN "AS IS" AND "AS AVAILABLE" BASIS AND GRANTS NO WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY OR OTHERWISE WITH RESPECT TO THE SERVICE (INCLUDING ALL CONTENT CONTAINED THEREIN), INCLUDING (WITHOUT LIMITATION) ANY IMPLIED WARRANTIES OF SATISFACTORY QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT. THE COMPANY DOES NOT REPRESENT OR WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED OR ERROR FREE, SECURE OR THAT ANY DEFECTS OR ERRORS IN THE SERVICE WILL BE CORRECTED. </span>
+                    class=" ">TO THE MAXIMUM EXTENT ALLOWED BY APPLICABLE LAW, THE COMPANY PROVIDES THE SERVICE ON AN "AS IS" AND "AS AVAILABLE" BASIS AND GRANTS NO WARRANTIES OF ANY KIND, WHETHER EXPRESS, IMPLIED, STATUTORY OR OTHERWISE WITH RESPECT TO THE SERVICE (INCLUDING ALL CONTENT CONTAINED THEREIN), INCLUDING (WITHOUT LIMITATION) ANY IMPLIED WARRANTIES OF SATISFACTORY QUALITY, MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR NON-INFRINGEMENT. THE COMPANY DOES NOT REPRESENT OR WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED OR ERROR FREE, SECURE OR THAT ANY DEFECTS OR ERRORS IN THE SERVICE WILL BE CORRECTED. </span>
         </p>
 
         <p class=""><span class=""></span></p>
@@ -325,21 +329,21 @@
             <li class=" "><span class="bold">Links. </span><span class="">The Service may contain, and the Service or third parties may provide, advertisements and promotions offered by third parties and links to other web sites or resources. You acknowledge and agree that the Company is not responsible for the availability of such external websites or resources, and does not endorse and is not responsible or liable for any content, information, statements, advertising, goods or services, or other materials on or available from such websites or resources. Your correspondence or business dealings with, or participation in promotions of, third parties found in or through the Service, including payment and delivery of related goods or services, and any other terms, conditions, warranties or representations associated with such dealings, are solely between you and such third party. You further acknowledge and agree that the Company shall not be responsible or liable, directly or indirectly, for any damage or loss caused or alleged to be caused by or in connection with the use of, or reliance upon, any such content, information, statements, advertising, goods or services or other materials available on or through any such website or resource. </span>
             </li>
             <li class=" "><span class=" "><span class="bold">Limitation on Liability.</span> TO THE FULLEST EXTENT ALLOWED BY APPLICABLE LAW, IN NO EVENT WILL THE COMPANY, ITS AFFILIATES, BUSINESS PARTNERS, LICENSORS OR SERVICE PROVIDERS BE LIABLE TO YOU OR ANY THIRD PERSON FOR ANY INDIRECT, RELIANCE, CONSEQUENTIAL, EXEMPLARY, INCIDENTAL, SPECIAL OR PUNITIVE DAMAGES, INCLUDING, WITHOUT LIMITATION, LOSS OF PROFITS, LOSS OF GOODWILL, DAMAGES FOR LOSS, CORRUPTION OR BREACHES OF DATA OR PROGRAMS, SERVICE INTERRUPTIONS AND PROCUREMENT OF SUBSTITUTE SERVICES, EVEN IF THE COMPANY HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. NOTWITHSTANDING ANYTHING TO THE CONTRARY CONTAINED HEREIN, THE COMPANY'S LIABILITY TO YOU FOR ANY CAUSE WHATSOEVER, AND REGARDLESS OF THE FORM OF THE ACTION, WILL AT ALL TIMES BE LIMITED TO THE AMOUNT PAID, IF ANY, BY YOU TO THE COMPANY FOR THE SERVICE WHILE YOU HAVE AN ACCOUNT. YOU AGREE THAT REGARDLESS OF ANY STATUTE OR LAW TO THE CONTRARY, ANY CLAIM OR CAUSE OF ACTION ARISING OUT OF OR RELATED TO USE OF THE SERVICE OR THE TERMS OF THIS AGREEMENT MUST BE FILED WITHIN ONE YEAR AFTER SUCH CLAIM OR CAUSE OF ACTION AROSE OR BE FOREVER BARRED.</span><span
-                    class=""></span></li>
+                        class=""></span></li>
             <li class=" "><span class="bold">Arbitration and Governing Law. </span></li>
         </ol>
         <p class=" "><span class="">a.The exclusive means of resolving any dispute or claim arising out of or relating to this Agreement (including any alleged breach thereof) or the Service shall be </span><span
-                class=" ">BINDING ARBITRATION</span><span class="">administered by the American Arbitration Association. The one exception to the exclusivity of arbitration is that you have the right to bring an individual claim against the Company in a small-claims court of competent jurisdiction. But whether you choose arbitration or small-claims court, you may not under any circumstances commence or maintain against the Company any class action, class arbitration, or other representative action or proceeding. </span>
+                    class=" ">BINDING ARBITRATION</span><span class="">administered by the American Arbitration Association. The one exception to the exclusivity of arbitration is that you have the right to bring an individual claim against the Company in a small-claims court of competent jurisdiction. But whether you choose arbitration or small-claims court, you may not under any circumstances commence or maintain against the Company any class action, class arbitration, or other representative action or proceeding. </span>
         </p>
 
         <p class=""><span class=""></span></p>
 
         <p class=" "><span class="">b.By using the Service in any manner, you agree to the above arbitration agreement. In doing so, </span><span
-                class=" ">YOU GIVE UP YOUR RIGHT TO GO TO COURT</span><span class="">to assert or defend any claims between you and the Company (except for matters that may be taken to small-claims court). </span><span
-                class=" ">YOU ALSO GIVE UP YOUR RIGHT TO PARTICIPATE IN A CLASS ACTION OR OTHER CLASS PROCEEDING.</span><span
-                class="">Your rights will be determined by a </span><span class=" ">NEUTRAL ARBITRATOR, NOT A JUDGE OR JURY.</span><span
-                class="">You are entitled to a fair hearing before the arbitrator. The arbitrator can grant any relief that a court can, but you should note that arbitration proceedings are usually simpler and more streamlined than trials and other judicial proceedings. Decisions by the arbitrator are enforceable in court and may be overturned by a court only for very limited reasons. For details on the arbitration process, see our </span><span
-                class="">Arbitration Procedures</span><span class="">. </span></p>
+                    class=" ">YOU GIVE UP YOUR RIGHT TO GO TO COURT</span><span class="">to assert or defend any claims between you and the Company (except for matters that may be taken to small-claims court). </span><span
+                    class=" ">YOU ALSO GIVE UP YOUR RIGHT TO PARTICIPATE IN A CLASS ACTION OR OTHER CLASS PROCEEDING.</span><span
+                    class="">Your rights will be determined by a </span><span class=" ">NEUTRAL ARBITRATOR, NOT A JUDGE OR JURY.</span><span
+                    class="">You are entitled to a fair hearing before the arbitrator. The arbitrator can grant any relief that a court can, but you should note that arbitration proceedings are usually simpler and more streamlined than trials and other judicial proceedings. Decisions by the arbitrator are enforceable in court and may be overturned by a court only for very limited reasons. For details on the arbitration process, see our </span><span
+                    class="">Arbitration Procedures</span><span class="">. </span></p>
 
         <p class=""><span class=""></span></p>
     </div>

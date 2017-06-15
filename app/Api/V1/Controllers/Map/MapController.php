@@ -34,11 +34,11 @@ class MapController extends Controller
     {
         $showAlert = false;
         $blink = false;
-        $message = 
-        [
-            'body' => null,
-            'title' => null,
-        ];
+        $message =
+            [
+                'body' => null,
+                'title' => null,
+            ];
         $authUser = $this->authUser;
         $enableAllPins = true;
 
