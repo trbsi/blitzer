@@ -9,3 +9,6 @@ http://meigwilym.com/family-fortunes-saving-and-updating-laravel-relations/
 
 get raw query: DB::table('users')->toSql() 
 https://stackoverflow.com/questions/18236294/how-do-i-get-the-query-builder-to-output-its-raw-sql-query-as-a-string
+
+Log all queries
+https://stackoverflow.com/questions/41163199/laravel-5-3-how-to-log-all-queries-on-a-page
