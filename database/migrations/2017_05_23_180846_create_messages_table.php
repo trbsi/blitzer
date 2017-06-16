@@ -15,11 +15,11 @@ class CreateMessagesTable extends Migration
     {
         Schema::create('messages', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('id', true);
-            $table->integer('pin_one');
-            $table->integer('pin_two');
-            $table->integer('user_one');
-            $table->integer('user_two');
+            $table->bigInteger('id', true);
+            $table->bigInteger('pin_one');
+            $table->bigInteger('pin_two');
+            $table->bigInteger('user_one');
+            $table->bigInteger('user_two');
             $table->tinyInteger('user_one_read')->default(1);
             $table->tinyInteger('user_two_read')->default(1);
             $table->timestamps();

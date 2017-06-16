@@ -15,8 +15,8 @@ class CreatePushNotificationsTokenTable extends Migration
     {
         Schema::create('push_notifications_token', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('id', true);
-            $table->integer('user_id');
+            $table->bigInteger('id', true);
+            $table->bigInteger('user_id');
             $table->string('token', 255);
             $table->string('device', 10);
             $table->string('device_id', 50);

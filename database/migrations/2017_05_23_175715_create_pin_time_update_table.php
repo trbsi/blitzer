@@ -15,8 +15,8 @@ class CreatePinTimeUpdateTable extends Migration
     {
         Schema::create('pin_time_update', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('id', true);
-            $table->integer('user_id');
+            $table->bigInteger('id', true);
+            $table->bigInteger('user_id');
         });
     }
 

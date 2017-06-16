@@ -15,12 +15,12 @@ class CreatePinsTable extends Migration
     {
         Schema::create('pins', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('id', true);
+            $table->bigInteger('id', true);
             $table->string('comment', 255)->nullable();
             $table->datetime('publish_time');
             $table->float('lat', 10, 6);
             $table->float('lng', 10, 6);
-            $table->integer('user_id');
+            $table->bigInteger('user_id');
             $table->timestamp('updated_at');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
 

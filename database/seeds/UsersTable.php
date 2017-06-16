@@ -16,7 +16,6 @@ class UsersTable extends Seeder
             [
                 [
                     'email' => 'user1@mail.com',
-                    'password' => '123456',
                     'birthday' => '1991-12-29',
                     'first_name' => 'Dario',
                     'last_name' => 'Trbovic',
@@ -26,7 +25,6 @@ class UsersTable extends Seeder
                 ],
                 [
                     'email' => 'user2@mail.com',
-                    'password' => '123456',
                     'birthday' => '1995-10-29',
                     'first_name' => 'Mila',
                     'last_name' => 'Kunich',
@@ -36,7 +34,6 @@ class UsersTable extends Seeder
                 ],
                 [
                     'email' => 'user3@mail.com',
-                    'password' => '123456',
                     'birthday' => '1985-01-29',
                     'first_name' => 'Emma',
                     'last_name' => 'Smithson',

@@ -15,9 +15,9 @@ class CreatePinTagTable extends Migration
     {
         Schema::create('pin_tag', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('id', true);
-            $table->integer('tag_id');
-            $table->integer('pin_id');
+            $table->bigInteger('id', true);
+            $table->bigInteger('tag_id');
+            $table->bigInteger('pin_id');
             $table->foreign('tag_id')->references('id')->on('tags')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('pin_id')->references('id')->on('pins')->onUpdate('cascade')->onDelete('cascade');
         });

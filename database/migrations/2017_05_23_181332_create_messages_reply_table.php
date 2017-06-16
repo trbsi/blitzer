@@ -15,10 +15,10 @@ class CreateMessagesReplyTable extends Migration
     {
         Schema::create('messages_reply', function (Blueprint $table) {
             $table->engine = 'InnoDB';
-            $table->integer('id', true);
-            $table->integer('message_id');
+            $table->bigInteger('id', true);
+            $table->bigInteger('message_id');
             $table->text('reply');
-            $table->integer('user_id');
+            $table->bigInteger('user_id');
             $table->datetime('send_date');
             $table->tinyInteger('message_type')->default(0);
             $table->foreign('message_id')->references('id')->on('messages')->onUpdate('cascade')->onDelete('cascade');
