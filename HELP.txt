@@ -12,3 +12,6 @@ https://stackoverflow.com/questions/18236294/how-do-i-get-the-query-builder-to-o
 
 Log all queries
 https://stackoverflow.com/questions/41163199/laravel-5-3-how-to-log-all-queries-on-a-page
+
+check if coordinates are on water
+https://stackoverflow.com/questions/3645649/i-need-to-know-the-predefined-point-is-in-the-sea-or-on-the-land/25275752#25275752

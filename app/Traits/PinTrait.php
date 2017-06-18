@@ -14,7 +14,7 @@ trait PinTrait
     private function fakeLocation($number)
     {
         //this moves pin's location to about 100m
-        $rand = 0.000400; //rand(1000,1100);
+        $rand = 0.000400; 
         $date_sum = date("Y") + date("m") + date("d");
 
         if ($date_sum % 2 == 0) {
@@ -689,6 +689,10 @@ trait PinTrait
 
     }
 
+    /**
+     * create random coordinate all over the city
+     * @param  [type] $latLng [lat or lng]
+     */
     private function randomCoordinates($latLng)
     {
         $rand_start = 3000;
@@ -709,6 +713,30 @@ trait PinTrait
         }
     }
 
+    /**
+     * check here if coordinates are on water, they shouldn't be
+     * https://stackoverflow.com/questions/3645649/i-need-to-know-the-predefined-point-is-in-the-sea-or-on-the-land/25275752#25275752
+     */
+    private function checkIfWater($data)
+    {
+        $lat = $this->randomCoordinates($data["lat"]);
+        $lng = $this->randomCoordinates($data["lng"]);
+
+        $im = imagecreatefrompng('http://maps.googleapis.com/maps/api/staticmap?center='.$lat.','.$lng.'&zoom=21&format=png&sensor=false&size=1x1&maptype=roadmap&style=feature:administrative|visibility:off&style=feature:landscape|color:0x000000&style=feature:water|color:0xffffff&style=feature:road|visibility:off&style=feature:transit|visibility:off&style=feature:poi|visibility:off&key='.env('GOOGLE_MAPS_API_KEY'));
+        //get pixel color, put it in an array
+        $color_index = imagecolorat($im, 0, 0);
+        $color_tran = imagecolorsforindex($im, $color_index);
+
+        //if, for example, red value of the pixel is 0 we are on land
+        if($color_tran['red'] == 0){
+            //this is land
+            return ['lat' => $lat, 'lng' => $lng];
+        }
+        else {
+            return $this->checkIfWater($data);
+        }
+    }
+
     private function generateArray($data, $get, $i)
     {
         $gender = $data["gender"];
@@ -720,8 +748,7 @@ trait PinTrait
         $last = trim($data['names']["last"][rand(0, $countName - 1)]);
         $name = $first . " " . $last;
         
-        $lat = $this->randomCoordinates($data["lat"]);
-        $lng = $this->randomCoordinates($data["lng"]);
+        $latLng = $this->checkIfWater($data);
 
         foreach ($data["tags"][$get][$i] as $key => $value) {
             $value["tag_id"] = 0;
@@ -747,8 +774,8 @@ trait PinTrait
                     [
                         "publish_time" => $date->format('Y-m-d H:i:s'),
                         "comment" => $comment,
-                        "lat" => $lat,
-                        "lng" => $lng,
+                        "lat" => $latLng["lat"],
+                        "lng" => $latLng["lng"],
                         "pin_id" => $data["pin_id"],
                         "tags" => $tags,
                     ],
