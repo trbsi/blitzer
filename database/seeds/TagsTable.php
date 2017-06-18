@@ -24,7 +24,7 @@ class TagsTable extends Seeder
         foreach ($data as $key => $value) {
             $insert = 
             [
-                'tag' => $value,
+                'tag_name' => $value,
                 'popularity' => rand(1000,5000),
             ];
 

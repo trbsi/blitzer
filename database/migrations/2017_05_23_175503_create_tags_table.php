@@ -16,11 +16,11 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigInteger('id', true);
-            $table->string('tag', 50);
+            $table->string('tag_name', 50);
             $table->integer('popularity');
         });
 
-        \DB::statement('ALTER TABLE tags ADD FULLTEXT INDEX tags_ft_index (tag);');
+        \DB::statement('ALTER TABLE tags ADD FULLTEXT INDEX tags_ft_index (tag_name);');
     }
 
     /**
