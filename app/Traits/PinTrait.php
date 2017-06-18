@@ -751,7 +751,7 @@ trait PinTrait
         $latLng = $this->checkIfWater($data);
 
         foreach ($data["tags"][$get][$i] as $key => $value) {
-            $value["tag_id"] = 0;
+            $value["tag_id"] = "0";
             $tags[] = $value;
         }
 
