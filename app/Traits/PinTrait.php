@@ -689,6 +689,26 @@ trait PinTrait
 
     }
 
+    private function randomCoordinates($latLng)
+    {
+        $rand_start = 3000;
+        $rand_end = 90000;
+
+        if(rand(0,1)%2 == 0) {
+            $x = "0.00";
+        }
+        else {
+            $x = "0.0";
+        }
+
+        if(rand(0,1) %2 == 0) {
+            return $latLng + (float)($x . rand($rand_start, $rand_end));
+        }
+        else {
+            return $latLng - (float)($x . rand($rand_start, $rand_end));
+        }
+    }
+
     private function generateArray($data, $get, $i)
     {
         $gender = $data["gender"];
@@ -699,25 +719,9 @@ trait PinTrait
         $first = trim($data['names']["first"][rand(0, $countName - 1)]);
         $last = trim($data['names']["last"][rand(0, $countName - 1)]);
         $name = $first . " " . $last;
-
-        if (strlen($name) % 2 == 0) {
-            if (strlen($first) % 2 == 0) {
-                $lat = $data["lat"] + (float)("0.00" . rand(1000, 9000));
-                $lng = $data["lng"] + (float)("0.00" . rand(1000, 9000));
-            } else {
-                $lat = $data["lat"] - (float)("0.00" . rand(1000, 9000));
-                $lng = $data["lng"] - (float)("0.00" . rand(1000, 9000));
-            }
-
-        } else {
-            if (strlen($last) % 2 == 0) {
-                $lat = $data["lat"] - (float)("0.00" . rand(1000, 9000));
-                $lng = $data["lng"] + (float)("0.00" . rand(1000, 9000));
-            } else {
-                $lat = $data["lat"] + (float)("0.00" . rand(1000, 9000));
-                $lng = $data["lng"] - (float)("0.00" . rand(1000, 9000));
-            }
-        }
+        
+        $lat = $this->randomCoordinates($data["lat"]);
+        $lng = $this->randomCoordinates($data["lng"]);
 
         foreach ($data["tags"][$get][$i] as $key => $value) {
             $value["tag_id"] = 0;
