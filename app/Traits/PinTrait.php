@@ -54,7 +54,7 @@ trait PinTrait
                 'user' =>
                     [
                         'name' => $user->first_name . " " . $user->last_name,
-                        'gender' => $user->gender,
+                        'gender' => PinHelper::returnGender($user->gender),
                         'user_id' => $user->id,
                         'age' => PinHelper::calculateAge($user->birthday),
                         'profile_picture' => $user->profile_picture,
@@ -94,7 +94,7 @@ trait PinTrait
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng)]);
 
         if (!empty($pins)) {
-            // return $pins;
+             return $pins;
         }
 
         if (!empty($pin)) {

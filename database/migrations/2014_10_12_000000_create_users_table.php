@@ -17,10 +17,10 @@ class CreateUsersTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigInteger('id', true);
             $table->string('email')->unique();
-            $table->date('birthday');
+            $table->date('birthday')->nullable();
             $table->string('first_name', 30);
             $table->string('last_name', 30);
-            $table->string('gender', 10);
+            $table->string('gender', 10)->nullable();
             $table->bigInteger('facebook_id');
             $table->string('profile_picture', 255);
             $table->timestamps();

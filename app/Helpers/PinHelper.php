@@ -35,10 +35,27 @@ class PinHelper
      */
     public static function calculateAge($birthday)
     {
+        if(empty($birthday)) {
+            return '?';
+        }
+
         $datetime1 = new \DateTime($birthday);
         $datetime2 = new \DateTime();
         $interval = $datetime1->diff($datetime2);
         return (int)$interval->format('%y');
+    }
+
+    /**
+     * return gender
+     * @param  [string] $gender [male/female]
+     */
+    public function returnGender($gender)
+    {
+        if(empty($gender)) {
+            return '?';
+        }
+
+        return $gender;
     }
 
     /**
