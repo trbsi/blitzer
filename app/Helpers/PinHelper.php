@@ -49,7 +49,7 @@ class PinHelper
      * return gender
      * @param  [string] $gender [male/female]
      */
-    public function returnGender($gender)
+    public static function returnGender($gender)
     {
         if(empty($gender)) {
             return '?';
