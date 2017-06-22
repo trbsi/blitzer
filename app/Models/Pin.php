@@ -110,10 +110,8 @@ class Pin extends Model
         $lng = $request->lng;
         $current_time = $request->current_time;
         $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
-        $distance = Pin::DISTANCE;
         $minusOneHour = PinHelper::returnTime('minus-1hour', $current_time);
         $pinTable = Pin::getTable();
-        $messagesTable = (new Message)->getTable();
 
         $query = Pin::where("$pinTable.updated_at", '>=', $minusOneHour
             )
@@ -122,7 +120,7 @@ class Pin extends Model
             ->with(['relationPinTag.relationTag', 'relationUser'])
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
-            ->having("distance", "<=", $distance)
+            ->having("distance", "<=", Pin::DISTANCE)
             ->groupBy("$pinTable.id");
 
         //if user wants to filter by tag
