@@ -19,10 +19,9 @@ class PinHelper
      */
     public static function formatCurrentTime($current_time, $strtotime = true)
     {
-        $current_time = explode("_", $current_time); //[0]Y-m-d, [1]H:i:s
-        $time = $current_time[0] . " " . $current_time[1];
+        $current_time = str_replace("_", " ", $current_time); 
         if ($strtotime == true)
-            return date("Y-m-d H:i:s", strtotime($time));
+            return date("Y-m-d H:i:s", strtotime($current_time));
         else
             return $time;
     }
