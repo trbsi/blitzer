@@ -5,6 +5,7 @@ use App\Models\Pin;
 use App\Models\Message;
 use App\Models\MessagesReply;
 use Faker\Factory;
+use App\Models\User;
 
 class MessagesTable extends Seeder
 {
@@ -13,16 +14,16 @@ class MessagesTable extends Seeder
      *
      * @return void
      */
-    public function run(Message $message, MessagesReply $messageReply)
+    public function run(Message $message, MessagesReply $messageReply, User $user, Pin $pin)
     {
         $date = date("Y-m-d H:i:s");
         $data =
             [
                 [
-                    'pin_one' => 1,
-                    'pin_two' => 2,
-                    'user_one' => 1,
-                    'user_two' => 2,
+                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail("user1@mail.com")->id)->id,
+                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail("user2@mail.com")->id)->id,
+                    'user_one' => $user->getUserByEmail("user1@mail.com")->id,
+                    'user_two' => $user->getUserByEmail("user2@mail.com")->id,
                     'replies' =>
                         [
                             [
@@ -48,10 +49,10 @@ class MessagesTable extends Seeder
                         ]
                 ],
                 [
-                    'pin_one' => 1,
-                    'pin_two' => 3,
-                    'user_one' => 1,
-                    'user_two' => 3,
+                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail("user1@mail.com")->id)->id,
+                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail("user3@mail.com")->id)->id,
+                    'user_one' => $user->getUserByEmail("user1@mail.com")->id,
+                    'user_two' => $user->getUserByEmail("user3@mail.com")->id,
                     'replies' =>
                         [
                             [
@@ -77,10 +78,10 @@ class MessagesTable extends Seeder
                         ]
                 ],
                 [
-                    'pin_one' => 2,
-                    'pin_two' => 3,
-                    'user_one' => 2,
-                    'user_two' => 3,
+                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail("user2@mail.com")->id)->id,
+                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail("user3@mail.com")->id)->id,
+                    'user_one' => $user->getUserByEmail("user2@mail.com")->id,
+                    'user_two' => $user->getUserByEmail("user3@mail.com")->id,
                     'replies' =>
                         [
                             [
@@ -129,10 +130,10 @@ class MessagesTable extends Seeder
         [
             //conversation between Osijek pins
             [
-                'pin_one' => 1,
-                'pin_two' => 4,
-                'user_one' => 1,
-                'user_two' => 4,  
+                'pin_one' => $pin->getUserLatestPin($user->getUserByEmail("user1@mail.com")->id)->id,
+                'pin_two' => $pin->getUserLatestPin($user->getUserByEmail("timmy.dario@gmail.com")->id)->id,
+                'user_one' => $user->getUserByEmail("user1@mail.com")->id,
+                'user_two' => $user->getUserByEmail("timmy.dario@gmail.com")->id, 
             ]
         ];
 

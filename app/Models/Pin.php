@@ -83,8 +83,10 @@ class Pin extends Model
      */
     public function getUserLatestPin($user_id)
     {
-
-        return Pin::where('id', DB::raw('(SELECT MAX(id) FROM ' . Pin::getTable() . ')'))->first();
+        return DB::table(Pin::getTable())
+                     ->select(DB::raw('MAX(id) as id'))
+                     ->where('user_id', $user_id)
+                     ->first();
     }
 
     /**

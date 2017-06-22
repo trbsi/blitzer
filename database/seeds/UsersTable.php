@@ -17,8 +17,8 @@ class UsersTable extends Seeder
                 [
                     'email' => 'user1@mail.com',
                     'birthday' => '1991-12-29',
-                    'first_name' => 'Dario',
-                    'last_name' => 'Trbovic',
+                    'first_name' => 'Ivan',
+                    'last_name' => 'Bucko',
                     'gender' => 'male',
                     'facebook_id' => mt_rand(),
                     'profile_picture' => 'https://scontent.xx.fbcdn.net/v/t1.0-1/c14.0.50.50/p50x50/18118555_2038480473049383_33756107051504425_n.jpg?oh=9bd9dd60bbf3a8c18af7974547486bc8&oe=59BFBDA8',

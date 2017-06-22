@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\Tag;
+use App\Models\User;
 use App\Helpers\CacheHelper;
 
 class PinsTable extends Seeder
@@ -13,7 +14,7 @@ class PinsTable extends Seeder
      *
      * @return void
      */
-    public function run(Pin $pin, PinTag $pinTag, Tag $tag)
+    public function run(Pin $pin, PinTag $pinTag, Tag $tag, User $user)
     {
 
         $tags = $tag->all();
@@ -27,21 +28,21 @@ class PinsTable extends Seeder
                     'publish_time' => $time,
                     'lat' => 45.5549624,
                     'lng' => 18.69551439999998,
-                    'user_id' => 1,
+                    'user_id' => $user->getUserByEmail("user1@mail.com")->id,
                 ],
                 [
                     'comment' => '',
                     'publish_time' => $time,
                     'lat' => 45.8150108,
                     'lng' => 15.981919000000062,
-                    'user_id' => 2,
+                    'user_id' => $user->getUserByEmail("user2@mail.com")->id,
                 ],
                 [
                     'comment' => 'So this is my time to shine.',
                     'publish_time' => $time,
                     'lat' => 39.7392358,
                     'lng' => -104.990251,
-                    'user_id' => 3,
+                    'user_id' => $user->getUserByEmail("user3@mail.com")->id,
                 ],
 
                 //Osijek pins
@@ -50,7 +51,7 @@ class PinsTable extends Seeder
                     'publish_time' => $time,
                     'lat' => 45.56117947133065,
                     'lng' => 18.682594299316406,
-                    'user_id' => 4,
+                    'user_id' => $user->getUserByEmail("timmy.dario@gmail.com")->id,
                 ],
                 
             ];
