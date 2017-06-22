@@ -41,6 +41,15 @@ class UsersTable extends Seeder
                     'facebook_id' => mt_rand(),
                     'profile_picture' => 'https://scontent.fzag1-1.fna.fbcdn.net/v/t1.0-9/18582028_268048996999657_3170307703511889749_n.jpg?oh=1dd5be0a9669c1cee6a6d1b6eef90ed3&oe=59AAFCA7',
                 ],
+                [
+                    'email' => 'timmy.dario@gmail.com',
+                    'birthday' => '1991-12-29',
+                    'first_name' => 'Dario',
+                    'last_name' => 'Isaac',
+                    'gender' => 'male',
+                    'facebook_id' => mt_rand(),
+                    'profile_picture' => 'https://scontent.fzag1-1.fna.fbcdn.net/v/t1.0-9/18582028_268048996999657_3170307703511889749_n.jpg?oh=1dd5be0a9669c1cee6a6d1b6eef90ed3&oe=59AAFCA7',
+                ],
 
             ];
 

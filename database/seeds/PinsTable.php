@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Pin;
 use App\Models\PinTag;
 use App\Models\Tag;
+use App\Helpers\CacheHelper;
 
 class PinsTable extends Seeder
 {
@@ -20,6 +21,7 @@ class PinsTable extends Seeder
         $time = date("Y-m-d H:i:s");
         $data =
             [
+                //Osijek pin
                 [
                     'comment' => 'Hello how are you?',
                     'publish_time' => $time,
@@ -41,6 +43,16 @@ class PinsTable extends Seeder
                     'lng' => -104.990251,
                     'user_id' => 3,
                 ],
+
+                //Osijek pins
+                [
+                    'comment' => 'Hello from Osijek.',
+                    'publish_time' => $time,
+                    'lat' => 45.56117947133065,
+                    'lng' => 18.682594299316406,
+                    'user_id' => 4,
+                ],
+                
             ];
 
         foreach ($data as $key => $value) {
@@ -48,6 +60,7 @@ class PinsTable extends Seeder
             for ($i = 0; $i < rand(1, count($tags)); $i++) {
                 $pinTmp->relationPinTag()->create(['tag_id' => rand(1, count($tags))]);
             }
+            CacheHelper::saveCache("user_pin_id", ["user_id" => $value["user_id"]], $pinTmp->id, 360);
         }
     }
 }

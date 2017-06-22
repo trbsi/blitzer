@@ -4,6 +4,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Pin;
 use App\Models\Message;
 use App\Models\MessagesReply;
+use Faker\Factory;
 
 class MessagesTable extends Seeder
 {
@@ -116,11 +117,40 @@ class MessagesTable extends Seeder
                 ],
             ];
 
+        //default conversation
         foreach ($data as $key => $value) {
             $msg = $message->create(array_except($value, ['replies']));
 
-
             $msg->messagesReplies()->createMany($value["replies"]);
         }
+
+        //create a conversation between real and fake users
+        $data =
+        [
+            //conversation between Osijek pins
+            [
+                'pin_one' => 1,
+                'pin_two' => 4,
+                'user_one' => 1,
+                'user_two' => 4,  
+            ]
+        ];
+
+        $faker = Factory::create();
+        
+        foreach ($data as $value) {
+            $msg = $message->create($value);
+
+            for ($i=0; $i < 20; $i++) { 
+                $replies = 
+                [
+                    'reply' => $faker->realText($maxNbChars = rand(20,200), $indexSize = 2),
+                    'user_id' => (rand(0,1)%2 == 0) ? $value["user_one"] : $value["user_two"],
+                    'send_date' => date("Y-m-d H:i:s")
+                ];
+                $msg->messagesReplies()->create($replies);
+            }
+        }
+
     }
 }
