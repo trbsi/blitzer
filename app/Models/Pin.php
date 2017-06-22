@@ -83,7 +83,9 @@ class Pin extends Model
      */
     public function getUserLatestPin($user_id)
     {
-        return Pin::where('id', DB::raw("(SELECT MAX(id) FROM " . Pin::getTable() . " WHERE user_id=$user_id)"))->first();
+        return Pin::where('id', DB::raw("(SELECT MAX(id) FROM " . Pin::getTable() . " WHERE user_id=$user_id)"))
+        ->with(['relationPinTag.relationTag', 'relationUser'])
+        ->first();
     }
 
     /**
@@ -113,10 +115,11 @@ class Pin extends Model
         $pinTable = Pin::getTable();
         $messagesTable = (new Message)->getTable();
 
-        $query = Pin::where("$pinTable.updated_at", '>=', $minusOneHour)
+        $query = Pin::where("$pinTable.updated_at", '>=', $minusOneHour
+            )
             ->where("$pinTable.updated_at", '<=', $current_time)
             ->where("$pinTable.user_id", '<>', $user_id)
-            ->with('relationPinTag.relationTag', 'relationUser')
+            ->with(['relationPinTag.relationTag', 'relationUser'])
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
             ->having("distance", "<=", $distance)
