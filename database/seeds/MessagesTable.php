@@ -41,9 +41,17 @@ class MessagesTable extends Seeder
                 'mail_1' => $seederHelper->fakeMails["mail1"],
                 'mail_2' => $seederHelper->realMails["timmydario"],
             ],
-            //conversation between Zagreb pins
             [
                 'mail_1' => $seederHelper->fakeMails["mail2"],
+                'mail_2' => $seederHelper->realMails["timmydario"],
+            ],
+            //conversation between Zagreb pins
+            [
+                'mail_1' => $seederHelper->fakeMails["mail3"],
+                'mail_2' => $seederHelper->realMails["msikic"],
+            ],
+            [
+                'mail_1' => $seederHelper->fakeMails["mail4"],
                 'mail_2' => $seederHelper->realMails["msikic"],
             ],
         ];
