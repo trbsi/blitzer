@@ -22,74 +22,53 @@ class MessagesTable extends Seeder
 
         //conversation between fake users
         $data =
+        [
             [
-                [
-                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail1"])->id)->id,
-                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail2"])->id)->id,
-                    'user_one' => $user->getUserByEmail($seederHelper->fakeMails["mail1"])->id,
-                    'user_two' => $user->getUserByEmail($seederHelper->fakeMails["mail2"])->id,
-                ],
-                [
-                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail1"])->id)->id,
-                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail3"])->id)->id,
-                    'user_one' => $user->getUserByEmail($seederHelper->fakeMails["mail1"])->id,
-                    'user_two' => $user->getUserByEmail($seederHelper->fakeMails["mail3"])->id,
-                ],
-                [
-                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail2"])->id)->id,
-                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail3"])->id)->id,
-                    'user_one' => $user->getUserByEmail($seederHelper->fakeMails["mail2"])->id,
-                    'user_two' => $user->getUserByEmail($seederHelper->fakeMails["mail3"])->id,
-                ],
+                'mail_1' => $seederHelper->fakeMails["mail1"],
+                'mail_2' => $seederHelper->fakeMails["mail2"],
+            ],
+            [
+                'mail_1' => $seederHelper->fakeMails["mail1"],
+                'mail_2' => $seederHelper->fakeMails["mail3"],
+            ],
+            [
+                'mail_1' => $seederHelper->fakeMails["mail2"],
+                'mail_2' => $seederHelper->fakeMails["mail3"],
+            ],
+
+            //conversation between Osijek pins
+            [
+                'mail_1' => $seederHelper->fakeMails["mail1"],
+                'mail_2' => $seederHelper->realMails["timmydario"],
+            ],
+            //conversation between Zagreb pins
+            [
+                'mail_1' => $seederHelper->fakeMails["mail2"],
+                'mail_2' => $seederHelper->realMails["msikic"],
+            ],
+        ];
+
+        foreach ($data as $value) {
+
+            $data = 
+            [
+                'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($value["mail_1"])->id)->id,
+                'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($value["mail_2"])->id)->id,
+                'user_one' => $user->getUserByEmail($value["mail_1"])->id,
+                'user_two' => $user->getUserByEmail($value["mail_2"])->id, 
             ];
 
-        foreach ($data as $key => $value) {
-            $msg = $message->create($value);
+            $msg = $message->create($data);
 
             for ($i=0; $i < 10; $i++) { 
                 $replies = 
                 [
                     'reply' => $faker->realText($maxNbChars = rand(20,200), $indexSize = 2),
-                    'user_id' => (rand(0,1)%2 == 0) ? $value["user_one"] : $value["user_two"],
+                    'user_id' => (rand(0,1)%2 == 0) ? $data["user_one"] : $data["user_two"],
                     'send_date' => date("Y-m-d H:i:s")
                 ];
                 $msg->messagesReplies()->create($replies);
             }
         }
-
-        //create a conversation between real and fake users
-        $data =
-        [
-            //conversation between Osijek pins
-            [
-                'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail1"])->id)->id,
-                'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->realMails["timmydario"])->id)->id,
-                'user_one' => $user->getUserByEmail($seederHelper->fakeMails["mail1"])->id,
-                'user_two' => $user->getUserByEmail($seederHelper->realMails["timmydario"])->id, 
-            ],
-            //conversation between Zagreb pins
-            [
-                'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->fakeMails["mail2"])->id)->id,
-                'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($seederHelper->realMails["msikic"])->id)->id,
-                'user_one' => $user->getUserByEmail($seederHelper->fakeMails["mail2"])->id,
-                'user_two' => $user->getUserByEmail($seederHelper->realMails["msikic"])->id, 
-            ]
-        ];
-
-        
-        foreach ($data as $value) {
-            $msg = $message->create($value);
-
-            for ($i=0; $i < 20; $i++) { 
-                $replies = 
-                [
-                    'reply' => $faker->realText($maxNbChars = rand(20,200), $indexSize = 2),
-                    'user_id' => (rand(0,1)%2 == 0) ? $value["user_one"] : $value["user_two"],
-                    'send_date' => date("Y-m-d H:i:s")
-                ];
-                $msg->messagesReplies()->create($replies);
-            }
-        }
-
     }
 }
