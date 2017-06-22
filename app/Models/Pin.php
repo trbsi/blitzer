@@ -157,7 +157,7 @@ class Pin extends Model
             $jsonPins[] = $this->generateContentForInfoWindow($pin);
         }
 
-        if (count($jsonPins) < 20 && $authUser->email != "timmy.dario@gmail.com") {
+        if (count($jsonPins) < 20) {
             $fakePins = $this->generateFakePins($authUser->id, $request);
             $jsonPins = array_merge($jsonPins, $fakePins);
         }
