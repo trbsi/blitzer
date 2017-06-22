@@ -83,10 +83,7 @@ class Pin extends Model
      */
     public function getUserLatestPin($user_id)
     {
-        return DB::table(Pin::getTable())
-                     ->select(DB::raw('MAX(id) as id'))
-                     ->where('user_id', $user_id)
-                     ->first();
+        return Pin::where('id', DB::raw("(SELECT MAX(id) FROM " . Pin::getTable() . " WHERE user_id=$user_id)"))->first();
     }
 
     /**
@@ -160,7 +157,7 @@ class Pin extends Model
             $jsonPins[] = $this->generateContentForInfoWindow($pin);
         }
 
-        if (count($jsonPins) < 20) {
+        if (count($jsonPins) < 20 && $authUser->email != "timmy.dario@gmail.com") {
             $fakePins = $this->generateFakePins($authUser->id, $request);
             $jsonPins = array_merge($jsonPins, $fakePins);
         }
