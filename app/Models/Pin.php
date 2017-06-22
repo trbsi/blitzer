@@ -109,11 +109,11 @@ class Pin extends Model
         $current_time = $request->current_time;
         $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
         $distance = Pin::DISTANCE;
-        $onehour = PinHelper::returnTime('minus-1hour', $current_time);
+        $minusOneHour = PinHelper::returnTime('minus-1hour', $current_time);
         $pinTable = Pin::getTable();
         $messagesTable = (new Message)->getTable();
 
-        $query = Pin::where("$pinTable.updated_at", '>=', $onehour)
+        $query = Pin::where("$pinTable.updated_at", '>=', $minusOneHour)
             ->where("$pinTable.updated_at", '<=', $current_time)
             ->where("$pinTable.user_id", '<>', $user_id)
             ->with('relationPinTag.relationTag', 'relationUser')

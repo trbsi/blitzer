@@ -17,7 +17,7 @@ class SeederHelper
 		$this->realMails = 
 		[
 			'timmydario' => 'timmy.dario@gmail.com',
-			'msikic' => 'msikic@gmail.com',
+			'msikic' => 'marijansikic@hotmail.com',
 		];
 	}
 }
