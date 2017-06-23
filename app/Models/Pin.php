@@ -113,9 +113,7 @@ class Pin extends Model
         $minusOneHour = PinHelper::returnTime('minus-1hour', $current_time);
         $pinTable = Pin::getTable();
 
-        $query = Pin::where("$pinTable.updated_at", '>=', $minusOneHour
-            )
-            ->where("$pinTable.updated_at", '<=', $current_time)
+        $query = Pin::whereBetween("$pinTable.updated_at", [$minusOneHour, $current_time])
             ->where("$pinTable.user_id", '<>', $user_id)
             ->with(['relationPinTag.relationTag', 'relationUser'])
             ->select("$pinTable.*")

@@ -71,7 +71,7 @@ class MessagesTable extends Seeder
             for ($i=0; $i < 10; $i++) { 
                 $replies = 
                 [
-                    'reply' => $faker->realText($maxNbChars = rand(1,50), $indexSize = 2),
+                    'reply' => $faker->realText($maxNbChars = rand(10,100), $indexSize = 2),
                     'user_id' => (rand(0,1)%2 == 0) ? $data["user_one"] : $data["user_two"],
                     'send_date' => date("Y-m-d H:i:s")
                 ];

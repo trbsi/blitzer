@@ -70,6 +70,8 @@ class PinsTable extends Seeder
             ];
 
         foreach ($data as $key => $value) {
+            
+            $value["updated_at"] = $time;
             $pinTmp = $pin->create($value);
             for ($i = 0; $i < rand(1, count($tags)); $i++) {
                 $pinTmp->relationPinTag()->create(['tag_id' => rand(1, count($tags))]);
