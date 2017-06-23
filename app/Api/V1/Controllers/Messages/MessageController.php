@@ -103,7 +103,11 @@ class MessageController extends BaseAuthController
                 //phone is expecting some kind of json response
                 return response()
                     ->json([
-                        "message" => null,
+                        "message" => 
+                        [
+                            'body' => null,
+                            'title' => null,
+                        ],
                         "success" => true,
                         "showAlert" => false,
                         "reply" => $MessagesReplyArray["reply"],
@@ -165,7 +169,7 @@ class MessageController extends BaseAuthController
                         "send_date" => Helper::formatDate($message->send_date),
                         "user_name" => $user->first_name . " " . $user->last_name,
                         "user_id" => $message->user_id,
-                        "id" => $message->id,
+                        "reply_id" => $message->id,
                     ];
             }
 

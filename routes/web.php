@@ -18,4 +18,5 @@ Route::get('legal', 'Controller@legal');
 Route::group(['namespace' => 'Cron', 'prefix' => 'cron'], function () {
     Route::get('update-pin-time', 'PinController@updatePinTime');
     Route::get('clear-push-tokens', 'CronController@clearOldPushTokens');
+    Route::get('enable-test-pins', 'CronController@enableTestPins');
 });
