@@ -13,6 +13,11 @@ class Tag extends Model
     protected $table = 'tags';
     public $timestamps = false;
     protected $fillable = ['id', 'tag_name', 'popularity'];
+    protected $casts = 
+    [
+        'id' => 'int',
+        'popularity' => 'int',
+    ];
 
     /**
      * @param $request

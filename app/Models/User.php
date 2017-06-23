@@ -19,6 +19,11 @@ class User extends Authenticatable
     protected $fillable = [
         'email', 'birthday', 'first_name', 'last_name', 'gender', 'facebook_id', 'profile_picture',
     ];
+    protected $casts = 
+    [
+        'id' => 'int',
+        'facebook_id' => 'int',
+    ];
 
     /**
      * The attributes that should be hidden for arrays.

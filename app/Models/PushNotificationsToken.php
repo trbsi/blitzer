@@ -12,6 +12,11 @@ class PushNotificationsToken extends Model
 
     protected $table = 'push_notifications_token';
     protected $fillable = ['id', 'user_id', 'token', 'device', 'device_id', 'updated_at', 'created_at'];
+    protected $casts = 
+    [
+        'id' => 'int',
+        'user_id' => 'int',
+    ];
 
     /**
      * Clear old push tokens, older than 7 days

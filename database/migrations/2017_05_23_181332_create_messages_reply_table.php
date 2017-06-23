@@ -20,7 +20,7 @@ class CreateMessagesReplyTable extends Migration
             $table->text('reply');
             $table->bigInteger('user_id');
             $table->datetime('send_date');
-            $table->tinyInteger('message_type')->default(0);
+            $table->tinyInteger('message_type')->default(1);
             $table->foreign('message_id')->references('id')->on('messages')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('restrict');
         });

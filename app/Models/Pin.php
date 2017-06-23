@@ -25,6 +25,13 @@ class Pin extends Model
     protected $table = 'pins';
     public $timestamps = false;
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
+    protected $casts = 
+    [
+        'id' => 'int',
+        'user_id' => 'int',
+        'lat' => 'float',
+        'lng' => 'float',
+    ];
 
     /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
