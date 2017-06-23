@@ -12,7 +12,7 @@ class Tag extends Model
 
     protected $table = 'tags';
     public $timestamps = false;
-    protected $fillable = ['id', 'tag', 'popularity'];
+    protected $fillable = ['id', 'tag_name', 'popularity'];
 
     /**
      * @param $request
