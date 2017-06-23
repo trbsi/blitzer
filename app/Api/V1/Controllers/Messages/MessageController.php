@@ -154,12 +154,12 @@ class MessageController extends BaseAuthController
             $messages = $this->messageReply->getMessages($request->load_all, $Message->id);
 
             foreach ($messages as $message) {
-                $usr = $message->relationUser;
+                $user = $message->relationUser;
                 $return["messages"][] =
                     [
                         "reply" => $message->reply,
                         "send_date" => Helper::formatDate($message->send_date),
-                        "user_name" => $usr->first_name . " " . $usr->last_name,
+                        "user_name" => $user->first_name . " " . $user->last_name,
                         "user_id" => $message->user_id,
                         "id" => $message->id,
                     ];

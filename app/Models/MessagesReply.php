@@ -23,7 +23,9 @@ class MessagesReply extends Model
         $messagesReplyTable = MessagesReply::getTable();
 
         $query = MessagesReply::with(['relationUser']);
-        if (!isset($load_all)) {
+
+        //@TODO - enable later, choose between loading all messages and last 10
+        /*if (!isset($load_all)) {
             //get newest last 10 messages
             //http://stackoverflow.com/questions/9424327/mysql-select-from-table-get-newest-last-10-rows-in-table
             $previousMessages = $query->from(DB::raw("(SELECT * FROM $messagesReplyTable WHERE message_id=$message_id ORDER BY send_date DESC LIMIT 10) AS temp_table"))
@@ -35,7 +37,11 @@ class MessagesReply extends Model
                 $query->orderBy('send_date', 'ASC')
                     ->where("message_id", "=", $message_id)
                     ->get();
-        }
+        }*/
+
+        $previousMessages = $query->orderBy('send_date', 'ASC')
+                    ->where("message_id", "=", $message_id)
+                    ->get();
 
         return $previousMessages;
     }
