@@ -42,7 +42,7 @@ class MessagesTable extends Seeder
                 'mail_2' => $seederHelper->realMails["timmydario"],
             ],
             [
-                'mail_1' => $seederHelper->fakeMails["mail2"],
+                'mail_1' => $seederHelper->fakeMails["mail4"],
                 'mail_2' => $seederHelper->realMails["timmydario"],
             ],
             //conversation between Zagreb pins
@@ -51,7 +51,7 @@ class MessagesTable extends Seeder
                 'mail_2' => $seederHelper->realMails["msikic"],
             ],
             [
-                'mail_1' => $seederHelper->fakeMails["mail4"],
+                'mail_1' => $seederHelper->fakeMails["mail2"],
                 'mail_2' => $seederHelper->realMails["msikic"],
             ],
         ];
