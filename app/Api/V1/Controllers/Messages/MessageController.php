@@ -138,12 +138,16 @@ class MessageController extends BaseAuthController
         $pin_two = (int)CacheHelper::getCache("user_pin_id", ["user_id" => $authUser->id]);
         $return = [];
         $return["success"] = true;
+        $return["message_id"] = NULL;
         $return["messages"] = [];
 
         //find message by pin id and logged user
         $Message = $this->message->getConversationByPin($pin_one, $pin_two);
 
         if (!empty($Message)) {
+            //set message_id so mobile phone can use it for PubNub
+            $return["message_id"] = $Message->id;
+
             if ($Message->user_one == $authUser->id) {
                 $Message->user_one_read = 1;
             } else {
@@ -164,10 +168,10 @@ class MessageController extends BaseAuthController
                         "id" => $message->id,
                     ];
             }
+
         }
 
-        return response()
-            ->json($return);
+        return response()->json($return);
     }
 
 }
