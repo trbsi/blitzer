@@ -15,3 +15,6 @@ https://stackoverflow.com/questions/41163199/laravel-5-3-how-to-log-all-queries-
 
 check if coordinates are on water
 https://stackoverflow.com/questions/3645649/i-need-to-know-the-predefined-point-is-in-the-sea-or-on-the-land/25275752#25275752
+
+Mysql returns integer as string
+https://laracasts.com/discuss/channels/general-discussion/mysql-returning-ints-as-strings-in-json

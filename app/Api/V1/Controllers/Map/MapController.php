@@ -134,8 +134,7 @@ class MapController extends BaseAuthController
             $tags = $this->tag->filterByTags($request);
         }
 
-        return response()
-            ->json($tags);
+        return response()->json($tags, 200, [], JSON_NUMERIC_CHECK);
     }
 
 }
