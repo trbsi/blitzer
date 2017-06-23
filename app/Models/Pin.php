@@ -40,11 +40,11 @@ class Pin extends Model
                 $tag = substr($tag, 0, self::MAX_TAG_LENGTH);
             }
 
-            $t = Tag::where(['tag' => $tag])->first();
+            $t = Tag::where(['tag_name' => $tag])->first();
 
             if (empty($t)) {
                 $t = new Tag;
-                $t->tag = $tag;
+                $t->tag_name = $tag;
                 $t->popularity = 1;
                 $t->save();
             } else {
