@@ -25,13 +25,13 @@ class Pin extends Model
     protected $table = 'pins';
     public $timestamps = false;
     protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
-    protected $casts = 
-    [
-        'id' => 'int',
-        'user_id' => 'int',
-        'lat' => 'float',
-        'lng' => 'float',
-    ];
+    protected $casts =
+        [
+            'id' => 'int',
+            'user_id' => 'int',
+            'lat' => 'float',
+            'lng' => 'float',
+        ];
 
     /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
@@ -82,8 +82,8 @@ class Pin extends Model
     public function getUserLatestPin($user_id)
     {
         return Pin::where('id', DB::raw("(SELECT MAX(id) FROM " . Pin::getTable() . " WHERE user_id=$user_id)"))
-        ->with(['relationPinTag.relationTag', 'relationUser'])
-        ->first();
+            ->with(['relationPinTag.relationTag', 'relationUser'])
+            ->first();
     }
 
     /**

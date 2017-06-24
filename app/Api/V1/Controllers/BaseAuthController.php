@@ -14,7 +14,7 @@ class BaseAuthController extends Controller
     public function __construct(User $user)
     {
         $this->user = $user;
-        if(!$this->authUser) {
+        if (!$this->authUser) {
             $this->authUser = $this->user->getAuthenticatedUser();
         }
     }

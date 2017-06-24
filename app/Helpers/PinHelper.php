@@ -19,7 +19,7 @@ class PinHelper
      */
     public static function formatCurrentTime($current_time, $strtotime = true)
     {
-        $current_time = str_replace("_", " ", $current_time); 
+        $current_time = str_replace("_", " ", $current_time);
         if ($strtotime == true)
             return date("Y-m-d H:i:s", strtotime($current_time));
         else
@@ -34,7 +34,7 @@ class PinHelper
      */
     public static function calculateAge($birthday)
     {
-        if(empty($birthday)) {
+        if (empty($birthday)) {
             return '?';
         }
 
@@ -50,7 +50,7 @@ class PinHelper
      */
     public static function returnGender($gender)
     {
-        if(empty($gender)) {
+        if (empty($gender)) {
             return '?';
         }
 

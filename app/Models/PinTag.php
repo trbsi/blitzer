@@ -12,12 +12,12 @@ class PinTag extends Model
     protected $table = 'pin_tag';
     public $timestamps = false;
     protected $fillable = ['id', 'tag_id', 'pin_id'];
-    protected $casts = 
-    [
-        'id' => 'int',
-        'tag_id' => 'int',
-        'pin_id' => 'int',
-    ];
+    protected $casts =
+        [
+            'id' => 'int',
+            'tag_id' => 'int',
+            'pin_id' => 'int',
+        ];
 
 
     public function location()

@@ -14,7 +14,7 @@ trait PinTrait
     private function fakeLocation($number)
     {
         //this moves pin's location to about 100m
-        $rand = 0.000400; 
+        $rand = 0.000400;
         $date_sum = date("Y") + date("m") + date("d");
 
         if ($date_sum % 2 == 0) {
@@ -95,7 +95,7 @@ trait PinTrait
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng, 2)]);
 
         if (!empty($pins)) {
-             return $pins;
+            return $pins;
         }
 
         if (!empty($pin)) {
@@ -699,17 +699,15 @@ trait PinTrait
         $rand_start = 3000;
         $rand_end = 90000;
 
-        if(rand(0,1)%2 == 0) {
+        if (rand(0, 1) % 2 == 0) {
             $x = "0.00";
-        }
-        else {
+        } else {
             $x = "0.0";
         }
 
-        if(rand(0,1) %2 == 0) {
+        if (rand(0, 1) % 2 == 0) {
             return $latLng + (float)($x . rand($rand_start, $rand_end));
-        }
-        else {
+        } else {
             return $latLng - (float)($x . rand($rand_start, $rand_end));
         }
     }
@@ -723,17 +721,16 @@ trait PinTrait
         $lat = $this->randomCoordinates($data["lat"]);
         $lng = $this->randomCoordinates($data["lng"]);
 
-        $im = imagecreatefrompng('http://maps.googleapis.com/maps/api/staticmap?center='.$lat.','.$lng.'&zoom=21&format=png&sensor=false&size=1x1&maptype=roadmap&style=feature:administrative|visibility:off&style=feature:landscape|color:0x000000&style=feature:water|color:0xffffff&style=feature:road|visibility:off&style=feature:transit|visibility:off&style=feature:poi|visibility:off&key='.env('GOOGLE_MAPS_API_KEY'));
+        $im = imagecreatefrompng('http://maps.googleapis.com/maps/api/staticmap?center=' . $lat . ',' . $lng . '&zoom=21&format=png&sensor=false&size=1x1&maptype=roadmap&style=feature:administrative|visibility:off&style=feature:landscape|color:0x000000&style=feature:water|color:0xffffff&style=feature:road|visibility:off&style=feature:transit|visibility:off&style=feature:poi|visibility:off&key=' . env('GOOGLE_MAPS_API_KEY'));
         //get pixel color, put it in an array
         $color_index = imagecolorat($im, 0, 0);
         $color_tran = imagecolorsforindex($im, $color_index);
 
         //if, for example, red value of the pixel is 0 we are on land
-        if($color_tran['red'] == 0){
+        if ($color_tran['red'] == 0) {
             //this is land
             return ['lat' => $lat, 'lng' => $lng];
-        }
-        else {
+        } else {
             return $this->checkIfWater($data);
         }
     }
@@ -748,7 +745,7 @@ trait PinTrait
         $first = trim($data['names']["first"][rand(0, $countName - 1)]);
         $last = trim($data['names']["last"][rand(0, $countName - 1)]);
         $name = $first . " " . $last;
-        
+
         $latLng = $this->checkIfWater($data);
 
         foreach ($data["tags"][$get][$i] as $key => $value) {

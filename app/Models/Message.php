@@ -17,17 +17,17 @@ class Message extends Model
 
     protected $table = 'messages';
     protected $fillable = ['id', 'pin_one', 'pin_two', 'user_one', 'user_two', 'user_one_read', 'user_two_read', 'created_at', 'updated_at'];
-    protected $casts = 
-    [
-        'id' => 'int',
-        'pin_one' => 'int',
-        'pin_two' => 'int',
-        'user_one' => 'int',
-        'user_two' => 'int',
-        'user_one_read' => 'boolean',
-        'user_two_read' => 'boolean',
-    ];
-    
+    protected $casts =
+        [
+            'id' => 'int',
+            'pin_one' => 'int',
+            'pin_two' => 'int',
+            'user_one' => 'int',
+            'user_two' => 'int',
+            'user_one_read' => 'boolean',
+            'user_two_read' => 'boolean',
+        ];
+
     /**
      * get conversation between 2 pins
      * @param  [int] $pin_one [id of a pin]

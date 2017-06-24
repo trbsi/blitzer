@@ -103,11 +103,11 @@ class MessageController extends BaseAuthController
                 //phone is expecting some kind of json response
                 return response()
                     ->json([
-                        "message" => 
-                        [
-                            'body' => null,
-                            'title' => null,
-                        ],
+                        "message" =>
+                            [
+                                'body' => null,
+                                'title' => null,
+                            ],
                         "success" => true,
                         "showAlert" => false,
                         "reply" => $MessagesReplyArray["reply"],

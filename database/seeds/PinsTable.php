@@ -22,7 +22,7 @@ class PinsTable extends Seeder
 
         $time = date("Y-m-d H:i:s");
         $data =
-            [                
+            [
                 //Osijek pins
                 [
                     'comment' => 'Hello from Osijek.',
@@ -37,14 +37,14 @@ class PinsTable extends Seeder
                     'lat' => 45.5549624,
                     'lng' => 18.69551439999998,
                     'user_id' => $user->getUserByEmail($seederHelper->fakeMails["mail1"])->id,
-                ],  
+                ],
                 [
                     'comment' => 'Osijek rulzzz?',
                     'publish_time' => $time,
                     'lat' => 45.5562515372263,
                     'lng' => 18.71872901916504,
                     'user_id' => $user->getUserByEmail($seederHelper->fakeMails["mail4"])->id,
-                ],  
+                ],
                 //Zagreb pins
                 [
                     'comment' => 'Hello from Zagreb.',
@@ -70,7 +70,7 @@ class PinsTable extends Seeder
             ];
 
         foreach ($data as $key => $value) {
-            
+
             $value["updated_at"] = $time;
             $pinTmp = $pin->create($value);
             for ($i = 0; $i < rand(1, count($tags)); $i++) {
