@@ -60,8 +60,8 @@ class MessagesTable extends Seeder
 
             $data =
                 [
-                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($value["mail_1"])->id)->id,
-                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($value["mail_2"])->id)->id,
+                    'pin_one' => $pin->getUserLatestPin($user->getUserByEmail($value["mail_1"])->id, $date)->id,
+                    'pin_two' => $pin->getUserLatestPin($user->getUserByEmail($value["mail_2"])->id, $date)->id,
                     'user_one' => $user->getUserByEmail($value["mail_1"])->id,
                     'user_two' => $user->getUserByEmail($value["mail_2"])->id,
                 ];

@@ -42,7 +42,7 @@ class MapController extends BaseAuthController
         $enableAllPins = true;
 
         //check if user has any active pin
-        $latestUserPin = $this->pin->getUserLatestPin($this->authUser->id, $request);
+        $latestUserPin = $this->pin->getUserLatestPin($this->authUser->id, $request->current_time);
 
         if (empty($latestUserPin)) {
             $showAlert = true;

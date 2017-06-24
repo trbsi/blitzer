@@ -84,16 +84,16 @@ class Pin extends Model
 
     /**
      * get user's latest pin
-     * @param $request
+     * @param $current_time
      * @param $user
      * @return mixed
      */
-    public function getUserLatestPin($user_id, $request)
+    public function getUserLatestPin($user_id, $current_time)
     {
-        $minusOneHour = PinHelper::returnTime('minus-1hour', $request->current_time);
+        $minusOneHour = PinHelper::returnTime('minus-1hour', $current_time);
 
         return Pin::where('id', DB::raw("(SELECT MAX(id) FROM " . Pin::getTable() . " WHERE user_id=$user_id)"))
-            ->whereBetween("updated_at", [$minusOneHour, $request->current_time])
+            ->whereBetween("updated_at", [$minusOneHour, $current_time])
             ->with(['tags', 'relationUser'])
             ->first();
     }
