@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('first_name', 30);
             $table->string('last_name', 30);
             $table->string('gender', 10)->nullable();
-            $table->bigInteger('facebook_id');
+            $table->string('facebook_id', 20);
             $table->string('profile_picture', 255);
             $table->timestamps();
         });

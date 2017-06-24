@@ -34,6 +34,16 @@ class Pin extends Model
         ];
 
     /**
+     *
+     * @param  string  $value
+     * @return string
+     */
+    public function getMessageUserReadAttribute($value)
+    {
+        return (isset($value) ? $value : 0);
+    }
+
+    /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
      * @param $tags
      * @return array
@@ -101,11 +111,11 @@ class Pin extends Model
      * get only query for pins
      * @param  Request $request [Laravel request]
      * @param  User $authUser [authenticated user
+     * @param integer $latestUserPinId [use this latest user pin id to get all message between my pin and pin of other people so you can return badge]
      * @return [Laravel Eloquent] [laravel prepared query]
      */
-    public function getPinsQuery($request, $authUser)
+    public function getPinsQuery($request, $authUser, $latestUserPinId)
     {
-        $user_id = $authUser->id;
         $lat = $request->lat;
         $lng = $request->lng;
         $current_time = $request->current_time;
@@ -114,7 +124,7 @@ class Pin extends Model
         $pinTable = Pin::getTable();
 
         $query = Pin::whereBetween("$pinTable.updated_at", [$minusOneHour, $current_time])
-            ->where("$pinTable.user_id", '<>', $user_id)
+            ->where("$pinTable.user_id", '<>', $authUser->id)
             ->with(['tags', 'relationUser'])
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
@@ -123,13 +133,31 @@ class Pin extends Model
 
         //if user wants to filter by tag
         if (isset($request->filter_by_tag)) {
-            $pinTagTable = new PinTag;
-            $pinTagTable = $pinTagTable->getTable();
+            $pinTagTable = (new PinTag)->getTable();
 
-            $query
+            $query = $query
                 ->where("tag_id", "=", $request->filter_by_tag)
                 ->join($pinTagTable, "$pinTable.id", "=", "$pinTagTable.pin_id", 'inner');
         }
+
+        //if user has published pin join with messages to get if user has unread messages so you can set badge
+        if($latestUserPinId) {
+            $messagesTable = (new Message)->getTable();
+            //IF(messages.user_one = 5, messages.user_one_read, messages.user_two_read) AS message_user_read,
+            //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
+            $query = $query
+                ->leftJoin($messagesTable, function($join) use($messagesTable, $latestUserPinId, $pinTable) {
+                    $join->on("$messagesTable.pin_one", "=", DB::raw($latestUserPinId))
+                        ->orOn("$messagesTable.pin_two", "=", DB::raw($latestUserPinId))
+                        ->on("$messagesTable.pin_one", "=", "$pinTable.id")
+                        ->orOn("$messagesTable.pin_two", "=", "$pinTable.id")
+                        ;
+                })
+                ->selectRaw("IF($messagesTable.user_one = $authUser->id, $messagesTable.user_one_read, $messagesTable.user_two_read) AS message_user_read")
+                ;
+
+        }
+
         return $query;
     }
 
@@ -142,14 +170,16 @@ class Pin extends Model
      */
     public function getPins($request, $authUser, $latestUserPin)
     {
-        $pins = $this->getPinsQuery($request, $authUser)->get();
-
         $jsonPins = [];
+        $latestUserPinId = null;
 
         //add latest user pin to array
         if (!empty($latestUserPin)) {
+            $latestUserPinId = $latestUserPin->id;
             $jsonPins[] = $this->generateContentForInfoWindow($latestUserPin);
         }
+
+        $pins = $this->getPinsQuery($request, $authUser, $latestUserPinId)->get();
 
         //return json data
         foreach ($pins as $key => $pin) {

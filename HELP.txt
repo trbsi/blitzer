@@ -1,23 +1,32 @@
-check if app is live or local
+#check if app is live or local
 http://laravel-recipes.com/recipes/1/checking-your-environment
 
-debug bar for API
+#debug bar for API
 https://github.com/barryvdh/laravel-debugbar/issues/252
 
-Saving and Updating Laravel Relations
+#Saving and Updating Laravel Relations
 http://meigwilym.com/family-fortunes-saving-and-updating-laravel-relations/
 
-get raw query: DB::table('users')->toSql() 
+#get raw query: DB::table('users')->toSql()
 https://stackoverflow.com/questions/18236294/how-do-i-get-the-query-builder-to-output-its-raw-sql-query-as-a-string
 
-Log all queries
+#Log all queries
 https://stackoverflow.com/questions/41163199/laravel-5-3-how-to-log-all-queries-on-a-page
 
-check if coordinates are on water
+#check if coordinates are on water
 https://stackoverflow.com/questions/3645649/i-need-to-know-the-predefined-point-is-in-the-sea-or-on-the-land/25275752#25275752
 
-Mysql returns integer as string
+#Mysql returns integer as string
 https://laracasts.com/discuss/channels/general-discussion/mysql-returning-ints-as-strings-in-json
 
-xdebug phpstorm
+#xdebug phpstorm
 https://stackoverflow.com/questions/19139803/xdebug-and-restful-server-using-phpstorm-or-postman
+
+#Testing query for getting pin badge. Badge is actually if user read a message or not
+select `pins`.*,
+IF(messages.user_one = 5, messages.user_one_read, messages.user_two_read) AS message_user_read,
+messages.user_one_read, messages.user_two_read
+from `pins`
+LEFT JOIN messages ON (messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id)
+WHERE pins.user_id <> 5
+group by `pins`.`id`

@@ -62,6 +62,7 @@ trait PinTrait
                     ],
                 'pin' =>
                     [
+                        'badge' => $pin->message_user_read,
                         'publish_time' => $pin->publish_time,
                         'comment' => $comment,
                         'lat' => $lat,
@@ -754,7 +755,9 @@ trait PinTrait
         }
 
         $comment = "";
+        $badge = 0;
         if (env('APP_ENV') != 'live') {
+            $badge = rand(0,5);
             $comment = rand(0, 1) % 2 ? "" : $this->randomizer('{Please|Just} make this {cool|awesome|random} test sentence {rotate {quickly|fast} and random|spin and be random}');
         }
 
@@ -771,6 +774,7 @@ trait PinTrait
                 "pin" =>
                     [
                         "publish_time" => $date->format('Y-m-d H:i:s'),
+                        "badge" => $badge,
                         "comment" => $comment,
                         "lat" => $latLng["lat"],
                         "lng" => $latLng["lng"],
