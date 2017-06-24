@@ -139,9 +139,8 @@ class Pin extends Model
                 ->where("tag_id", "=", $request->filter_by_tag)
                 ->join($pinTagTable, "$pinTable.id", "=", "$pinTagTable.pin_id", 'inner');
         }
-
         //if user has published pin join with messages to get if user has unread messages so you can set badge
-        if($latestUserPinId) {
+        else if($latestUserPinId) {
             $messagesTable = (new Message)->getTable();
             //IF(messages.user_one = 5, messages.user_one_read, messages.user_two_read) AS message_user_read,
             //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
