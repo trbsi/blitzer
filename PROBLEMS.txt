@@ -1,0 +1,2 @@
+Dingo API calls construct twice
+https://github.com/dingo/api/issues/922

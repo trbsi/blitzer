@@ -8,9 +8,14 @@ use App\Models\User;
 
 class BaseAuthController extends Controller
 {
+    public $user;
+    public $authUser;
+
     public function __construct(User $user)
     {
         $this->user = $user;
-        $this->authUser = $this->user->getAuthenticatedUser();
+        if(!$this->authUser) {
+            $this->authUser = $this->user->getAuthenticatedUser();
+        }
     }
 }

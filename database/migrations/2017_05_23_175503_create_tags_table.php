@@ -17,7 +17,7 @@ class CreateTagsTable extends Migration
             $table->engine = 'InnoDB';
             $table->bigInteger('id', true);
             $table->string('tag_name', 50);
-            $table->integer('popularity');
+            $table->integer('popularity')->default(0);
         });
 
         \DB::statement('ALTER TABLE tags ADD FULLTEXT INDEX tags_ft_index (tag_name);');

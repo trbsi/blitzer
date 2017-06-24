@@ -47,19 +47,10 @@ class Pin extends Model
                 $tag = substr($tag, 0, self::MAX_TAG_LENGTH);
             }
 
-            $t = Tag::where(['tag_name' => $tag])->first();
+            $tagSave = Tag::updateOrCreate(['tag_name' => $tag]);
+            $tagSave->increment("popularity");
 
-            if (empty($t)) {
-                $t = new Tag;
-                $t->tag_name = $tag;
-                $t->popularity = 1;
-                $t->save();
-            } else {
-                $t->popularity = $t->popularity + 1;
-                $t->update();
-            }
-
-            $return[$t->id] = $tag;
+            $return[$tagSave->id] = $tag;
         }
 
         return $return;
@@ -122,7 +113,7 @@ class Pin extends Model
 
         $query = Pin::whereBetween("$pinTable.updated_at", [$minusOneHour, $current_time])
             ->where("$pinTable.user_id", '<>', $user_id)
-            ->with(['relationPinTag.relationTag', 'relationUser'])
+            ->with(['tags', 'relationUser'])
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
             ->having("distance", "<=", Pin::DISTANCE)

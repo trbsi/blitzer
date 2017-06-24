@@ -40,9 +40,10 @@ trait PinTrait
 
         $i = 0;
         $tags = [];
-        foreach ($pin->relationPinTag as $pin2) {
-            $tags[$i]["tag_id"] = $pin2->tag_id;
-            $tags[$i]["tag_name"] = $pin2->relationTag->tag_name;
+
+        foreach ($pin->tags as $pin2) {
+            $tags[$i]["tag_id"] = $pin2->id;
+            $tags[$i]["tag_name"] = $pin2->tag_name;
             $i++;
         }
 

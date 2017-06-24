@@ -94,24 +94,19 @@ class MapController extends BaseAuthController
             $comment = substr($comment, 0, Pin::COMMENT_LENGTH);
         }
 
+        $pin->fill($request->all());
         $pin->user_id = $user->id;
         $pin->publish_time = $pin->updated_at = $request->current_time;
         $pin->lng = $request->lng;
         $pin->lat = $request->lat;
         $pin->comment = $comment;
-        $pin->fill($request->all());
         if ($pin->save()) {
             //save in redis so you can get latest user's pin id
             //@TODO Redis::set("user:$user->id:pin", $pin->id);
             CacheHelper::saveCache("user_pin_id", ["user_id" => $user->id], $pin->id, 360);
 
             //save tags
-            foreach ($tags as $tag_id => $tag_name) {
-                $tmp = new $this->pinTag;
-                $tmp->pin_id = $pin->id;
-                $tmp->tag_id = $tag_id;
-                $tmp->save();
-            }
+            $pin->tags()->attach(array_flip($tags));
             $status = true;
         }
 
