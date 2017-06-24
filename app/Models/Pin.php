@@ -63,15 +63,14 @@ class Pin extends Model
      * @param $user
      * @return mixed
      */
-    public function userHasActivePin($request, $user)
+    /*public function userHasActivePin($request, $user)
     {
-        $onehour = PinHelper::returnTime('minus-1hour', $request->current_time);
+        $minusOneHour = PinHelper::returnTime('minus-1hour', $request->current_time);
 
-        return Pin::where('updated_at', '>=', $onehour)
-            ->where('updated_at', '<=', $request->current_time)
+        return Pin::whereBetween("updated_at", [$minusOneHour, $request->current_time])
             ->where('user_id', $user->id)
             ->count();
-    }
+    }*/
 
     /**
      * get user's latest pin
@@ -79,10 +78,13 @@ class Pin extends Model
      * @param $user
      * @return mixed
      */
-    public function getUserLatestPin($user_id)
+    public function getUserLatestPin($user_id, $request)
     {
+        $minusOneHour = PinHelper::returnTime('minus-1hour', $request->current_time);
+
         return Pin::where('id', DB::raw("(SELECT MAX(id) FROM " . Pin::getTable() . " WHERE user_id=$user_id)"))
-            ->with(['relationPinTag.relationTag', 'relationUser'])
+            ->whereBetween("updated_at", [$minusOneHour, $request->current_time])
+            ->with(['tags', 'relationUser'])
             ->first();
     }
 
@@ -98,8 +100,8 @@ class Pin extends Model
     /**
      * get only query for pins
      * @param  Request $request [Laravel request]
-     * @param  User $authUser [authenticated user]
-     * @return [Laravel Eloquent]           [laravel prepared query]
+     * @param  User $authUser [authenticated user
+     * @return [Laravel Eloquent] [laravel prepared query]
      */
     public function getPinsQuery($request, $authUser)
     {
@@ -135,16 +137,16 @@ class Pin extends Model
      * return all pins formatted
      * @param  Request $request [Laravel request]
      * @param  User $authUser [authenticated user]
+     * @param  Pin $latestUserPin [returned model from getUserLatestPin()]
      * @return [array]           [formatted pins]
      */
-    public function getPins($request, $authUser)
+    public function getPins($request, $authUser, $latestUserPin)
     {
         $pins = $this->getPinsQuery($request, $authUser)->get();
 
         $jsonPins = [];
 
         //add latest user pin to array
-        $latestUserPin = $this->getUserLatestPin($authUser->id);
         if (!empty($latestUserPin)) {
             $jsonPins[] = $this->generateContentForInfoWindow($latestUserPin);
         }
