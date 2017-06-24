@@ -33,10 +33,7 @@ trait PinTrait
     public function generateContentForInfoWindow($pin)
     {
         $user = $pin->relationUser;
-        if (!empty($pin->comment)) {
-            $comment = htmlentities($pin->comment);
-        }
-        //decode html
+        $comment = htmlentities($pin->comment); //decode html
 
         $i = 0;
         $tags = [];
