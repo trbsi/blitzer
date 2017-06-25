@@ -15,7 +15,7 @@ class Pin extends Model
 
     const MAX_TAG_LENGTH = 50;
     const MEAUREMENT = 'miles';
-    const DISTANCE = 20;
+    const DISTANCE = 25;
     const COMMENT_LENGTH = 255;
 
     /**
