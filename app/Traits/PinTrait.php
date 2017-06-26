@@ -129,7 +129,7 @@ trait PinTrait
                             ],
                         'last' =>
                             [
-                                'Gotal ', 'Radanović ', 'Vinković ', 'Lon�?ar ', 'Nenadić ', 'Bešlić ', 'Brković ', 'Ivanović ', 'Bobić ', 'Malenica ', 'Peruško ', 'Roguljić ', 'Slunjski ', 'Gori�?ki ', 'Blažević ', 'Acinger ', 'Hrgović ', 'Antolović ', 'Varga ', 'Ćorak',
+                                'Gotal', 'Radanović', 'Vinković', 'Lončar', 'Nenadić', 'Bečanić', 'Brković', 'Ivanović', 'Bobić', 'Malenica ', 'Peruško', 'Roguljić', 'Slunjski', 'Goriški', 'Blažević', 'Acinger', 'Hrgović', 'Antolović', 'Varga', 'Ćorak',
                             ],
                     ],
             ];
@@ -151,7 +151,7 @@ trait PinTrait
                             'Valentina', 'Lea', 'Sara', 'Irma', 'Gordana', 'Danica', 'Kristina', 'Ivana', 'Anita', 'Tea', 'Vanja', 'Klara', 'Ela', 'Anita', 'Tatjana', 'Irena', 'Dubravka', 'Nikolina', 'Anastazija', 'Maja', 'Danijela', 'Leonarda', 'Petra', 'Veronika', 'Ružica', 'Lidija', 'Jadranka', 'Antonija', 'Eva', 'Julija',
                         ],
                         'last' => [
-                            'Komušar', 'Barac', 'Dolenec', 'Brković', 'Kvešić', 'Davidović', 'Božanović', 'Vulić', 'Pavković ', 'Butković', 'Krizmanić ', 'Mihajlović ', 'Medan�?ić ', 'Krstić ', 'Per�?ić ', 'Medved ', 'Vojković ', 'Ranogajec ', 'Marić ', 'Jurjević ', 'Mandić ', 'Vidić ', 'Knežić ', 'Obradović ', 'Bosak ', 'Ivanišević ', 'Ćuk ', 'Jel�?ić ', 'Maleš ', 'Lukšić',
+                            'Komušar', 'Barac', 'Dolenec', 'Brković', 'Kvelić', 'Davidović', 'Božanović', 'Vulić', 'Pavković', 'Butković', 'Krizmanić', 'Mihajlović', 'Medanlić', 'Krstić', 'Peršić', 'Medved', 'Vojković', 'Ranogajec', 'Marić', 'Jurjević', 'Mandić', 'Vidić', 'Knežić', 'Obradović', 'Bosak', 'Ivanišević', 'Šuk', 'Jelić', 'Malež', 'Lukčić',
                         ],
                     ],
             ];
