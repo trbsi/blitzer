@@ -93,7 +93,7 @@ trait PinTrait
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng, 1)]);
 
         if (!empty($pins)) {
-            //return $pins;
+            return $pins;
         }
 
         if (!empty($pin)) {
