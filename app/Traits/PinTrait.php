@@ -93,7 +93,7 @@ trait PinTrait
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng, 1)]);
 
         if (!empty($pins)) {
-            return $pins;
+            //return $pins;
         }
 
         if (!empty($pin)) {
@@ -644,11 +644,13 @@ trait PinTrait
             ];
 
         $header = $request->header("Country");
+        $reverseGeocode = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=AIzaSyBgt5EqBlAx6LNNNiaerWd7u78TktJFVt8"));
+
         $get = 'en';
-        if ($header) {
-            if ($header == "Croatia") {
-                $get = "hr";
-            }
+        foreach ($reverseGeocode->results[0]->address_components as $value) {
+            if($value->long_name == "Croatia") {
+                 $get = "hr";
+            }    
         }
 
         $countMale = count($male[$get]["first"]);
