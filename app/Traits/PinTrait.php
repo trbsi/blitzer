@@ -643,8 +643,7 @@ trait PinTrait
                     ],
             ];
 
-        $header = $request->header("Country");
-        $reverseGeocode = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=AIzaSyBgt5EqBlAx6LNNNiaerWd7u78TktJFVt8"));
+        $reverseGeocode = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=".env('GOOGLE_MAPS_API_KEY')));
 
         $get = 'en';
         foreach ($reverseGeocode->results[0]->address_components as $value) {
