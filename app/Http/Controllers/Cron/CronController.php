@@ -29,9 +29,11 @@ class CronController extends Controller
      */
     public function enableTestPins(Request $request)
     {
-        date_default_timezone_set(isset($request->timezone) ? $request->timezone : "Europe/Zagreb");
+        var_dump("sh ".base_path()."/reset_database.sh");
+        var_dump(exec("sh ".base_path()."/reset_database.sh"));
+        /*date_default_timezone_set(isset($request->timezone) ? $request->timezone : "Europe/Zagreb");
         DB::table((new Pin)->getTable())
             ->update(['updated_at' => date("Y-m-d H:i:s")]);
-        echo "Done. Check the app!";
+        echo "Done. Check the app!";*/
     }
 }    
