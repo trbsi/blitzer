@@ -142,6 +142,7 @@ class Pin extends Model
         //if user has published pin join with messages to get if user has unread messages so you can set badge
         else if($latestUserPinId) {
             $messagesTable = (new Message)->getTable();
+            //if user_one_read = 0, user one didn't read a message, set badge to 1, else to 0
             //IF(messages.user_one = 5, IF(messages.user_one_read = 0, 1, 0), IF(messages.user_two_read = 0, 1, 0)) AS message_user_read
             //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
             $query = $query
