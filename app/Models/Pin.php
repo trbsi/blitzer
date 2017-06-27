@@ -142,7 +142,7 @@ class Pin extends Model
         //if user has published pin join with messages to get if user has unread messages so you can set badge
         else if($latestUserPinId) {
             $messagesTable = (new Message)->getTable();
-            //IF(messages.user_one = 5, messages.user_one_read, messages.user_two_read) AS message_user_read,
+            //IF(messages.user_one = 5, IF(messages.user_one_read = 0, 1, 0), IF(messages.user_two_read = 0, 1, 0)) AS message_user_read
             //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
             $query = $query
                 ->leftJoin($messagesTable, function($join) use($messagesTable, $latestUserPinId, $pinTable) {
@@ -152,7 +152,7 @@ class Pin extends Model
                         ->orOn("$messagesTable.pin_two", "=", "$pinTable.id")
                         ;
                 })
-                ->selectRaw("IF($messagesTable.user_one = $authUser->id, $messagesTable.user_one_read, $messagesTable.user_two_read) AS message_user_read")
+                ->selectRaw("IF($messagesTable.user_one = $authUser->id, IF($messagesTable.user_one_read = 0, 1, 0), IF($messagesTable.user_two_read = 0, 1, 0)) AS message_user_read")
                 ;
 
         }
