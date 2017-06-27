@@ -22,7 +22,9 @@ class TagsTable extends Seeder
             ];
 
         foreach ($data as $key => $value) {
-            try {
+            try 
+            {
+                
                 $insert =
                 [
                     'tag_name' => $value,
@@ -31,8 +33,7 @@ class TagsTable extends Seeder
 
                 $tags->create($insert); 
             }
-            catch(\Exceptio $e)
-            {
+            catch(\Exception $e) {
                 //do nothing
             }
             
