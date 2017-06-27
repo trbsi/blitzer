@@ -22,13 +22,20 @@ class TagsTable extends Seeder
             ];
 
         foreach ($data as $key => $value) {
-            $insert =
+            try {
+                $insert =
                 [
                     'tag_name' => $value,
                     'popularity' => rand(1000, 5000),
                 ];
 
-            $tags->create($insert);
+                $tags->create($insert); 
+            }
+            catch(\Exceptio $e)
+            {
+                //do nothing
+            }
+            
         }
     }
 }

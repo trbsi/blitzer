@@ -16,7 +16,7 @@ class CreateTagsTable extends Migration
         Schema::create('tags', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->bigInteger('id', true);
-            $table->string('tag_name', 50);
+            $table->string('tag_name', 50)->unique();
             $table->integer('popularity')->default(0);
         });
         
