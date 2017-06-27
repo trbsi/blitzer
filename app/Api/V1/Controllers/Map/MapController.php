@@ -63,7 +63,7 @@ class MapController extends BaseAuthController
                 'blink' => $blink,
                 'message' => $message,
                 'pins' => $pins
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
@@ -115,7 +115,7 @@ class MapController extends BaseAuthController
             ->json([
                 'status' => $status,
                 'pins' => [$pin_info],
-            ]);
+            ], 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
