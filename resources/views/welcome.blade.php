@@ -84,8 +84,7 @@
                                     class="strong"><?= config("app.name") ?></strong><br>Live in the moment</h2>
 
                         <p>
-                            <?= config("app.name") ?> is a social discovery app where people can discover other people
-                            on the map based on hashtags, chat from within map markers and quickly meet in real life.
+                            Use the map to see what's going on next to you, who's currently on the spot ready to interact with you and get things done in real time.
                         </p>
                         <a href="<?= env("GOOGLE_PLAY_LINK") ?>" target="_blank"
                            class="btn btn-download wow animated fadeInLeft">

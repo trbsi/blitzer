@@ -22,3 +22,7 @@ https://www.flickr.com/photos/moonlightbulb/7082563813/in/photostream/
 
 #facebook/twitter login buttons
 https://dribbble.com/shots/1358062-Social-Login-Buttons
+
+#Background image dimensions 
+https://stackoverflow.com/questions/13024272/android-background-image-size-in-pixel-which-support-all-devices
+https://stackoverflow.com/questions/38250333/ios-preparing-background-images-for-applications
