@@ -19,7 +19,8 @@ class CreateTagsTable extends Migration
             $table->string('tag_name', 50);
             $table->integer('popularity')->default(0);
         });
-
+        
+        //https://laracasts.com/discuss/channels/general-discussion/fulltext-indexes-at-migrations
         \DB::statement('ALTER TABLE tags ADD FULLTEXT INDEX tags_ft_index (tag_name);');
     }
 
