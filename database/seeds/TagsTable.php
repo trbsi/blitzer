@@ -21,6 +21,7 @@ class TagsTable extends Seeder
 
             ];
 
+        $data = array_unique($data);
         foreach ($data as $key => $value) {
             try 
             {
