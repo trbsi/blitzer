@@ -30,7 +30,8 @@ class CronController extends Controller
      */
     public function enableTestPins(Request $request)
     {
-        if(env('APP_ENV') != 'live' && strpos("blitzerapp", $_SERVER['HTTP_HOST']) === false) {
+        strpos(haystack, needle)
+        if(env('APP_ENV') != 'live' && strpos($_SERVER['HTTP_HOST'], "blitzerapp") === false) {
             Artisan::call("migrate:reset");
             Artisan::call("migrate");
             Artisan::call("db:seed");
