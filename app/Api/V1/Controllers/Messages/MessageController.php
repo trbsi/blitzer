@@ -32,7 +32,7 @@ class MessageController extends BaseAuthController
             $reply = $request->reply;
             $authUser = $this->authUser;
             $user_one = $request->user_id; //id of a user whose pin it is
-            $pin_one = $request->pin_id;
+            $pin_one = $request->pin_id; //pin id of a user who published that pin
             $user_two = $authUser->id;
             //$badgeForPin - if I send a message other user will get notification and badge has to be set on my pin.
             $pin_two = $badgeForPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_two]);
@@ -115,6 +115,7 @@ class MessageController extends BaseAuthController
                         "user_id" => $MessagesReplyArray["user_id"],
                         "user_name" => $MessagesReplyArray["user_name"],
                         "reply_id" => $MessagesReplyArray["reply_id"],
+                        "message_id" => $MessagesReplyArray["message_id"],
                     ]);
             }
         } else {
