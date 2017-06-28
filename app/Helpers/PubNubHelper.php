@@ -3,6 +3,7 @@
 namespace App\Helpers;
 
 use PubNub\PubNub;
+use PubNub\PNConfiguration;
 
 class PubNubHelper
 {
@@ -10,18 +11,19 @@ class PubNubHelper
 
     /**
      * initialize pubnub
-     * @param $IDuser
+     * @param $user_id
      * @return Pubnub
      */
-    private static function pubNubObject($IDuser)
+    private static function pubNubObject($user_id)
     {
-        return new PubNub(array(
-            'subscribe_key' => env('PUBNUB_SUBSCRIBE_KEY'),
-            'publish_key' => env('PUBNUB_PUBLISH_KEY'),
-            'uuid' => $IDuser,
-            'ssl' => false, // kad je true ima neka greška sa PEM fajlom
-            //'verify_peer' => false
-        ));
+        $pnconf = new PNConfiguration();
+        $pubnub = new PubNub($pnconf);
+         
+        $pnconf->setSubscribeKey(env('PUBNUB_SUBSCRIBE_KEY'));
+        $pnconf->setPublishKey(env('PUBNUB_PUBLISH_KEY'));
+        $pnconf->setUuid($user_id);
+        
+        return $pubnub;
     }
 
     /**

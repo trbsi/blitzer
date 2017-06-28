@@ -88,7 +88,10 @@ class Message extends Model
         $pubnub = PubNubHelper::initPubNub($user_id);
         $pubnub_channel = PubNubHelper::PUBNUB_CHANNEL_MSG . $data["message_id"];
         //publish message
-        $pubnub->publish($pubnub_channel, $data);
+        $r = $pubnub->publish($pubnub_channel)
+            ->channel($pubnub_channel)
+            ->message($data)
+            ->sync();
     }
 
     /**
