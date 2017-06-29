@@ -125,9 +125,17 @@ class MapController extends BaseAuthController
     public function tags(Request $request)
     {
         $tags = [];
-        if (!empty($request->filter_by_tag)) {
-            $tags = $this->tag->filterByTags($request);
+        if(isset($request->filter_by_tag))
+        {
+            if ($request->filter_by_tag == "get_top_tags") {
+                $tags = $this->tag->getTopHashtags();
+            }
+            else
+            {
+                $tags = $this->tag->filterByTags($request);
+            } 
         }
+        
 
         return response()->json($tags, 200, [], JSON_NUMERIC_CHECK);
     }

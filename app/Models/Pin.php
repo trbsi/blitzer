@@ -146,13 +146,17 @@ class Pin extends Model
             //IF(messages.user_one = 5, IF(messages.user_one_read = 0, 1, 0), IF(messages.user_two_read = 0, 1, 0)) AS message_user_read
             //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
             $query = $query
-                ->leftJoin(DB::raw('(`messages`.`pin_one` = 8 or `messages`.`pin_two` = 8) and (`messages`.`pin_one` = `pins`.`id` or `messages`.`pin_two` = `pins`.`id`)')
-
-                    $messagesTable, function($join) use($messagesTable, $latestUserPinId, $pinTable) {
-                    $join->on(DB::raw("
-                        ($messagesTable.pin_one = $latestUserPinId OR $messagesTable.pin_two = $latestUserPinId) 
-                        AND
-                        ($messagesTable.pin_one = $pinTable.id` OR $messagesTable.pin_two = $pinTable.id)"));
+                ->leftJoin($messagesTable, function($join) use($messagesTable, $latestUserPinId, $pinTable) {
+                    $join->on(function($join) use($messagesTable, $latestUserPinId)
+                    {
+                        $join->on("$messagesTable.pin_one", "=", DB::raw($latestUserPinId))
+                              ->orOn("$messagesTable.pin_two", "=", DB::raw($latestUserPinId));
+                    })
+                    ->on(function($join)  use($messagesTable, $pinTable)
+                    {
+                        $join->on("$messagesTable.pin_one", "=", "$pinTable.id")
+                              ->orOn("$messagesTable.pin_two", "=", "$pinTable.id");
+                    });
                 })
                 ->selectRaw("IF($messagesTable.user_one = $authUser->id, IF($messagesTable.user_one_read = 0, 1, 0), IF($messagesTable.user_two_read = 0, 1, 0)) AS message_user_read")
                 ;

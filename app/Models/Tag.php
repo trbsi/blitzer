@@ -29,6 +29,14 @@ class Tag extends Model
         return DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$request->filter_by_tag*"]);
     }
 
+    public function getTopHashtags()
+    {
+        return Tag::select(['id AS tag_id', 'tag_name', 'popularity'])
+        ->limit(10)
+        ->orderBy('popularity', 'DESC')
+        ->get();
+    }
+
     public function locations()
     {
         return $this->belongsToMany(\App\Models\Location::class, 'location_tag', 'tag_id', 'location_id');
