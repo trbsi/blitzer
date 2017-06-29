@@ -19,7 +19,7 @@ class CacheHelper
                 break;
         }
 
-        return $key;
+        return env('APP_ENV').":".$key;
     }
 
     /**
