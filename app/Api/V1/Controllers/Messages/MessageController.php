@@ -78,6 +78,7 @@ class MessageController extends BaseAuthController
                 try {
                     PinTimeUpdate::create(['user_id' => $authUser->id]);
                 } catch (\Exception $e) {
+                    //do nothing, user_id is unique value
                 }
 
                 $MessagesReplyArray =
