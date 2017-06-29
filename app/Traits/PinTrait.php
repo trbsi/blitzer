@@ -129,7 +129,7 @@ trait PinTrait
                             ],
                         'last' =>
                             [
-                                'Gotal', 'Radanović', 'Vinković', 'Lončar', 'Nenadić', 'Bečanić', 'Brković', 'Ivanović', 'Bobić', 'Malenica ', 'Peruško', 'Roguljić', 'Slunjski', 'Goriški', 'Blažević', 'Acinger', 'Hrgović', 'Antolović', 'Varga', 'Ćorak',
+                                'Gotal', 'Radanović', 'Vinković', 'Lon�?ar', 'Nenadić', 'Be�?anić', 'Brković', 'Ivanović', 'Bobić', 'Malenica ', 'Peruško', 'Roguljić', 'Slunjski', 'Goriški', 'Blažević', 'Acinger', 'Hrgović', 'Antolović', 'Varga', 'Ćorak',
                             ],
                     ],
             ];
@@ -151,7 +151,7 @@ trait PinTrait
                             'Valentina', 'Lea', 'Sara', 'Irma', 'Gordana', 'Danica', 'Kristina', 'Ivana', 'Anita', 'Tea', 'Vanja', 'Klara', 'Ela', 'Anita', 'Tatjana', 'Irena', 'Dubravka', 'Nikolina', 'Anastazija', 'Maja', 'Danijela', 'Leonarda', 'Petra', 'Veronika', 'Ružica', 'Lidija', 'Jadranka', 'Antonija', 'Eva', 'Julija',
                         ],
                         'last' => [
-                            'Komušar', 'Barac', 'Dolenec', 'Brković', 'Kvelić', 'Davidović', 'Božanović', 'Vulić', 'Pavković', 'Butković', 'Krizmanić', 'Mihajlović', 'Medanlić', 'Krstić', 'Peršić', 'Medved', 'Vojković', 'Ranogajec', 'Marić', 'Jurjević', 'Mandić', 'Vidić', 'Knežić', 'Obradović', 'Bosak', 'Ivanišević', 'Šuk', 'Jelić', 'Malež', 'Lukčić',
+                            'Komušar', 'Barac', 'Dolenec', 'Brković', 'Kvelić', 'Davidović', 'Božanović', 'Vulić', 'Pavković', 'Butković', 'Krizmanić', 'Mihajlović', 'Medanlić', 'Krstić', 'Peršić', 'Medved', 'Vojković', 'Ranogajec', 'Marić', 'Jurjević', 'Mandić', 'Vidić', 'Knežić', 'Obradović', 'Bosak', 'Ivanišević', 'Šuk', 'Jelić', 'Malež', 'Luk�?ić',
                         ],
                     ],
             ];
@@ -643,13 +643,13 @@ trait PinTrait
                     ],
             ];
 
-        $reverseGeocode = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=".$lat.",".$lng."&key=".env('GOOGLE_MAPS_API_KEY')));
+        $reverseGeocode = json_decode(file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?latlng=" . $lat . "," . $lng . "&key=" . env('GOOGLE_MAPS_API_KEY')));
 
         $get = 'en';
         foreach ($reverseGeocode->results[0]->address_components as $value) {
-            if($value->long_name == "Croatia") {
-                 $get = "hr";
-            }    
+            if ($value->long_name == "Croatia") {
+                $get = "hr";
+            }
         }
 
         $countMale = count($male[$get]["first"]);
@@ -755,7 +755,7 @@ trait PinTrait
         $comment = "";
         $badge = 0;
         if (env('APP_ENV') != 'live') {
-            $badge = rand(0,5);
+            $badge = rand(0, 5);
             $comment = rand(0, 1) % 2 ? "" : $this->randomizer('{Please|Just} make this {cool|awesome|random} test sentence {rotate {quickly|fast} and random|spin and be random}');
         }
 

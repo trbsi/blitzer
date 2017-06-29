@@ -30,15 +30,15 @@ class CronController extends Controller
      */
     public function enableTestPins(Request $request)
     {
-        if(env('APP_ENV') != 'live' && strpos($_SERVER['HTTP_HOST'], "blitzerapp") === false) {
+        if (env('APP_ENV') != 'live' && strpos($_SERVER['HTTP_HOST'], "blitzerapp") === false) {
             Artisan::call("migrate:reset");
             Artisan::call("migrate");
             Artisan::call("db:seed");
-            
+
             date_default_timezone_set(isset($request->timezone) ? $request->timezone : "Europe/Zagreb");
             DB::table((new Pin)->getTable())
                 ->update(['updated_at' => date("Y-m-d H:i:s")]);
-            echo "Done. Check the app!";        
+            echo "Done. Check the app!";
         }
 
     }

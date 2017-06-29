@@ -18,11 +18,11 @@ class PubNubHelper
     {
         $pnconf = new PNConfiguration();
         $pubnub = new PubNub($pnconf);
-         
+
         $pnconf->setSubscribeKey(env('PUBNUB_SUBSCRIBE_KEY'));
         $pnconf->setPublishKey(env('PUBNUB_PUBLISH_KEY'));
         $pnconf->setUuid($user_id);
-        
+
         return $pubnub;
     }
 

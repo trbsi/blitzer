@@ -32,9 +32,9 @@ class Tag extends Model
     public function getTopHashtags()
     {
         return Tag::select(['id AS tag_id', 'tag_name', 'popularity'])
-        ->limit(10)
-        ->orderBy('popularity', 'DESC')
-        ->get();
+            ->limit(10)
+            ->orderBy('popularity', 'DESC')
+            ->get();
     }
 
     public function locations()
