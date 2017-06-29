@@ -26,7 +26,7 @@ class Tag extends Model
     public function filterByTags($request)
     {
         $tagTable = Tag::getTable();
-        return DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$request->tag*"]);
+        return DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$request->filter_by_tag*"]);
     }
 
     public function locations()

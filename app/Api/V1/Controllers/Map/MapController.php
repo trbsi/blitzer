@@ -125,7 +125,7 @@ class MapController extends BaseAuthController
     public function tags(Request $request)
     {
         $tags = [];
-        if (!empty($request->tag)) {
+        if (!empty($request->filter_by_tag)) {
             $tags = $this->tag->filterByTags($request);
         }
 
