@@ -172,6 +172,7 @@ class MessageController extends BaseAuthController
                         "user_name" => $user->first_name . " " . $user->last_name,
                         "user_id" => $message->user_id,
                         "reply_id" => $message->id,
+                        "message_id" => $message->message_id,
                     ];
             }
 
