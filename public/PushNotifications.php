@@ -76,7 +76,19 @@ class PushNotifications {
         // Sends Push notification for iOS users
 	public function iOS($data, $devicetoken) 
 	{
-        $sandbox=true;
+		if(!isset($_GET["sandbox"]))
+		{
+			$sandbox = false;
+		}
+		else if($_GET["sandbox"] == "true")
+		{
+			$sandbox = true;
+		}
+		else
+		{
+			$sandbox = false;
+		}
+
         if($sandbox == true)
         {$gate="ssl://gateway.sandbox.push.apple.com:2195"; $ck='ios_sandbox.pem';}
         else
