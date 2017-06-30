@@ -76,7 +76,7 @@
         <div class="starting">
             <div class="row">
                 <div class="col-md-6 col-sm-12">
-                    <img src="img/LUCY2.png" alt="LUCY" class="img-responsive wow flipInY animated animated">
+                    <img src="img/blitzy.png" alt="LUCY" class="img-responsive wow flipInY animated animated">
                 </div>
                 <div class="col-md-6 col-sm-12">
                     <div class="banner-text">
