@@ -103,21 +103,19 @@ class MessageController extends BaseAuthController
 
                 //phone is expecting some kind of json response
                 return response()
-                    ->json([
-                        "message" =>
-                            [
-                                'body' => null,
-                                'title' => null,
-                            ],
-                        "success" => true,
-                        "showAlert" => false,
-                        "reply" => $MessagesReplyArray["reply"],
-                        "send_date" => $MessagesReplyArray["send_date"],
-                        "user_id" => $MessagesReplyArray["user_id"],
-                        "user_name" => $MessagesReplyArray["user_name"],
-                        "reply_id" => $MessagesReplyArray["reply_id"],
-                        "message_id" => $MessagesReplyArray["message_id"],
-                    ]);
+                    ->json(
+                        array_merge(
+                        [
+                            "message" =>
+                                [
+                                    'body' => null,
+                                    'title' => null,
+                                ],
+                            "status" => true,
+                            "showAlert" => false
+                        ],
+                        $MessagesReplyArray)
+                    );
             }
         } else {
             return response()
@@ -143,7 +141,7 @@ class MessageController extends BaseAuthController
         $authUser = $this->authUser;
         $pin_two = (int)CacheHelper::getCache("user_pin_id", ["user_id" => $authUser->id]);
         $return = [];
-        $return["success"] = true;
+        $return["status"] = true;
         $return["message_id"] = NULL;
         $return["messages"] = [];
 

@@ -44,11 +44,11 @@ class BootstrapController extends Controller
                 $PNT->update();
             }
 
-            return response()->json(['success' => true]);
+            return response()->json(['status' => true]);
 
         }
 
-        return response()->json(['success' => false]);
+        return response()->json(['status' => false]);
 
     }
 }

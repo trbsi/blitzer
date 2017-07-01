@@ -26,3 +26,7 @@ https://dribbble.com/shots/1358062-Social-Login-Buttons
 #Background image dimensions 
 https://stackoverflow.com/questions/13024272/android-background-image-size-in-pixel-which-support-all-devices
 https://stackoverflow.com/questions/38250333/ios-preparing-background-images-for-applications
+
+#Lucy landing page
+https://themewagon.com/themes/lucy-best-free-responsive-bootstrap-app-landing-page-template/
+http://freemiumdownload.com/downloads/lucy-bootstrap-app-landing-page-template/
