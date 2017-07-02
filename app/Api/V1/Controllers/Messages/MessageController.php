@@ -51,6 +51,20 @@ class MessageController extends BaseAuthController
                     ]);
             }
 
+            //if user doesn't have published pin show alert
+            if (empty($pin_two)) {
+                return response()
+                    ->json([
+                        'status' => false,
+                        'message' =>
+                            [
+                                'body' => trans('core.message.no_published_pin_body'),
+                                'title' => trans('core.message.no_published_pin_title'),
+                            ],
+                        'showAlert' => true,
+                    ]);
+            }
+
             $Message = $this->message->findMessageByPinIdOrCreate($user_one, $user_two, $pin_one, $pin_two);
 
             //set as unread

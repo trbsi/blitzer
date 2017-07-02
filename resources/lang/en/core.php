@@ -24,5 +24,7 @@ return
             [
                 'no_reply_title' => 'Say something',
                 'no_reply_body' => 'Say something before hitting Send',
+                'no_published_pin_title' => 'Publish your own pin',
+                'no_published_pin_body' => 'Before you can send a message you have to publish your own pin.',
             ]
     ];
