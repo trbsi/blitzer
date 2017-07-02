@@ -82,15 +82,10 @@ trait PinTrait
         $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
         $pin = $this->getPinById($userPin);
 
-        if (!empty($pin)) {
-            $lat = $pin->lat;
-            $lng = $pin->lng;
-        } else {
-            $lat = $request->lat;
-            $lng = $request->lng;
-        }
+        $lat = $request->lat;
+        $lng = $request->lng;
 
-        $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat + $lng, 1)]);
+        $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat,1).":".round($lng,1)]);
 
         if (!empty($pins)) {
             return $pins;
@@ -684,7 +679,7 @@ trait PinTrait
         }
 
         //save pins to cache
-        CacheHelper::saveCache("fake_pins", ["location" => round($lat + $lng, 1)], $fake, 60);
+        CacheHelper::saveCache("fake_pins", ["location" => round($lat,1).":".round($lng,1)], $fake, 60);
         return $fake;
 
     }
