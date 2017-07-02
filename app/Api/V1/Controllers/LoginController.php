@@ -69,7 +69,7 @@ class LoginController extends Controller
             ->json([
                 'status' => $status,
                 'token' => $token,
-                'uuid' => $user->id,
+                'pubnub_uuid' => $user->id,
                 'message' => $message,
                 'showAlert' => $showAlert,
             ]);
