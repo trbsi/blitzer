@@ -7,7 +7,7 @@ use PubNub\PNConfiguration;
 
 class PubNubHelper
 {
-    const PUBNUB_CHANNEL_MSG = "pubnub_channel_msg_";
+    const PUBNUB_CHANNEL_MSG = "pubnub_channel_msg_"; //plus MESSAGEID
 
     /**
      * initialize pubnub
