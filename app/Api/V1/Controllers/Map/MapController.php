@@ -41,7 +41,20 @@ class MapController extends BaseAuthController
         $authUser = $this->authUser;
         $enableAllPins = true;
 
-        $pins = $this->pin->getPins($request, $authUser);
+        //check if user has any active pin
+        $latestUserPin = $this->pin->getUserLatestPin($this->authUser->id, $request->current_time);
+
+        if (empty($latestUserPin)) {
+            $showAlert = true;
+            $enableAllPins = false;
+            $blink = true;
+            $message = [
+                'body' => trans('core.map.user_didnt_publish_pin_body'),
+                'title' => trans('core.map.user_didnt_publish_pin_title'),
+            ];
+        }
+
+        $pins = $this->pin->getPins($request, $authUser, $latestUserPin);
 
         return response()
             ->json([
