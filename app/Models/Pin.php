@@ -169,13 +169,10 @@ class Pin extends Model
      * @param  Pin $latestUserPin [returned model from getUserLatestPin()]
      * @return [array]           [formatted pins]
      */
-    public function getPins($request, $authUser)
+    public function getPins($request, $authUser, $latestUserPin)
     {
         $jsonPins = [];
         $latestUserPinId = null;
-
-        //check if user has any active pin
-        $latestUserPin = $this->getUserLatestPin($authUser->id, $request->current_time);
 
         //add latest user pin to array
         if (!empty($latestUserPin)) {
