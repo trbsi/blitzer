@@ -45,7 +45,7 @@ class MapController extends BaseAuthController
         $latestUserPin = $this->pin->getUserLatestPin($this->authUser->id, $request->current_time);
 
         if (empty($latestUserPin)) {
-            $showAlert = true;
+            $showAlert = false;
             $enableAllPins = false;
             $blink = true;
             $message = [
@@ -79,8 +79,8 @@ class MapController extends BaseAuthController
                     'status' => false,
                     'message' =>
                         [
-                            'body' => trans('core.map.missing_tags_title'),
-                            'title' => trans('core.map.missing_tags_body'),
+                            'body' => trans('core.map.missing_tags_body'),
+                            'title' => trans('core.map.missing_tags_title'),
                         ],
                     'showAlert' => true,
                 ]);
