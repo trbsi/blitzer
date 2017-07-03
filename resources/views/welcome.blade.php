@@ -34,7 +34,7 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-TileImage" content="img/favicon/ms-icon-144x144.png">
     <meta name="theme-color" content="#ffffff">
-    <meta property="og:image" content="<?= env('APP_URL') ?>/img/logo_full.png"/>
+    <meta property="og:image" content="<?= env('APP_URL') ?>/img/blitzy.png"/>
     <meta property="og:title" content="<?= config("app.name") ?> - live in the moment"/>
     <meta property="og:url" content="<?= env('APP_URL') ?>"/>
     <meta property="og:site_name" content="<?= config("app.name") ?>"/>
