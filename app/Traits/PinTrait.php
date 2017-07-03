@@ -93,13 +93,13 @@ trait PinTrait
 
         if (!empty($pin)) {
             $publish_time = $pin->publish_time;
-            $pin_id = $pin->id;
             $age = PinHelper::calculateAge($pin->relationUser->birthday);
         } else {
             $publish_time = $request->current_time;
-            $pin_id = 0;
             $age = 25;
         }
+        
+        $pin_id = 1; //pin id=1 already exists in our database
 
         $male =
             [
