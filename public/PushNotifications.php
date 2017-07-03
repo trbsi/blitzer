@@ -100,8 +100,8 @@ class PushNotifications {
 		stream_context_set_option($ctx, 'ssl', 'local_cert', $ck);
 		stream_context_set_option($ctx, 'ssl', 'passphrase', self::$passphrase);
 
-//ssl://gateway.sandbox.push.apple.com:2195
-//ssl://gateway.push.apple.com:2195
+		//ssl://gateway.sandbox.push.apple.com:2195
+		//ssl://gateway.push.apple.com:2195
 		// Open a connection to the APNS server
 		$fp = stream_socket_client(
 			$gate, $err,
@@ -121,9 +121,7 @@ class PushNotifications {
 			'sound' => 'request.wav'
 		];
         $body["event"]="message";  
-        $body["IDuser"] = 292;
-        $body["IDmessage"] = 292;
-        $body['aps']['badge'] = 292;
+        $body["pin_id"] = (int)isset($_GET["pin_id"]) ? $_GET["pin_id"] : 0;
 
 		// Encode the payload as JSON
 		$payload = json_encode($body);
