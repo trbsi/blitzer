@@ -39,6 +39,7 @@
     <meta property="og:url" content="<?= env('APP_URL') ?>"/>
     <meta property="og:site_name" content="<?= config("app.name") ?>"/>
     <meta property="og:description" content="Use the map to see what's going on next to you, who's currently on the spot ready to interact with you and get things done in real time."/>
+    <meta property="fb:app_id" content="<?= env('FB_APP_ID') ?>"/>
     <script src="js/modernizr.custom.js"></script>
 
 </head>
