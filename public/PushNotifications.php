@@ -121,7 +121,8 @@ class PushNotifications {
 			'sound' => 'request.wav'
 		];
         $body["event"]="message";  
-        $body["pin_id"] = (int)isset($_GET["pin_id"]) ? $_GET["pin_id"] : 0;
+        $body["pin_id"] = isset($_GET["pin_id"]) ? (int)$_GET["pin_id"] : 0;
+        $body['aps']['badge'] = isset($_GET["badge"]) ? (int)$_GET["badge"] : 3;
 
 		// Encode the payload as JSON
 		$payload = json_encode($body);
