@@ -99,8 +99,6 @@ trait PinTrait
             $publish_time = $request->current_time;
             $age = 25;
         }
-        
-        $pin_id = 1; //pin id=1 already exists in our database
 
         $male =
             [
@@ -658,7 +656,6 @@ trait PinTrait
                 'lat' => $lat,
                 'lng' => $lng,
                 'time' => $publish_time,
-                'pin_id' => $pin_id,
                 'tags' => $tags,
                 'user_id' => $user_id,
             ];
@@ -761,7 +758,7 @@ trait PinTrait
                     [
                         "name" => $name,
                         "gender" => $gender,
-                        "user_id" => $data["user_id"],
+                        "user_id" => rand()*(-1),
                         "age" => rand(23 - $plusMinusage, 23 + $plusMinusage), //$data["age"] instead of 23
                         "profile_picture" => env('APP_URL') . '/files/' . $get . '/' . $gender . '/' . $i . '.jpg',
                     ],
@@ -772,7 +769,7 @@ trait PinTrait
                         "comment" => $comment,
                         "lat" => $latLng["lat"],
                         "lng" => $latLng["lng"],
-                        "pin_id" => $data["pin_id"],
+                        "pin_id" => rand()*(-1),
                         "tags" => $tags,
                     ],
             ];
