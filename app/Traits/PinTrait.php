@@ -72,6 +72,7 @@ trait PinTrait
     }
 
     //****************************FAKE PINS START********************************
+    //@FAKEPINSSTART
     /**
      * [generateFakePins description]
      * @param  [type] $user_id [Auth user id]
@@ -854,5 +855,5 @@ trait PinTrait
     }
 
     //****************************FAKE PINS END********************************
-
+    //@FAKEPINSEND
 }

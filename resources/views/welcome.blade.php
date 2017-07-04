@@ -202,6 +202,7 @@
             <li class="hideit"><a href="#header">Home</a></li>
             <li class="hideit"><a href="#video">Video</a></li>
             <li class="hideit"><a href="#gallery">Screenshots</a></li>
+            <li class="hideit"><a href="<?= url('legal') ?>">Legal</a></li>
         </ul>
     </nav>
 </div>
