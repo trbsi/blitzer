@@ -25,7 +25,7 @@ class MessagesReply extends Model
     {
         parent::__construct($attributes);
 
-        if(request('pin_id') < 0 && request('user_id'))
+        if(request('pin_id') < 0 || request('user_id') < 0)
         {
             $this->table = 'messages_reply_fake';
         }
@@ -38,7 +38,7 @@ class MessagesReply extends Model
      */
     public function getMessages($load_all, $message_id)
     {
-        $messagesReplyTable = MessagesReply::getTable();
+        //$messagesReplyTable = MessagesReply::getTable();
 
         $query = MessagesReply::with(['relationUser']);
 
