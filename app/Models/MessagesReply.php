@@ -5,7 +5,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class MessagesReply extends Model
 {
-
     /**
      * Generated
      */
@@ -20,6 +19,18 @@ class MessagesReply extends Model
             'user_id' => 'int',
             'message_type' => 'int',
         ];
+
+    //@FAKEPINSSTART
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+
+        if(request('pin_id') < 0 && request('user_id'))
+        {
+            $this->table = 'messages_reply_fake';
+        }
+    }
+    //@FAKEPINSEND
 
     /**
      * @param $load_all

@@ -28,6 +28,17 @@ class Message extends Model
             'user_two_read' => 'boolean',
         ];
 
+    //@FAKEPINSEND
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+        if(request('pin_id') < 0)
+        {
+            $this->table = 'messages_fake';
+        }
+    }
+    //@FAKEPINSSTART
+
     /**
      * get conversation between 2 pins
      * @param  [int] $pin_one [id of a pin]
