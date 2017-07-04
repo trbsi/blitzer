@@ -150,23 +150,8 @@
                     <a href="img/4.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
                         <img src="img/4.jpg" class="img_res wow animated zoomIn" alt="">
                     </a>
-                    <a href="img/1.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
-                        <img src="img/1.jpg" class="img_res wow animated zoomIn" alt="">
-                    </a>
-                    <a href="img/2.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
-                        <img src="img/2.jpg" class="img_res wow animated zoomIn" alt="">
-                    </a>
-                    <a href="img/3.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
-                        <img src="img/3.jpg" class="img_res wow animated zoomIn" alt="">
-                    </a>
-                    <a href="img/4.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
-                        <img src="img/4.jpg" class="img_res wow animated zoomIn" alt="">
-                    </a>
-                    <a href="img/1.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
-                        <img src="img/1.jpg" class="img_res wow animated zoomIn" alt="">
-                    </a>
-                    <a href="img/2.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
-                        <img src="img/2.jpg" class="img_res wow animated zoomIn" alt="">
+                    <a href="img/5.jpg" class="item wow flipInY animated animated" data-lightbox-gallery="screenshots">
+                        <img src="img/5.jpg" class="img_res wow animated zoomIn" alt="">
                     </a>
                 </div>
                 <div class="customNavigation row">
