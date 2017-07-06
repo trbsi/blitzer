@@ -43,7 +43,15 @@ class LoginController extends Controller
             $request["birthday"] = date("Y-m-d", strtotime($request->birthday));
         }
 
-        $user = User::updateOrCreate(['email' => $request->email], $request->all());
+        try
+        {
+            $user = User::updateOrCreate(['email' => $request->email, 'facebook_id' => $request->facebook_id], $request->all());   
+        }
+        catch(\Exception $e)
+        {
+            abort(403, trans('core.general.unauthorized'));
+        }
+
         if ($user) {
 
             try {
