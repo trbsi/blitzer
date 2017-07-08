@@ -57,7 +57,7 @@ class UsersTable extends Seeder
                     'first_name' => 'Dario',
                     'last_name' => 'Isaac',
                     'gender' => 'male',
-                    'facebook_id' => 258370841302496,
+                    'facebook_id' => '258370841302496',
                     'profile_picture' => 'https://scontent.fzag1-1.fna.fbcdn.net/v/t1.0-9/18582028_268048996999657_3170307703511889749_n.jpg?oh=1dd5be0a9669c1cee6a6d1b6eef90ed3&oe=59AAFCA7',
                 ],
                 [
@@ -66,7 +66,7 @@ class UsersTable extends Seeder
                     'first_name' => 'Marijan',
                     'last_name' => 'Šikić',
                     'gender' => 'male',
-                    'facebook_id' => 1324159487667380,
+                    'facebook_id' => '1324159487667380',
                     'profile_picture' => 'https://scontent.fzag1-1.fna.fbcdn.net/v/t1.0-9/18582028_268048996999657_3170307703511889749_n.jpg?oh=1dd5be0a9669c1cee6a6d1b6eef90ed3&oe=59AAFCA7',
                 ],
 
