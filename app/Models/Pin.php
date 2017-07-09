@@ -24,7 +24,7 @@ class Pin extends Model
 
     protected $table = 'pins';
     public $timestamps = false;
-    protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id'];
+    protected $fillable = ['comment', 'publish_time', 'lat', 'lng', 'user_id', 'updated_at'];
     protected $casts =
         [
             'id' => 'int',

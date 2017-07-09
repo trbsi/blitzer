@@ -10,6 +10,7 @@ use App\Models\Tag;
 //use Illuminate\Support\Facades\Redis;
 use App\Helpers\CacheHelper;
 use App\Models\User;
+use DB;
 
 class MapController extends BaseAuthController
 {
@@ -72,50 +73,63 @@ class MapController extends BaseAuthController
      */
     public function pinPublish(Request $request)
     {
-        $tags = $this->pin->checkTags($request->tags);
-        if (empty($tags)) {
+        DB::beginTransaction();
+        try {
+            $tags = $this->pin->checkTags($request->tags);
+            if (empty($tags)) {
+                return response()
+                    ->json([
+                        'status' => false,
+                        'message' =>
+                            [
+                                'body' => trans('core.map.missing_tags_body'),
+                                'title' => trans('core.map.missing_tags_title'),
+                            ],
+                        'showAlert' => true,
+                    ]);
+            }
+
+            $user = $this->authUser;
+            $pin = $this->pin;
+
+            $comment = $request->comment;
+            if (strlen($comment) > Pin::COMMENT_LENGTH) {
+                $comment = substr($comment, 0, Pin::COMMENT_LENGTH);
+            }
+
+            //get latest user pin and just update updated_at one hour back just in case user publishes few pins in a row
+            if($latestUserPin = $this->pin->getUserLatestPin($user->id, $request->current_time)) {
+                //revert last user pin one hour back
+                $latestUserPin->update(['updated_at' => DB::raw('DATE_SUB(updated_at,INTERVAL 1 HOUR)')]);
+            }
+
+            $pin->fill($request->all());
+            $pin->user_id = $user->id;
+            $pin->publish_time = $pin->updated_at = $request->current_time;
+            $pin->lng = $request->lng;
+            $pin->lat = $request->lat;
+            $pin->comment = $comment;
+            if ($pin->save()) {
+                //save in redis so you can get latest user's pin id
+                //@TODO Redis::set("user:$user->id:pin", $pin->id);
+                CacheHelper::saveCache("user_pin_id", ["user_id" => $user->id], $pin->id, 360);
+
+                //save tags
+                $pin->tags()->attach(array_flip($tags));
+                $status = true;
+            }
+
+            $pin_info = $pin->generateContentForInfoWindow($pin);
+            DB::commit();
             return response()
                 ->json([
-                    'status' => false,
-                    'message' =>
-                        [
-                            'body' => trans('core.map.missing_tags_body'),
-                            'title' => trans('core.map.missing_tags_title'),
-                        ],
-                    'showAlert' => true,
-                ]);
+                    'status' => $status,
+                    'pins' => [$pin_info],
+                ], 200, [], JSON_NUMERIC_CHECK);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            abort(403, $e->getMessage());
         }
-
-        $user = $this->authUser;
-        $pin = $this->pin;
-
-        $comment = $request->comment;
-        if (strlen($comment) > Pin::COMMENT_LENGTH) {
-            $comment = substr($comment, 0, Pin::COMMENT_LENGTH);
-        }
-
-        $pin->fill($request->all());
-        $pin->user_id = $user->id;
-        $pin->publish_time = $pin->updated_at = $request->current_time;
-        $pin->lng = $request->lng;
-        $pin->lat = $request->lat;
-        $pin->comment = $comment;
-        if ($pin->save()) {
-            //save in redis so you can get latest user's pin id
-            //@TODO Redis::set("user:$user->id:pin", $pin->id);
-            CacheHelper::saveCache("user_pin_id", ["user_id" => $user->id], $pin->id, 360);
-
-            //save tags
-            $pin->tags()->attach(array_flip($tags));
-            $status = true;
-        }
-
-        $pin_info = $pin->generateContentForInfoWindow($pin);
-        return response()
-            ->json([
-                'status' => $status,
-                'pins' => [$pin_info],
-            ], 200, [], JSON_NUMERIC_CHECK);
     }
 
     /**
