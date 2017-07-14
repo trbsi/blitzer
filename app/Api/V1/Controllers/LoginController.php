@@ -43,9 +43,15 @@ class LoginController extends Controller
             $request["birthday"] = date("Y-m-d", strtotime($request->birthday));
         }
 
+        $loginData['facebook_id'] = $request->facebook_id;
+
+        if(!empty($request->email)) {
+            $loginData['email'] = $request->email;
+        }
+
         try
         {
-            $user = User::updateOrCreate(['email' => $request->email, 'facebook_id' => $request->facebook_id], $request->all());   
+            $user = User::updateOrCreate($loginData, $request->all());   
         }
         catch(\Exception $e)
         {
