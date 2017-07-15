@@ -12,7 +12,8 @@
         "phpmailer/phpmailer": "*",
         "pubnub/pubnub": "*",
         "dingo/api": "1.0.0-beta8",
-        "fzaninotto/faker": "^1.6"
+        "fzaninotto/faker": "^1.6",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
