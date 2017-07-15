@@ -92,7 +92,7 @@ class MapController extends BaseAuthController
             $user = $this->authUser;
             $pin = $this->pin;
 
-            $comment = $request->comment;
+            $comment = (empty($request->comment)) ? NULL : $request->comment;
             if (strlen($comment) > Pin::COMMENT_LENGTH) {
                 $comment = substr($comment, 0, Pin::COMMENT_LENGTH);
             }
