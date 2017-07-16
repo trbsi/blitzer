@@ -45,8 +45,13 @@ class LoginController extends Controller
 
         $loginData['facebook_id'] = $request->facebook_id;
 
+        //if email is not empty, try to login via email also
         if(!empty($request->email)) {
             $loginData['email'] = $request->email;
+        } 
+        //app is sending email as empty string ("") if it doesn't exist, so set it to null for the database since email is unique it can't be empty string
+        else {
+            $request['email'] = NULL;
         }
 
         try
