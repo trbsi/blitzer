@@ -30,3 +30,6 @@ http://freemiumdownload.com/downloads/lucy-bootstrap-app-landing-page-template/
 
 #Android/iOS hdpi/3x generator 
 https://www.img-bak.in/
+
+#ios round icon generator
+http://thomasfinch.me/iosicon/

@@ -57,7 +57,7 @@
                     <div class="col-md-11 col-xs-10">
                         <a href="/">
                             <img src="img/logo.png" class="img-responsive"
-                                 style="max-width: 25px; float: left;margin-right: 20px; padding-top: 10px;">
+                                 style="max-width: 55px; float: left;margin-right: 20px; padding-top: 10px;">
                             <span id="logo"><?= config("app.name") ?></span>
                         </a>
                     </div>
@@ -174,7 +174,7 @@
             <li class="wow animated fadeInLeft facebook"><a href="https://www.facebook.com/BlitzerApp/" target="_blank"><i
                             class="fa fa-facebook"></i></a></li>
         </ul>
-        EMAIL: hello@blitzerapp.com
+        EMAIL: hello@hucklbrry.com
     </div>
     <!-- container -->
 </section>
