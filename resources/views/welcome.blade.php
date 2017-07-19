@@ -86,10 +86,10 @@
                 <div class="col-md-6 col-sm-12">
                     <div class="banner-text">
                         <h2 class="animation-box wow bounceIn animated"><strong
-                                    class="strong"><?= config("app.name") ?></strong><br>Live in the moment</h2>
+                                    class="strong"><?= config("app.name") ?></strong></h2>
 
                         <p>
-                            Use the map to see what's going on next to you, who's currently on the spot ready to interact with you and get things done in real time.
+                            <?= config("app.name") ?> is a social media application based on real-time, hyper-local interactions with people and businesses in your geographic area. Find adventure, new friends, drinking/study buddies, a popular business and more - all in real time.
                         </p>
                         <a href="<?= env("GOOGLE_PLAY_LINK") ?>" target="_blank"
                            class="btn btn-download wow animated fadeInLeft">
