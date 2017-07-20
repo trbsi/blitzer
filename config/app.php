@@ -14,6 +14,8 @@ return [
 
     'name' => 'Hucklbrry',
 
+    'email' => 'info@hucklbrry.com',
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

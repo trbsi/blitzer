@@ -9,10 +9,7 @@
 
         <p></p>
 
-        <p class=" 4"><span class="">By accessing the <?= config("app.name") ?> application or its website found at <a
-                        href="<?= env('APP_URL') ?>"><?= env('APP_URL') ?></a>, whether through a mobile device, mobile application or computer (collectively, the "</span><span
-                    class="  c9">Service</span><span
-                    class="">") you agree to be bound by these Terms of Use (this "</span><span
+        <p class=" 4"><span class="">By accessing the <?= config("app.name") ?> application you agree to be bound by these Terms of Use (this "</span><span
                     class="  c9">Agreement</span><span
                     class="">"), whether or not you create a <?= config("app.name") ?>
                 account. If you wish to create a <?= config("app.name") ?>
@@ -42,8 +39,7 @@
                     's express consent (such as for promoted profiles or other advertisements), which <?= config("app.name") ?>
                     may provide or deny in its sole discretion. The Company may investigate and take any available legal action in response to illegal and/or unauthorized uses of the Service, including collecting usernames and/or email addresses of users by electronic or other means for the purpose of sending unsolicited email and unauthorized framing of or linking to the Service. </span>
             </li>
-            <li class=" "><span class="bold">Account Security. </span><span class="">You are responsible for maintaining the confidentiality of the username and password you designate during the registration process, and you are solely responsible for all activities that occur under your username and password. You agree to immediately notify the Company of any disclosure or unauthorized use of your username or password or any other breach of security at info@blitzerapp
-                    .com
+            <li class=" "><span class="bold">Account Security. </span><span class="">You are responsible for maintaining the confidentiality of the username and password you designate during the registration process, and you are solely responsible for all activities that occur under your username and password. You agree to immediately notify the Company of any disclosure or unauthorized use of your username or password or any other breach of security at <?= config("app.email") ?>
                     and ensure that you log out from your account at the end of each session. </span></li>
             <li class=" "><span class="bold">Your Interactions with Other Users. </span></li>
         </ol>

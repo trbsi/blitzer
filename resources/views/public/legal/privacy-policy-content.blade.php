@@ -278,7 +278,7 @@
             <p class="p37 bold">How to contact us</p>
 
             <p class="p53 ft16">If you have any questions about this Privacy Policy, please contact us by email or
-                postal mail as follows: info@blitzerapp.com</p>
+                postal mail as follows: <?= config("app.email") ?></p>
 
         </div>
     </div>
