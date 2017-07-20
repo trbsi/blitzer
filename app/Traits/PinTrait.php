@@ -66,6 +66,7 @@ trait PinTrait
                         'lng' => $lng,
                         'pin_id' => $pin->id,
                         'tags' => $tags,
+                        'color' => 'default'
                     ],
 
             ];
@@ -745,6 +746,8 @@ trait PinTrait
             $tags[] = $value;
         }
 
+        $colors = ['white', 'black', 'green', 'yellow', 'red', 'blue', 'orange'];
+
         $comment = "";
         $badge = 0;
         if (env('APP_ENV') != 'live') {
@@ -771,6 +774,7 @@ trait PinTrait
                         "lng" => $latLng["lng"],
                         "pin_id" => rand()*(-1),
                         "tags" => $tags,
+                        "color" => $colors[rand(0, count($colors)-1)],
                     ],
             ];
     }
