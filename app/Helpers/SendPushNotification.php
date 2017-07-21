@@ -211,14 +211,14 @@ class SendPushNotification
         $return = true;
         $iOStokens = $Androidtokens = [];
         foreach ($tokens as $token) {
-            if (!empty($token->token) && $token->device == "android") {
-            $Androidtokens[] = $token->token;
+            if (!empty($token->token)) {
+                if($token->device == "android") {
+                    $Androidtokens[] = $token->token;
+                }
+                else if($token->device == "ios") {
+                    $iOStokens[] = $token->token;
+                }
             }
-
-            if (!empty($token->token) && $token->device == "ios") {
-                $iOStokens[] = $token->token;
-            }
-
         }
 
         //only send notifications if there are tokens
