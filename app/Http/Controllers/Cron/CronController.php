@@ -17,11 +17,12 @@ class CronController extends Controller
     }
 
     /**
+     * NOT USED AT THE MOMENT
      * Clear old push tokens, older than 7 days
      */
     public function clearOldPushTokens()
     {
-        $this->PNT->clearPushTokens();
+        //$this->PNT->clearPushTokens();
     }
 
     /**

@@ -18,7 +18,7 @@ class PushNotifications {
         // Sends Push notification for Android users
 	public function android($data, $reg_id)
     {
-         $url = 'https://android.googleapis.com/gcm/send';
+         $url = 'https://fcm.googleapis.com/fcm/send';
          $message = array(
              'title' => $data['mtitle'],
              'message' => $data['mdesc'],
@@ -39,8 +39,7 @@ class PushNotifications {
          );
 
         // (&$model, $url, $headers, $fields = null)
-     	$a=self::useCurl($url, $headers, json_encode($fields));
-        echo $a;
+     	return self::useCurl($url, $headers, json_encode($fields));
 	}
 	
 	// Sends Push's toast notification for Windows Phone 8 users
