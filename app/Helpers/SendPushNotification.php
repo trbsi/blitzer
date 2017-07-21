@@ -10,7 +10,7 @@ class SendPushNotification
 
     //------------CHANGED-------------------
     // (Android)API access key from Google API's Console.
-    private static $API_ACCESS_KEY = 'AIzaSyCl9lkXrA__C7fz9cIui-odn4TPkVsHqC0';
+    private static $API_ACCESS_KEY = 'AAAAb8xj5LA:APA91bHa_cDIKzHwBLm3V9B9QJSIqAgX2Z-VbGjsN7quVa2Ve0K4bKJRuXYTwj4v-UbZ_xT0iTG_hesHQiCqtAByc3Kd7bR2GoA9e6aOCqC5_8RwNtm7hx0stCDouQiq-rI0oAFsjUht';
     // (iOS) Private key's passphrase.
     private static $passphrase = '0000';
     // (Windows Phone 8) The name of our push channel.
@@ -20,15 +20,15 @@ class SendPushNotification
     /**
      * Sends Push notification for Android users
      * @param $data
-     * @param $reg_id - array of all tokens for notifications
+     * @param $tokens - array of all tokens for notifications
      * @return mixed
      */
-    public function android($data, $reg_id)
+    public function android($data, $tokens)
     {
-        $url = 'https://android.googleapis.com/gcm/send';
+        $url = 'https://fcm.googleapis.com/fcm/send';
         $message = array(
             'title' => $data['title'],
-            'message' => $data['body'],
+            'body' => $data['body'],
             'subtitle' => '',
             'tickerText' => '',
             'msgcnt' => 1,
@@ -41,7 +41,7 @@ class SendPushNotification
         );
 
         $fields = array(
-            'registration_ids' => $reg_id,
+            'registration_ids' => $tokens,
             'data' => $message,
         );
 
@@ -211,9 +211,9 @@ class SendPushNotification
         $return = true;
         $iOStokens = $Androidtokens = [];
         foreach ($tokens as $token) {
-            /*if (!empty($token->token) && $token->device == "android") {
+            if (!empty($token->token) && $token->device == "android") {
             $Androidtokens[] = $token->token;
-            }*/
+            }
 
             if (!empty($token->token) && $token->device == "ios") {
                 $iOStokens[] = $token->token;
@@ -227,9 +227,9 @@ class SendPushNotification
         }
 
         //send android notifications
-        /*if (!empty($Androidtokens)) {
-        $return = SendPushNotification::android($data, $Androidtokens);
-        }*/
+        if (!empty($Androidtokens)) {
+            SendPushNotification::android($data, $Androidtokens);
+        }
 
     }
 

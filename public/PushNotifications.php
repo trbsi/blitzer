@@ -21,7 +21,7 @@ class PushNotifications {
          $url = 'https://fcm.googleapis.com/fcm/send';
          $message = array(
              'title' => $data['mtitle'],
-             'message' => $data['mdesc'],
+             'body' => $data['mdesc'],
              'subtitle' => '',
              'tickerText' => '',
              'msgcnt' => 1,
