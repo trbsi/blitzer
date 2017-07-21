@@ -23,7 +23,7 @@ class SendPushNotification
      * @param $tokens - array of all tokens for notifications
      * @return mixed
      */
-    public function android($data, $tokens)
+    public static function android($data, $tokens)
     {
         $url = 'https://fcm.googleapis.com/fcm/send';
         $message = array(
