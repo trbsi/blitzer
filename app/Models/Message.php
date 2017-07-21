@@ -46,8 +46,8 @@ class Message extends Model
      */
     public function getConversationByPin($pin_one, $pin_two)
     {
-        return Message::whereRaw("(pin_one = ? OR pin_two = ?) AND (pin_one = ? OR pin_two = ?)",
-            [$pin_one, $pin_one, $pin_two, $pin_two])->first();
+        return Message::whereRaw("(pin_one = ? AND pin_two = ?) OR (pin_one = ? AND pin_two = ?)",
+            [$pin_one, $pin_two, $pin_two, $pin_one])->first();
     }
 
     /**
