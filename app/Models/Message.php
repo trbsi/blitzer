@@ -127,7 +127,7 @@ class Message extends Model
                 'sound' => "message.wav",
                 'event' => 'message', //so you can redirect users to messages screen, directly to that message
                 'pin_id' => (int)$data["badgeForPin"],
-                'badge' => rand(1, 9),
+                'badge' => rand(1, 5),
             ];
 
         //send notification to a user

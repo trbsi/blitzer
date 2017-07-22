@@ -746,7 +746,7 @@ trait PinTrait
             $tags[] = $value;
         }
 
-        $colors = ['white', 'black', 'green', 'yellow', 'red', 'blue', 'orange'];
+        $colors = ['green', 'yellow', 'red', 'blue', 'orange'];
 
         $comment = "";
         $badge = 0;

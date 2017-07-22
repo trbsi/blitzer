@@ -35,6 +35,16 @@ class SendPushNotification
             'vibrate' => 1,
         );
 
+        //only if badge is set, send it
+        if (isset($data['badge'])) {
+            $message['badge'] = (int)$data['badge'];
+        }
+
+        //this is used so you know which pin to open
+        if (isset($data["pin_id"])) {
+            $message["pin_id"] = (int)$data["pin_id"];
+        }
+
         $headers = array(
             'Authorization: key=' . self::$API_ACCESS_KEY,
             'Content-Type: application/json',
