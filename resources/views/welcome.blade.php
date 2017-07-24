@@ -127,7 +127,7 @@ if(strpos($_SERVER['SERVER_NAME'], "blitzerapp") !== false): ?>
         <div class="virticle-line"></div>
         <div class="circle"></div>
         <div class='embed-container'>
-            <iframe src='https://www.youtube.com/embed/sbj7NplvRe8' frameborder='0' allowfullscreen></iframe>
+            <iframe src='https://www.youtube.com/embed/B187LnJ8ZLo' frameborder='0' allowfullscreen></iframe>
         </div>
     </div>
     <!-- /.container -->
