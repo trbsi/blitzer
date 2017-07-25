@@ -111,4 +111,8 @@ class User extends Authenticatable
         return $this->hasMany(\App\Models\PushNotificationsToken::class, 'user_id', 'id');
     }
 
+    public function favoriteUser()
+    {
+        return $this->belongsToMany(\App\Models\User::class, 'favorite_users', 'favorited_by', 'favorited');
+    }
 }

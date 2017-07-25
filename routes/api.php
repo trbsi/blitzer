@@ -28,6 +28,10 @@ $api->version('v1', function (Router $api) {
                 $api->get('view', 'App\Api\V1\Controllers\Messages\MessageController@view');
                 $api->post('send', 'App\Api\V1\Controllers\Messages\MessageController@send');
             });
+
+            $api->group(['prefix' => 'profile'], function (Router $api) {
+                $api->post('favorite-user', 'App\Api\V1\Controllers\Profile\ProfileController@favoriteUser');
+            });
         });
     });
 

@@ -31,10 +31,11 @@ class Pin extends Model
             'user_id' => 'int',
             'lat' => 'float',
             'lng' => 'float',
+            'favorited' => 'int', // see getPinsQuery()
+            'message_user_read' => 'int', // see getPinsQuery()
         ];
 
     /**
-     *
      * @param  string $value
      * @return string
      */
@@ -42,6 +43,16 @@ class Pin extends Model
     {
         return (isset($value) ? $value : 0);
     }
+
+    /**
+     * @param  string $value
+     * @return string
+     */
+    public function getFavoritedAttribute($value)
+    {
+        return ($value == NULL ? 0 : $value);
+    }
+
 
     /**
      * @TODO - check if tags exists, put in redis as key => value and check in that way
@@ -128,6 +139,7 @@ class Pin extends Model
             ->with(['tags', 'relationUser'])
             ->select("$pinTable.*")
             ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
+            ->selectRaw("IF(EXISTS(SELECT null FROM favorite_users WHERE favorited_by = $authUser->id AND favorited = $pinTable.user_id),1,0) AS favorited")
             ->having("distance", "<=", Pin::DISTANCE)
             ->groupBy("$pinTable.id");
 
@@ -146,13 +158,13 @@ class Pin extends Model
             //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
             $query = $query
                 ->leftJoin($messagesTable, function ($join) use ($messagesTable, $latestUserPinId, $pinTable) {
-                    $join->on(function ($join) use ($messagesTable, $latestUserPinId) {
+                    $join->on(function ($join) use ($messagesTable, $latestUserPinId, $pinTable) {
                         $join->on("$messagesTable.pin_one", "=", DB::raw($latestUserPinId))
-                            ->orOn("$messagesTable.pin_two", "=", DB::raw($latestUserPinId));
+                            ->on("$messagesTable.pin_two", "=", "$pinTable.id");
                     })
-                        ->on(function ($join) use ($messagesTable, $pinTable) {
+                        ->orOn(function ($join) use ($messagesTable, $latestUserPinId, $pinTable) {
                             $join->on("$messagesTable.pin_one", "=", "$pinTable.id")
-                                ->orOn("$messagesTable.pin_two", "=", "$pinTable.id");
+                                ->on("$messagesTable.pin_two", "=", DB::raw($latestUserPinId));
                         });
                 })
                 ->selectRaw("IF($messagesTable.user_one = $authUser->id, IF($messagesTable.user_one_read = 0, 1, 0), IF($messagesTable.user_two_read = 0, 1, 0)) AS message_user_read");

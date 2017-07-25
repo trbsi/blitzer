@@ -56,6 +56,7 @@ trait PinTrait
                         'user_id' => $user->id,
                         'age' => PinHelper::calculateAge($user->birthday),
                         'profile_picture' => $user->profile_picture,
+                        'favorited' => $pin->favorited,
                     ],
                 'pin' =>
                     [
@@ -759,6 +760,7 @@ trait PinTrait
             [
                 "user" =>
                     [
+                        "favorited" => (int)0,
                         "name" => $name,
                         "gender" => $gender,
                         "user_id" => rand()*(-1),
