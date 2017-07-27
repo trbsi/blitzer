@@ -46,13 +46,6 @@
 
 <body>
 
-<?php 
-if(strpos($_SERVER['SERVER_NAME'], "blitzerapp") !== false): ?>
-<div style="background-color: #3562E7; color: white; height: 50px; text-align: center; line-height: 50px">
-    Blitzer was acquired and <a href="http://www.hucklbrry.com" style="color: white; text-decoration: underline;"> Hucklbrry</a> was born. 
-</div>
-<?php endif; ?>
-
 <!-- HHHHHHHHHHHHHHHHHH        Preloader          HHHHHHHHHHHHHHHH -->
 <!-- <div id="preloader"></div> -->
 <!-- HHHHHHHHHHHHHHHHHH        Header          HHHHHHHHHHHHHHHH -->

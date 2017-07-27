@@ -18,6 +18,11 @@ class Controller extends BaseController
 
     public function index()
     {
+
+        if(strpos($_SERVER['SERVER_NAME'], "blitzerapp") !== false) {
+            return;
+        }
+
         return view("welcome");
     }
 
