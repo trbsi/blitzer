@@ -51,7 +51,7 @@ trait PinTrait
             [
                 'user' =>
                     [
-                        'name' => $user->first_name . " " . $user->last_name,
+                        'name' => $user->first_name . " " . utf8_encode(substr($user->last_name, 0, 1)).".",
                         'gender' => PinHelper::returnGender($user->gender),
                         'user_id' => $user->id,
                         'age' => PinHelper::calculateAge($user->birthday),
@@ -91,7 +91,7 @@ trait PinTrait
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat,1).":".round($lng,1)]);
 
         if (!empty($pins)) {
-            return $pins;
+          //  return $pins;
         }
 
         if (!empty($pin)) {
@@ -715,18 +715,18 @@ trait PinTrait
         $lat = $this->randomCoordinates($data["lat"]);
         $lng = $this->randomCoordinates($data["lng"]);
 
-        $im = imagecreatefrompng('http://maps.googleapis.com/maps/api/staticmap?center=' . $lat . ',' . $lng . '&zoom=21&format=png&sensor=false&size=1x1&maptype=roadmap&style=feature:administrative|visibility:off&style=feature:landscape|color:0x000000&style=feature:water|color:0xffffff&style=feature:road|visibility:off&style=feature:transit|visibility:off&style=feature:poi|visibility:off&key=' . env('GOOGLE_MAPS_API_KEY'));
+       /* $im = imagecreatefrompng('http://maps.googleapis.com/maps/api/staticmap?center=' . $lat . ',' . $lng . '&zoom=21&format=png&sensor=false&size=1x1&maptype=roadmap&style=feature:administrative|visibility:off&style=feature:landscape|color:0x000000&style=feature:water|color:0xffffff&style=feature:road|visibility:off&style=feature:transit|visibility:off&style=feature:poi|visibility:off&key=' . env('GOOGLE_MAPS_API_KEY'));
         //get pixel color, put it in an array
         $color_index = imagecolorat($im, 0, 0);
         $color_tran = imagecolorsforindex($im, $color_index);
 
         //if, for example, red value of the pixel is 0 we are on land
-        if ($color_tran['red'] == 0) {
+        if ($color_tran['red'] == 0) {*/
             //this is land
             return ['lat' => $lat, 'lng' => $lng];
-        } else {
+        /*} else {
             return $this->checkIfWater($data);
-        }
+        }*/
     }
 
     private function generateArray($data, $get, $i)
@@ -738,7 +738,7 @@ trait PinTrait
         $date->sub(new \DateInterval('PT' . rand(1, 120) . "M" . rand(1, 60) . "S"));
         $first = trim($data['names']["first"][rand(0, $countName - 1)]);
         $last = trim($data['names']["last"][rand(0, $countName - 1)]);
-        $name = $first . " " . $last;
+        $name = $first . " " . utf8_encode(substr($last, 0, 1)).".";
 
         $latLng = $this->checkIfWater($data);
 
