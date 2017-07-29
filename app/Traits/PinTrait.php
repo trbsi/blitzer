@@ -765,7 +765,7 @@ trait PinTrait
                         "gender" => $gender,
                         "user_id" => rand()*(-1),
                         "age" => rand(23 - $plusMinusage, 23 + $plusMinusage), //$data["age"] instead of 23
-                        "profile_picture" => env('APP_URL') . '/files/' . $get . '/' . $gender . '/' . $i . '.jpg',
+                        "profile_picture" => env('APP_URL') . '/files/hr/' . $gender . '/' . $i . '.jpg',
                     ],
                 "pin" =>
                     [
