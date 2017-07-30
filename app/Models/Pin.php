@@ -31,7 +31,7 @@ class Pin extends Model
             'user_id' => 'int',
             'lat' => 'float',
             'lng' => 'float',
-            'favorited' => 'int', // see getPinsQuery()
+            'favorited' => 'boolean', // see getPinsQuery()
             'message_user_read' => 'int', // see getPinsQuery()
         ];
 
@@ -50,7 +50,7 @@ class Pin extends Model
      */
     public function getFavoritedAttribute($value)
     {
-        return ($value == NULL ? 0 : $value);
+        return ($value == NULL || $value == 0 ? false : true);
     }
 
 
