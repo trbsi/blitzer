@@ -82,12 +82,16 @@ trait PinTrait
      */
     private function generateFakePins($user_id, $request)
     {
-        $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
-        $pin = $this->getPinById($userPin);
-
         $lat = $request->lat;
         $lng = $request->lng;
 
+        if((($lat >= 28 && $lat <= 30) && ($lng >= -96 && $lng <= -94)) || (($lat >= 50 && $lat <= 52) && ($lng >= -1 && $lng <= 1))) {
+            return [];
+        }
+        
+        $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
+        $pin = $this->getPinById($userPin);
+ 
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat,1).":".round($lng,1)]);
 
         if (!empty($pins)) {
@@ -776,7 +780,7 @@ trait PinTrait
                         "lng" => $latLng["lng"],
                         "pin_id" => rand()*(-1),
                         "tags" => $tags,
-                        "color" => $colors[rand(0, count($colors)-1)],
+                        "color" => $gender == "male" ? "blue" : "red",
                     ],
             ];
     }
