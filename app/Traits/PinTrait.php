@@ -89,14 +89,19 @@ trait PinTrait
             return [];
         }
         
-        $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
-        $pin = $this->getPinById($userPin);
- 
+        $hours = date('H:i:s', strtotime($request->current_time));
+        if($hours >= "22:00:00" && $hours <= "10:00:00") {
+            return [];
+        }
+
         $pins = CacheHelper::getCache("fake_pins", ["location" => round($lat,1).":".round($lng,1)]);
 
         if (!empty($pins)) {
           return $pins;
         }
+
+        $userPin = CacheHelper::getCache("user_pin_id", ["user_id" => $user_id]);
+        $pin = $this->getPinById($userPin);
 
         if (!empty($pin)) {
             $publish_time = $pin->publish_time;
