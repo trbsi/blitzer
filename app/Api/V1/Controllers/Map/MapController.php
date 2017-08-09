@@ -141,9 +141,9 @@ class MapController extends BaseAuthController
         $tags = [];
         if (isset($request->filter_by_tag)) {
             if ($request->filter_by_tag == "get_top_tags") {
-                $tags = $this->tag->getTopHashtags();
+                $tags = $this->tag->getTopHashtags($request->current_time, $this->authUser, $request->lat, $request->lng);
             } else {
-                $tags = $this->tag->filterByTags($request);
+                $tags = $this->tag->filterByTags($request->filter_by_tag);
             }
         }
 

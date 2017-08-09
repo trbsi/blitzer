@@ -1,6 +1,8 @@
 <?php namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Pin;
+use App\Helpers\PinHelper;
 use DB;
 
 class Tag extends Model
@@ -20,26 +22,41 @@ class Tag extends Model
         ];
 
     /**
-     * @param $request
+     * @param $tag string Some hashtag
      * @return mixed
      */
-    public function filterByTags($request)
+    public function filterByTags($tag)
     {
         $tagTable = Tag::getTable();
-        return DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$request->filter_by_tag*"]);
+        return DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$tag*"]);
     }
 
-    public function getTopHashtags()
+    /**
+     * Get top hashtags for that specific area where user is
+     * @param  string $current_time Current time on phone
+     * @param  object $authUser Authenticated user
+     * @param  float $lat Latitude
+     * @param  float $lng Longitude
+     * @return Collection
+     */
+    public function getTopHashtags($current_time, $authUser, $lat, $lng)
     {
+        //little help - https://stackoverflow.com/questions/44003969/how-to-get-a-belongstomany-query-from-a-collection-mysql-laravel
+        $pinIds = (new Pin)->getPinBasicQuery($current_time, $authUser, $lat, $lng)->get()->pluck('id');
+
         return Tag::select(['id AS tag_id', 'tag_name', 'popularity'])
             ->limit(10)
             ->orderBy('popularity', 'DESC')
+            ->groupBy('id')
+            ->whereHas('pins', function($query) use ($pinIds) {
+                $query->whereIn('pin_id', $pinIds); //pin_id from pin_tag table
+            })
             ->get();
     }
 
-    public function locations()
+    public function pins()
     {
-        return $this->belongsToMany(\App\Models\Location::class, 'location_tag', 'tag_id', 'location_id');
+        return $this->belongsToMany(\App\Models\Pin::class, 'pin_tag', 'tag_id', 'pin_id');
     }
 
     public function locationTags()
