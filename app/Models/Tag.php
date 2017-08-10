@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Pin;
+use App\Models\PinTag;
 use App\Helpers\PinHelper;
 use DB;
 
@@ -25,10 +26,18 @@ class Tag extends Model
      * @param $tag string Some hashtag
      * @return mixed
      */
-    public function filterByTags($tag)
+    public function filterByTags($tag, $current_time, $authUser, $lat, $lng)
     {
+        $pinIds = (new Pin)->getPinBasicQuery($current_time, $authUser, $lat, $lng)->get()->pluck('id');
+        $pinTagTable = (new PinTag)->getTable();
         $tagTable = Tag::getTable();
-        return DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$tag*"]);
+        
+        return DB::select("
+            SELECT id AS tag_id, tag_name, 
+            (SELECT COUNT(tag_id) FROM $pinTagTable WHERE tag_id = $tagTable.id AND pin_id IN (".implode(",", $pinIds->toArray()).")) AS popularity 
+            FROM $tagTable 
+            WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) 
+            ORDER BY popularity DESC", ["$tag*"]);
     }
 
     /**
@@ -43,8 +52,11 @@ class Tag extends Model
     {
         //little help - https://stackoverflow.com/questions/44003969/how-to-get-a-belongstomany-query-from-a-collection-mysql-laravel
         $pinIds = (new Pin)->getPinBasicQuery($current_time, $authUser, $lat, $lng)->get()->pluck('id');
+        $pinTagTable = (new PinTag)->getTable();
+        $tagTable = Tag::getTable();
 
-        return Tag::select(['id AS tag_id', 'tag_name', 'popularity'])
+        return Tag::select(['id AS tag_id', 'tag_name'])
+            ->selectRaw("(SELECT COUNT(tag_id) FROM $pinTagTable WHERE tag_id = $tagTable.id AND pin_id IN (".implode(",", $pinIds->toArray()).")) AS popularity")
             ->limit(10)
             ->orderBy('popularity', 'DESC')
             ->groupBy('id')
