@@ -769,7 +769,7 @@ trait PinTrait
             [
                 "user" =>
                     [
-                        "favorited" => (int)0,
+                        "favorited" => false,
                         "name" => $name,
                         "gender" => $gender,
                         "user_id" => rand()*(-1),
