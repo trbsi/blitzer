@@ -33,11 +33,11 @@ class ProfileController extends BaseAuthController
                 'sound' => "default",
             ];
 			SendPushNotification::sendNotification($user2->id, $dataTmp);
-			$response = ['status' => true];
+			$response = ['favorited' => true];
 		} catch (\Exception $e) {
 			DB::rollBack();
 			$this->authUser->favoriteUser()->detach($request->user_id);
-			$response = ['status' => false];
+			$response = ['favorited' => false];
 		}
 
         return response()->json($response);
