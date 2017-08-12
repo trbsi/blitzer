@@ -119,7 +119,7 @@ class Pin extends Model
     }
 
     /**
-     * Get basic query for getting all pins
+     * Get basic query for getting all pins in your nearby area
      * @param  date $current_time 
      * @param  object $authUser Authenticated user
      * @param  float $lat Latitude

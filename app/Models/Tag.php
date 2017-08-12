@@ -26,7 +26,7 @@ class Tag extends Model
      * @param $tag string Some hashtag
      * @return mixed
      */
-    public function filterByTags($tag, $current_time, $authUser, $lat, $lng)
+    public function filterByTags($tag, $current_time, $authUser, $lat, $lng) 
     {
         $pinIds = (new Pin)->getPinBasicQuery($current_time, $authUser, $lat, $lng)->get()->pluck('id');
         $pinTagTable = (new PinTag)->getTable();
