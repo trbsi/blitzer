@@ -30,4 +30,14 @@ class Controller extends BaseController
     {
         return view("public.legal.legal");
     }
+
+    public function ios()
+    {
+         return redirect(env('IOS_STORE_LINK'));
+    }
+
+    public function android()
+    {
+         return redirect(env('GOOGLE_PLAY_LINK'));
+    }
 }

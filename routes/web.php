@@ -14,6 +14,8 @@
 Route::get('ajax-test', 'Controller@ajaxTest');
 Route::get('/', 'Controller@index');
 Route::get('legal', 'Controller@legal');
+Route::get('ios', 'Controller@ios');
+Route::get('android', 'Controller@android');
 
 Route::group(['namespace' => 'Cron', 'prefix' => 'cron'], function () {
     Route::get('update-pin-time', 'PinController@updatePinTime');
