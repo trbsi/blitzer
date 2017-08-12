@@ -32,7 +32,7 @@ class Tag extends Model
         $pinTagTable = (new PinTag)->getTable();
         $tagTable = Tag::getTable();
         
-        if(empty($pinIds)) {
+        if($pinIds->isEmpty()) {
             return [];
         }
 
@@ -58,10 +58,10 @@ class Tag extends Model
         $pinTagTable = (new PinTag)->getTable();
         $tagTable = Tag::getTable();
 
-        if(empty($pinIds)) {
+        if($pinIds->isEmpty()) {
             return [];
         }
-        
+
         return Tag::select(['id AS tag_id', 'tag_name'])
             ->selectRaw("(SELECT COUNT(tag_id) FROM $pinTagTable WHERE tag_id = $tagTable.id AND pin_id IN (".implode(",", $pinIds->toArray()).")) AS popularity")
             ->limit(10)
