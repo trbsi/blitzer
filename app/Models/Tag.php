@@ -32,9 +32,12 @@ class Tag extends Model
         $pinTagTable = (new PinTag)->getTable();
         $tagTable = Tag::getTable();
         
+        if(empty($pinIds)) {
+            return [];
+        }
+
         return DB::select("
-            SELECT id AS tag_id, tag_name, 
-            (SELECT COUNT(tag_id) FROM $pinTagTable WHERE tag_id = $tagTable.id AND pin_id IN (".implode(",", $pinIds->toArray()).")) AS popularity 
+            SELECT id AS tag_id, tag_name, (SELECT COUNT(tag_id) FROM $pinTagTable WHERE tag_id = $tagTable.id AND pin_id IN (".implode(",", $pinIds->toArray()).")) AS popularity 
             FROM $tagTable 
             WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) 
             ORDER BY popularity DESC", ["$tag*"]);
@@ -55,6 +58,10 @@ class Tag extends Model
         $pinTagTable = (new PinTag)->getTable();
         $tagTable = Tag::getTable();
 
+        if(empty($pinIds)) {
+            return [];
+        }
+        
         return Tag::select(['id AS tag_id', 'tag_name'])
             ->selectRaw("(SELECT COUNT(tag_id) FROM $pinTagTable WHERE tag_id = $tagTable.id AND pin_id IN (".implode(",", $pinIds->toArray()).")) AS popularity")
             ->limit(10)
