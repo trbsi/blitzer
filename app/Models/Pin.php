@@ -119,6 +119,30 @@ class Pin extends Model
     }
 
     /**
+     * Get basic query for getting all pins in your nearby area
+     * @param  date $current_time 
+     * @param  object $authUser Authenticated user
+     * @param  float $lat Latitude
+     * @param  float $lng Longitude
+     * @return Model
+     */
+    public function getPinBasicQuery($current_time, $authUser, $lat, $lng)
+    {
+        $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
+        $minusOneHour = PinHelper::returnTime('minus-1hour', $current_time);
+        $pinTable = Pin::getTable();
+
+        return Pin::whereBetween("$pinTable.updated_at", [$minusOneHour, $current_time])
+            ->where("$pinTable.user_id", '<>', $authUser->id)
+            ->with(['tags', 'relationUser'])
+            ->select("$pinTable.*")
+            ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
+            ->having("distance", "<=", Pin::DISTANCE)
+            ->groupBy("$pinTable.id")
+            ;
+    }
+
+    /**
      * get only query for pins
      * @param  Request $request [Laravel request]
      * @param  User $authUser [authenticated user
@@ -127,21 +151,11 @@ class Pin extends Model
      */
     public function getPinsQuery($request, $authUser, $latestUserPinId)
     {
-        $lat = $request->lat;
-        $lng = $request->lng;
-        $current_time = $request->current_time;
-        $km = (Pin::MEAUREMENT == 'km') ? 6371 : 3959;
-        $minusOneHour = PinHelper::returnTime('minus-1hour', $current_time);
         $pinTable = Pin::getTable();
 
-        $query = Pin::whereBetween("$pinTable.updated_at", [$minusOneHour, $current_time])
-            ->where("$pinTable.user_id", '<>', $authUser->id)
-            ->with(['tags', 'relationUser'])
-            ->select("$pinTable.*")
-            ->selectRaw("($km * acos(cos(radians(?)) * cos(radians(lat)) * cos(radians(lng) - radians(?)) + sin(radians(?)) * sin(radians(lat)) )) AS distance", [$lat, $lng, $lat])
+        $query = $this->getPinBasicQuery($request->current_time, $authUser, $request->lat, $request->lng)
             ->selectRaw("IF(EXISTS(SELECT null FROM favorite_users WHERE favorited_by = $authUser->id AND favorited = $pinTable.user_id),1,0) AS favorited")
-            ->having("distance", "<=", Pin::DISTANCE)
-            ->groupBy("$pinTable.id");
+            ;
 
         //if user wants to filter by tag
         if (isset($request->filter_by_tag)) {
@@ -155,7 +169,7 @@ class Pin extends Model
             $messagesTable = (new Message)->getTable();
             //if user_one_read = 0, user one didn't read a message, set badge to 1, else to 0
             //IF(messages.user_one = 5, IF(messages.user_one_read = 0, 1, 0), IF(messages.user_two_read = 0, 1, 0)) AS message_user_read
-            //LEFT JOIN messages ON ((messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id))
+            //LEFT JOIN messages ON ((messages.pin_one = 1 AND messages.pin_two = pins.id) OR (messages.pin_one = pins.id AND messages.pin_two = 1))
             $query = $query
                 ->leftJoin($messagesTable, function ($join) use ($messagesTable, $latestUserPinId, $pinTable) {
                     $join->on(function ($join) use ($messagesTable, $latestUserPinId, $pinTable) {
@@ -199,10 +213,10 @@ class Pin extends Model
             $jsonPins[] = $this->generateContentForInfoWindow($pin);
         }
 
-        if (count($jsonPins) < 20) {
+        /*if (count($jsonPins) < 20) {
             $fakePins = $this->generateFakePins($authUser->id, $request);
             $jsonPins = array_merge($jsonPins, $fakePins);
-        }
+        }*/
 
         return $jsonPins;
 

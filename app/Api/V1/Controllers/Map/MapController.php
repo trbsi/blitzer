@@ -141,9 +141,24 @@ class MapController extends BaseAuthController
         $tags = [];
         if (isset($request->filter_by_tag)) {
             if ($request->filter_by_tag == "get_top_tags") {
-                $tags = $this->tag->getTopHashtags();
+                //ANDROID FIX, this is not done on android
+                if(!$request->lat && !$request->lng) {
+                    $tags = Tag::select(['id AS tag_id', 'tag_name', 'popularity'])
+                        ->limit(10)
+                        ->orderBy('popularity', 'DESC')
+                        ->get();
+                } else {
+                    $tags = $this->tag->getTopHashtags($request->current_time, $this->authUser, $request->lat, $request->lng);
+                }
+                
             } else {
-                $tags = $this->tag->filterByTags($request);
+                if(!$request->lat && !$request->lng) {
+                    $tagTable = Tag::getTable();
+                    $tags = DB::select("SELECT id AS tag_id, tag_name, popularity FROM $tagTable WHERE MATCH(tag_name) AGAINST(? IN BOOLEAN MODE) ORDER BY popularity DESC", ["$request->filter_by_tag*"]);
+
+                } else {
+                    $tags = $this->tag->filterByTags($request->filter_by_tag, $request->current_time, $this->authUser, $request->lat, $request->lng);
+                }
             }
         }
 

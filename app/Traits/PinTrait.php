@@ -7,25 +7,6 @@ use App\Helpers\PinHelper;
 trait PinTrait
 {
     /**
-     * fake user's real location
-     * @param $number - lng/lat coordinates
-     * @return float
-     */
-    private function fakeLocation($number)
-    {
-        //this moves pin's location to about 100m
-        $rand = 0.000400;
-        $date_sum = date("Y") + date("m") + date("d");
-
-        if ($date_sum % 2 == 0) {
-            return (float)($number + $rand);
-        } else {
-            return (float)($number - $rand);
-        }
-
-    }
-
-    /**
      * @param $pin - loaded Pin model
      * @param $user - current user
      * @return array
@@ -71,6 +52,25 @@ trait PinTrait
                     ],
 
             ];
+    }
+
+    /**
+     * fake user's real location
+     * @param $number - lng/lat coordinates
+     * @return float
+     */
+    private function fakeLocation($number)
+    {
+        //this moves pin's location to about 100m
+        $rand = 0.000400;
+        $date_sum = date("Y") + date("m") + date("d");
+
+        if ($date_sum % 2 == 0) {
+            return (float)($number + $rand);
+        } else {
+            return (float)($number - $rand);
+        }
+
     }
 
     //****************************FAKE PINS START********************************
@@ -769,7 +769,7 @@ trait PinTrait
             [
                 "user" =>
                     [
-                        "favorited" => (int)0,
+                        "favorited" => false,
                         "name" => $name,
                         "gender" => $gender,
                         "user_id" => rand()*(-1),

@@ -30,3 +30,17 @@ from `pins`
 LEFT JOIN messages ON (messages.pin_one = 1 OR messages.pin_two = 1) AND (messages.pin_one = pins.id OR messages.pin_two = pins.id)
 WHERE pins.user_id <> 5
 group by `pins`.`id`
+
+#HAVERSINE SQL
+https://developers.google.com/maps/articles/phpsqlsearch_v3
+http://stackoverflow.com/questions/574691/mysql-great-circle-distance-haversine-formula
+SELECT id, 
+( 
+	6371 * acos(
+					cos(radians(MOJLAT)) * cos(radians(geolat)) * cos(radians(geolong) - radians(MOJLONG)) + sin(radians(MOJLAT)) * sin(radians(geolat)) 
+				) 
+) AS distance 
+FROM markers 
+HAVING distance < 25 
+ORDER BY distance 
+LIMIT 0 , 20;
