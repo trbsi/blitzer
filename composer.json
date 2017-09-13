@@ -13,7 +13,8 @@
         "pubnub/pubnub": "*",
         "dingo/api": "1.0.0-beta8",
         "fzaninotto/faker": "^1.6",
-        "doctrine/dbal": "^2.5"
+        "doctrine/dbal": "^2.5",
+        "andrewevansmith/php-craigslist-api-utility": "dev-master"
     },
     "require-dev": {
         "mockery/mockery": "0.9.*",
